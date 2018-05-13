@@ -1,5 +1,5 @@
 call plug#begin()
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go' 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
