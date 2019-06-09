@@ -1,39 +1,66 @@
-if [ -f ~/.bashrc ]; then . ~/.bashrc; fi 
+### Install
+# 1. Install latest bash via brew: brew install bash
+# 2. To source .bashrc, create .bash_profile with content:
+#
+#    if [ -f ~/.bashrc ]; then . ~/.bashrc; fi 
+#
+###############
+
+# Source other files
+
+# Senstive functions which are not pushed to Github
+# It contains GOPATH, some functions, aliases etc...
+[ -r ~/.bash_private ] && source ~/.bash_private
 
 # On Mac OS X: brew install bash-completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
-# Get it from the original Git repo:
+
+# Get it from the original Git repo: 
 # https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 if [ -f ~/.git-prompt.sh ]; then
   source ~/.git-prompt.sh
 fi
 
-# # Get it from the original Git repo:
+# # Get it from the original Git repo: 
 # https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 if [ -f ~/.git-completion.bash ]; then
   source ~/.git-completion.bash
 fi
 
-alias vi='vim'
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/go/bin:$GOBIN"
-
-export EDITOR="vim"
-
+###############
+# Aliases (custom)
 alias ..='cd ..'
 alias ls='ls -GpF' # Mac OSX specific
 alias ll='ls -alGpF' # Mac OSX specific
+
+# most used fast git commands
+alias t="tig status"
+alias tigs="tig status" #old habits don't die
+alias d='git diff' 
+
+alias vi='nvim'
+alias vim='nvim'
+# alias vi='vim'
+ 
+#################
+# Git
+#################
+
+alias sq='git rebase -i $(git merge-base $(git rev-parse --abbrev-ref HEAD) master)'
+alias co='git checkout master'
+alias po='git pull origin master'
+alias b='git branch'
+alias hc='hub compare'
+
+###############
+# Exports (custom)
+
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:$GOBIN"
+
+export EDITOR="vim"
 
 # checkout `man ls` for the meaning
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
@@ -63,7 +90,7 @@ export PROMPT_COMMAND='__git_ps1 "\[$(tput setaf 6)\]\W\[$(tput sgr0)\]\[$(tput 
 
 # ignoreboth ignores commands starting with a space and duplicates. Erasedups
 # removes all previous dups in history
-export HISTCONTROL=ignoreboth:erasedups
+export HISTCONTROL=ignoreboth:erasedups  
 export HISTFILE=~/.bash_history          # be explicit about file path
 export HISTSIZE=100000                   # in memory history size
 export HISTFILESIZE=100000               # on disk history size
@@ -86,7 +113,7 @@ bind "set show-all-if-ambiguous On" # show list automatically, without double ta
 # Ignore files with these suffixes when performing completion.
 export FIGNORE='.o:.pyc'
 
-# Ignore files that match these patterns when
+# Ignore files that match these patterns when 
 # performing filename expansion.
 export GLOBIGNORE='.DS_Store:*.o:*.pyc'
 
@@ -157,3 +184,10 @@ shopt -s no_empty_cmd_completion
 shopt -s nocaseglob
 
 
+# brew install jump
+# https://github.com/gsamokovarov/jump
+eval "$(jump shell)"
+
+# brew install direnv
+# https://github.com/direnv/direnv
+eval "$(direnv hook bash)"

@@ -1,25 +1,53 @@
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+# =============
+#    INIT
+# =============
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/go/bin:$GOBIN"
+# Senstive functions which are not pushed to Github
+# It contains GOPATH, some functions, aliases etc...
+[ -r ~/.zsh_private ] && source ~/.zsh_private
 
 # =============
 #    ALIAS
 # =============
 alias ..='cd ..'
-alias ls='ls -GpF' # Mac OSX specific
-alias ll='ls -alGpF' # Mac OSX specific
 
+alias t="tig status"
+alias tigs="tig status" #old habits don't die
+alias d='git diff' 
 alias vi='vim'
+
+case `uname` in
+  Darwin)
+    alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed'
+    alias ls='ls -GpF' # Mac OSX specific
+    alias ll='ls -alGpF' # Mac OSX specific
+  ;;
+  Linux)
+    alias ll='ls -al'
+    alias ls='ls --color=auto' 
+  ;;
+esac
+
+alias sq='git rebase -i $(git merge-base $(git rev-parse --abbrev-ref HEAD) master)'
+alias co='git checkout master'
+alias po='git pull origin master'
+alias b='git branch'
+alias hc='hub compare'
+alias hb='hub browse'
+
+alias -s go='go run'
+alias hs='hugo server'
+
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
 
 # =============
 #    EXPORT
 # =============
+#
+
+export PATH="/usr/local/go/bin:$GOBIN:$HOME/.cargo/bin:$PATH"
+
 export EDITOR="vim"
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
@@ -38,10 +66,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # =============
 
 ## Command history configuration
-if [ -z "$HISTFILE" ]; then
-    HISTFILE=$HOME/.zsh_history
-fi
-
+HISTFILE=$HOME/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
@@ -104,6 +129,9 @@ function parse_git_dirty() {
 # enable completion
 autoload -Uz compinit
 compinit
+
+autoload bashcompinit
+bashcompinit
 
 zmodload -i zsh/complist
 
@@ -188,15 +216,30 @@ fi
 # automatically remove duplicates from these arrays
 typeset -U path PATH cdpath CDPATH fpath FPATH manpath MANPATH
 
+# only exit if we're not on the last pane
+	
+exit() {
+  if [[ -z $TMUX ]]; then
+    builtin exit
+    return
+  fi
+
+  panes=$(tmux list-panes | wc -l)
+  wins=$(tmux list-windows | wc -l) 
+  count=$(($panes + $wins - 1))
+  if [ $count -eq 1 ]; then
+    tmux detach
+  else
+    builtin exit
+  fi
+}
+
 # ===================
 #    PLUGINS
 # ===================
 
-# brew install zsh-syntax-highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# brew install zsh-autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # ===================
 #    THIRD PARTY
@@ -208,4 +251,3 @@ eval "$(jump shell)"
 # brew install direnv
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
-

@@ -39,7 +39,7 @@
 [credential]
 	helper = osxkeychain
 [github]
-	user = HuJingwei 
+	user = echo
 [mergetool]
 	keepBackup = true
 [filter "media"]
