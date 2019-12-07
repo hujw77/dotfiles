@@ -2,7 +2,7 @@
 # 1. Install latest bash via brew: brew install bash
 # 2. To source .bashrc, create .bash_profile with content:
 #
-#    if [ -f ~/.bashrc ]; then . ~/.bashrc; fi 
+# if [ -f ~/.bashrc ]; then . ~/.bashrc; fi 
 #
 ###############
 
@@ -191,3 +191,7 @@ eval "$(jump shell)"
 # brew install direnv
 # https://github.com/direnv/direnv
 eval "$(direnv hook bash)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

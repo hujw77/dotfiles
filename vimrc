@@ -525,7 +525,7 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 " function will generate the following front matter under the cursor:
 "
 "   +++
-"   author = "Fatih Arslan"
+"   author = "Echo"
 "   date = 2018-02-03 08:41:20
 "   title = "Speed up vim"
 "   slug = "speed-up-vim"
@@ -536,7 +536,7 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 "
 function! s:create_front_matter()
   let fm = ["+++"]
-  call add(fm, 'author = "Fatih Arslan"')
+  call add(fm, 'author = "Echo"')
   call add(fm, printf("date = \"%s\"", strftime("%Y-%m-%d %X")))
 
   let filename = expand("%:r")
