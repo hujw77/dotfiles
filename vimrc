@@ -1,14 +1,17 @@
-" I use the same vimrc for both nvim and vim
+" PlugInstall
 call plug#begin('~/.vim/plugged')
 
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
+Plug 'ervandew/supertab'
+Plug 'arthurxavierx/vim-caser'
 Plug 'cespare/vim-toml'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
+Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
@@ -18,18 +21,25 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'plasticboy/vim-markdown'
+Plug 'roxma/vim-tmux-clipboard'
 Plug 'scrooloose/nerdtree'
 Plug 't9md/vim-choosewin'
-Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'fatih/molokai'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-scriptease'
-Plug 'ervandew/supertab'
+Plug 'leafgarland/typescript-vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi'
+Plug 'davidhalter/jedi-vim'
+Plug 'will133/vim-dirdiff'
+Plug 'posva/vim-vue'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+Plug 'tpope/vim-surround'
 
 call plug#end()
 
@@ -54,7 +64,7 @@ set autoindent
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set incsearch                   " Shows the match while typing
 set hlsearch                    " Highlight found searches
-set mouse=a                     "Enable mouse mode
+set mouse=a                     " Enable mouse mode
 
 set noerrorbells             " No beeps
 set number                   " Show line numbers
@@ -113,7 +123,6 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
   autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf* setf nginx
   autocmd BufNewFile,BufRead *.hcl setf conf
-  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 
 
   autocmd BufRead,BufNewFile *.gotmpl set filetype=gotexttmpl
   
@@ -126,9 +135,14 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.sh setlocal expandtab shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.proto setlocal expandtab shiftwidth=2 tabstop=2
   
+  autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd BufNewFile,BufRead *.vue setlocal expandtab shiftwidth=2 tabstop=2 
+  
   autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType typescript setlocal expandtab shiftwidth=2 tabstop=2
 augroup END
 
 "=====================================================
@@ -240,7 +254,7 @@ augroup END
 autocmd BufEnter * silent! lcd %:p:h
 
 " Automatically resize screens to be equally the same
-" autocmd VimResized * wincmd =
+autocmd VimResized * wincmd =
 
 " Fast saving
 nnoremap <leader>w :w!<cr>
@@ -277,6 +291,9 @@ map <C-l> <C-W>l
 
 " Print full path
 map <C-f> :echo expand("%:p")<cr>
+
+" Mnemonic: Copy File path
+nnor <leader>cf :let @*=expand("%:p")<CR>    
 
 " Terminal settings
 if has('terminal')
@@ -316,7 +333,7 @@ noremap k gk
 imap jj <Esc>
 
 " Source (reload configuration)
-nnoremap <silent> <F5> :source $MNVIMRC<CR>
+nnoremap <silent> <F5> :source $MYNVIMRC<CR>
 
 nnoremap <F6> :setlocal spell! spell?<CR>
 
@@ -403,9 +420,10 @@ let g:go_test_prepend_name = 1
 let g:go_list_type = "quickfix"
 let g:go_auto_type_info = 0
 let g:go_auto_sameids = 0
-let g:go_info_mode = "gocode"
-let g:go_def_mode = "gopls"
+
+let g:go_null_module_warning = 0
 let g:go_echo_command_info = 1
+
 let g:go_autodetect_gopath = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_enabled = ['vet', 'golint']
@@ -438,15 +456,14 @@ function! s:build_go_files()
   endif
 endfunction
 
-
 augroup go
   autocmd!
 
   autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
   autocmd FileType go nmap <silent> <Leader>s <Plug>(go-def-split)
-  autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
+  autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def)
 
-  autocmd FileType go nmap <silent> <Leader>x <Plug>(go-doc-vertical)
+  autocmd FileType go nmap <silent> <Leader>x <Plug>(go-doc)
 
   autocmd FileType go nmap <silent> <Leader>i <Plug>(go-info)
   autocmd FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
@@ -481,7 +498,7 @@ imap <C-b> <esc>:<C-u>FzfFiles<cr>
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
   \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
-  \ -g "!{.git,node_modules,vendor}/*" '
+  \ -g "!{.git,node_modules,vendor,env,venv}/*" '
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
@@ -510,6 +527,8 @@ let NERDTreeShowHidden=1
 
 " ==================== ag ====================
 let g:ackprg = 'ag --vimgrep --smart-case'                                                   
+let g:ag_working_path_mode="r"
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " ==================== markdown ====================
 let g:vim_markdown_folding_disabled = 1
@@ -525,7 +544,7 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 " function will generate the following front matter under the cursor:
 "
 "   +++
-"   author = "Echo"
+"   author = "echo"
 "   date = 2018-02-03 08:41:20
 "   title = "Speed up vim"
 "   slug = "speed-up-vim"
@@ -536,7 +555,7 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 "
 function! s:create_front_matter()
   let fm = ["+++"]
-  call add(fm, 'author = "Echo"')
+  call add(fm, 'author = "echo"')
   call add(fm, printf("date = \"%s\"", strftime("%Y-%m-%d %X")))
 
   let filename = expand("%:r")
@@ -587,10 +606,10 @@ let g:vim_json_syntax_conceal = 0
 " Ultisnips has native support for SuperTab. SuperTab does omnicompletion by
 " pressing tab. I like this better than autocompletion, but it's still fast.
 let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"  
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
-
 
 " ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)
@@ -598,8 +617,46 @@ nmap  -  <Plug>(choosewin)
 " Trigger a highlight in the appropriate direction when pressing these keys:
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-nmap <Leader>gi <Plug>(grammarous-open-info-window)
-nmap <Leader>gc <Plug>(grammarous-close-info-window)
-nmap <Leader>gf <Plug>(grammarous-fixit)
+" rhysd/vim-grammarous
+" nmap <Leader>gi <Plug>(grammarous-open-info-window)
+" nmap <Leader>gc <Plug>(grammarous-close-info-window)
+" nmap <Leader>gf <Plug>(grammarous-fixit)
+
+" vim-vue
+let g:vue_disable_pre_processors=1
+autocmd FileType vue syntax sync fromstart
+
+" python
+" vim-python
+augroup vimrc-python
+  autocmd!
+  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 colorcolumn=79
+      \ formatoptions+=croq softtabstop=4
+      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+augroup END
+
+" jedi-vim
+let g:jedi#popup_on_dot = 0
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>u"
+let g:jedi#rename_command = "<leader>r"
+let g:jedi#show_call_signatures = "0"
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+
+let g:python_host_prog = '/usr/local/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
+
+" vim-autopep8
+let g:autopep8_on_save = 1
+let g:autopep8_disable_show_diff=1
+
+" supertab
+
+" let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " vim: sw=2 sw=2 et
