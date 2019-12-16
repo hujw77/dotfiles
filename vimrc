@@ -333,7 +333,7 @@ noremap k gk
 imap jj <Esc>
 
 " Source (reload configuration)
-nnoremap <silent> <F5> :source $MYNVIMRC<CR>
+nnoremap <silent> <F5> :source $MNVIMRC<CR>
 
 nnoremap <F6> :setlocal spell! spell?<CR>
 
