@@ -5,12 +5,12 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
-Plug 'ervandew/supertab'
 Plug 'arthurxavierx/vim-caser'
 Plug 'cespare/vim-toml'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
+Plug 'ervandew/supertab'
 Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
@@ -40,6 +40,7 @@ Plug 'posva/vim-vue'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'tpope/vim-surround'
+Plug 'tyru/open-browser.vim'
 
 call plug#end()
 
@@ -403,6 +404,13 @@ nnoremap <leader>ui :<C-u>call <SID>create_go_doc_comment()<CR>
 
 "===================== PLUGINS ======================
 
+" ==================== open-browser ====================
+
+" default netrw is not working anymore, switch to a custom plugin
+" (open-browser.vim)  https://github.com/vim/vim/issues/4738
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 
 " ==================== Fugitive ====================
 vnoremap <leader>gb :Gblame<CR>
