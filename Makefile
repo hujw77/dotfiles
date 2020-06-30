@@ -1,4 +1,4 @@
-all: build
+all: sync
 
 sync:
 	mkdir -p ~/.config/nvim
