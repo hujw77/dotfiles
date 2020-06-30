@@ -5,6 +5,9 @@
 # Senstive functions which are not pushed to Github
 # It contains GOPATH, some functions, aliases etc...
 [ -r ~/.zsh_private ] && source ~/.zsh_private
+export GOPATH=$HOME/go 
+export PATH=$PATH:$GOPATH/bin
+export PATH="/usr/local/sbin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -35,6 +38,10 @@ esac
 alias sq='git rebase -i $(git merge-base $(git rev-parse --abbrev-ref HEAD) master)'
 alias co='git checkout master'
 alias po='git pull origin master'
+# cd into git root dir
+alias cdr='cd $(git rev-parse --show-toplevel)'
+# show 
+alias duh='du -sh -h * .[^.]* 2> /dev/null | sort -h'
 alias b='git branch'
 alias hc='hub compare'
 alias hb='hub browse'

@@ -49,6 +49,8 @@
 	default = current
 [commit]
 	template = /Users/hujingwei/.stCommitMsg
-
-
-
+[http]
+	sslVerify = false
+	proxy = socks5://127.0.0.1:1081
+[https]
+    	proxy = socks5://127.0.0.1:1081

@@ -6,6 +6,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
 Plug 'cespare/vim-toml'
+Plug 'tpope/vim-surround'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
@@ -403,12 +404,20 @@ let g:go_test_prepend_name = 1
 let g:go_list_type = "quickfix"
 let g:go_auto_type_info = 0
 let g:go_auto_sameids = 0
-let g:go_info_mode = "gocode"
-let g:go_def_mode = "gopls"
+
+let g:go_null_module_warning = 0
 let g:go_echo_command_info = 1
+
 let g:go_autodetect_gopath = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_enabled = ['vet', 'golint']
+
+let g:go_info_mode = 'gopls'
+let g:go_rename_command='gopls'
+let g:go_gopls_complete_unimported = 1
+let g:go_implements_mode='gopls'
+let g:go_diagnostics_enabled = 1
+let g:go_doc_popup_window = 1
 
 let g:go_highlight_space_tab_error = 0
 let g:go_highlight_array_whitespace_error = 0
@@ -444,7 +453,7 @@ augroup go
 
   autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
   autocmd FileType go nmap <silent> <Leader>s <Plug>(go-def-split)
-  autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
+  autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def)
 
   autocmd FileType go nmap <silent> <Leader>x <Plug>(go-doc-vertical)
 
