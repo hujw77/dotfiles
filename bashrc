@@ -61,6 +61,7 @@ alias hc='hub compare'
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:$GOBIN"
 
 export EDITOR="vim"
+export NVIMRC="~/.vimrc"
 
 # checkout `man ls` for the meaning
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx

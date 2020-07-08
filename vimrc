@@ -42,6 +42,7 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'tpope/vim-surround'
 Plug 'tyru/open-browser.vim'
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
@@ -84,7 +85,8 @@ set ignorecase               " Search case insensitive...
 set smartcase                " ... but not it begins with upper case 
 set completeopt=menu,menuone
 set nocursorcolumn           " speed up syntax highlighting
-set nocursorline
+" set nocursorline
+set cursorline
 set updatetime=300
 set pumheight=10             " Completion window max size
 set conceallevel=2           " Concealed text is completely hidden
@@ -112,11 +114,16 @@ endif
 
 " color
 syntax enable
-set t_Co=256
-set background=dark
-let g:molokai_original = 1
-let g:rehash256 = 1
-colorscheme molokai
+" set t_Co=256
+" set background=dark
+" let g:molokai_original = 1
+" let g:rehash256 = 1
+" colorscheme molokai
+colorscheme nord
+let g:nord_cursor_line_number_background = 1
+let g:nord_bold_vertical_split_line = 1
+let g:nord_uniform_status_lines = 1
+let g:nord_underline = 1
 
 augroup filetypedetect
   command! -nargs=* -complete=help Help vertical belowright help <args>
@@ -335,7 +342,7 @@ noremap k gk
 imap jj <Esc>
 
 " Source (reload configuration)
-nnoremap <silent> <F5> :source $MNVIMRC<CR>
+nnoremap <silent> <F5> :source $NVIMRC<CR>
 
 nnoremap <F6> :setlocal spell! spell?<CR>
 
@@ -504,12 +511,19 @@ let g:fzf_command_prefix = 'Fzf'
 let g:fzf_layout = { 'down': '~20%' }
 
 " search 
-nmap <C-p> :FzfHistory<cr>
-imap <C-p> <esc>:<C-u>FzfHistory<cr>
+nmap <C-p> :FzfGFiles<cr>
+imap <C-p> <esc>:<C-u>FzfGFiles<cr>
 
 " search across files in the current directory
 nmap <C-b> :FzfFiles<cr>
 imap <C-b> <esc>:<C-u>FzfFiles<cr>
+
+" Command for git grep
+" - fzf#vim#grep(command, with_column, [options], [fullscreen])
+command! -bang -nargs=* FF
+  \ call fzf#vim#grep(
+  \   'git grep --line-number --color --column --  '.shellescape(<q-args>), 1,
+  \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
@@ -548,7 +562,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " ==================== markdown ====================
 let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh']
+let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh', 'racket=lisp']
 let g:vim_markdown_conceal = 2
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_frontmatter = 1
