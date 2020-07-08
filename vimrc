@@ -7,7 +7,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
 Plug 'arthurxavierx/vim-caser'
 Plug 'cespare/vim-toml'
-Plug 'tpope/vim-surround'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
@@ -16,11 +15,11 @@ Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
-Plug 'godlygeek/tabular'
 Plug 'hashivim/vim-hashicorp-tools'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
+Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'roxma/vim-tmux-clipboard'
 Plug 'scrooloose/nerdtree'
@@ -241,6 +240,10 @@ set statusline+=\ %*
 
 "=====================================================
 "===================== MAPPINGS ======================
+
+" yiw, move, viw,p, move again, viw,p, etc
+let mapleader=","
+xnoremap <leader>p "_dP
 
 " This comes first, because we have mappings that depend on leader
 " With a map leader it's possible to do extra key combinations
@@ -485,6 +488,7 @@ augroup go
   autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
   autocmd FileType go nmap <silent> <Leader>s <Plug>(go-def-split)
   autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def)
+  autocmd FileType go nmap <silent> <Leader>e <Plug>(go-referrers))
 
   autocmd FileType go nmap <silent> <Leader>x <Plug>(go-doc)
 
@@ -494,7 +498,6 @@ augroup go
   autocmd FileType go nmap <silent> <leader>b :<C-u>call <SID>build_go_files()<CR>
   autocmd FileType go nmap <silent> <leader>t  <Plug>(go-test)
   autocmd FileType go nmap <silent> <leader>r  <Plug>(go-run)
-  autocmd FileType go nmap <silent> <leader>e  <Plug>(go-install)
 
   autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
 
@@ -503,6 +506,7 @@ augroup go
   autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
   autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+  autocmd Filetype go command! -bang Q call go#lsp#Exit()
 augroup END
 
 
@@ -522,7 +526,7 @@ imap <C-b> <esc>:<C-u>FzfFiles<cr>
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* FF
   \ call fzf#vim#grep(
-  \   'git grep --line-number --color --column --  '.shellescape(<q-args>), 1,
+  \   'git grep --line-number --color=always --column -- '.shellescape(<q-args>), 1,
   \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
 let g:rg_command = '
