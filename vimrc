@@ -7,7 +7,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
 Plug 'arthurxavierx/vim-caser'
 Plug 'cespare/vim-toml'
-Plug 'tpope/vim-surround'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
@@ -16,11 +15,11 @@ Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
-Plug 'godlygeek/tabular'
 Plug 'hashivim/vim-hashicorp-tools'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
+Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'roxma/vim-tmux-clipboard'
 Plug 'scrooloose/nerdtree'
@@ -234,6 +233,10 @@ set statusline+=\ %*
 
 "=====================================================
 "===================== MAPPINGS ======================
+
+" yiw, move, viw,p, move again, viw,p, etc
+let mapleader=","
+xnoremap <leader>p "_dP
 
 " This comes first, because we have mappings that depend on leader
 " With a map leader it's possible to do extra key combinations
@@ -496,6 +499,7 @@ augroup go
   autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
   autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+  autocmd Filetype go command! -bang Q call go#lsp#Exit()
 augroup END
 
 
@@ -510,6 +514,11 @@ imap <C-p> <esc>:<C-u>FzfHistory<cr>
 " search across files in the current directory
 nmap <C-b> :FzfFiles<cr>
 imap <C-b> <esc>:<C-u>FzfFiles<cr>
+
+command! -bang -nargs=* FF
+  \ call fzf#vim#grep(
+  \   'git grep --line-number --color=always --column -- '.shellescape(<q-args>), 1,
+  \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
