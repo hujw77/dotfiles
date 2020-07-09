@@ -22,6 +22,7 @@ alias t="tig status"
 alias tigs="tig status" #old habits don't die
 alias d='git diff' 
 alias vi='vim'
+alias emacs="emacsclient -nw"
 
 case `uname` in
   Darwin)
