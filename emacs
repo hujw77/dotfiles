@@ -20,10 +20,10 @@
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(global-set-key (kbd "M-H") 'windmove-left)
-(global-set-key (kbd "M-J") 'windmove-up)
-(global-set-key (kbd "M-K") 'windmove-down)
-(global-set-key (kbd "M-L") 'windmove-right)
+(global-set-key (kbd "M-h") 'windmove-left)
+(global-set-key (kbd "M-j") 'windmove-down)
+(global-set-key (kbd "M-k") 'windmove-up)
+(global-set-key (kbd "M-l") 'windmove-right)
 
 (global-set-key (kbd "<f11>") (lambda () (interactive) (other-frame 1)))
 (global-set-key (kbd "<f12>") (lambda () (interactive) (other-frame -1)))
@@ -48,10 +48,13 @@
     (other-window 1)
     (switch-to-buffer "*scheme*")
     (other-window 1))
-   ((not (find "*scheme*"
+   ; ((not (find "*scheme*"
+   ;             (mapcar (lambda (w) (buffer-name (window-buffer w)))
+   ;                     (window-list))
+   ;             :test 'equal))
+   ((not (member "*scheme*"
                (mapcar (lambda (w) (buffer-name (window-buffer w)))
-                       (window-list))
-               :test 'equal))
+                       (window-list))))
     (other-window 1)
     (switch-to-buffer "*scheme*")
     (other-window -1))))
@@ -77,3 +80,27 @@
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 (load-theme 'nord t)
+(add-to-list 'exec-path "/usr/local/bin")
+
+;; Save all tempfiles in $TMPDIR/emacs$UID/                                                        
+(defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
+(setq backup-directory-alist
+  `((".*" . ,emacs-tmp-dir)))
+(setq auto-save-file-name-transforms
+  `((".*" ,emacs-tmp-dir t)))
+
+(setq auto-save-list-file-prefix
+emacs-tmp-dir)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(global-display-line-numbers-mode t)
+ '(package-selected-packages (quote (nord-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
