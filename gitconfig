@@ -1,6 +1,6 @@
 [user]
 	name = echo 
-	email = a479540195@gmail.com
+	email = hujw77@gmail.com
 [alias]
 	st = status -sb
 	ci = commit
@@ -23,6 +23,10 @@
 
 [color]
 	ui = auto
+[color "grep"]
+	linenumber = yellow 
+	match = red
+	filename = magenta    
 [color "branch"]
 	current = yellow reverse
 	local = yellow

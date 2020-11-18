@@ -8,11 +8,13 @@
 export GOPATH=$HOME/go 
 export PATH=$PATH:$GOPATH/bin
 export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 # =============
 #    ALIAS
 # =============
@@ -59,6 +61,7 @@ export LANG="en_US.UTF-8"
 #
 
 export PATH="/usr/local/go/bin:$GOBIN:$HOME/.cargo/bin:$PATH"
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/library"
 
 export EDITOR="vim"
 export NVIMRC="~/.vimrc"

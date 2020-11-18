@@ -42,6 +42,10 @@ Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'tpope/vim-surround'
 Plug 'tyru/open-browser.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'tomlion/vim-solidity'
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+" Plug 'vim-syntastic/syntastic'
 
 call plug#end()
 
@@ -113,16 +117,16 @@ endif
 
 " color
 syntax enable
-" set t_Co=256
-" set background=dark
-" let g:molokai_original = 1
-" let g:rehash256 = 1
-" colorscheme molokai
-colorscheme nord
-let g:nord_cursor_line_number_background = 1
-let g:nord_bold_vertical_split_line = 1
-let g:nord_uniform_status_lines = 1
-let g:nord_underline = 1
+set t_Co=256
+set background=dark
+let g:molokai_original = 1
+let g:rehash256 = 1
+colorscheme molokai
+" colorscheme nord
+" let g:nord_cursor_line_number_background = 1
+" let g:nord_bold_vertical_split_line = 1
+" let g:nord_uniform_status_lines = 1
+" let g:nord_underline = 1
 
 augroup filetypedetect
   command! -nargs=* -complete=help Help vertical belowright help <args>
@@ -144,6 +148,8 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.proto setlocal expandtab shiftwidth=2 tabstop=2
   
   autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
+  autocmd FileType rust setlocal noexpandtab tabstop=4 shiftwidth=4
+  autocmd FileType solidity setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.vue setlocal expandtab shiftwidth=2 tabstop=2 
   
@@ -237,6 +243,16 @@ set statusline+=%=
 set statusline+=%#myInfoColor#
 set statusline+=\ %{StatusLineFiletype()}\ %{StatusLinePercent()}\ %l:%v
 set statusline+=\ %*
+
+" syntastic
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+" let g:syntastic_auto_jump = 3
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 1
 
 "=====================================================
 "===================== MAPPINGS ======================
@@ -526,12 +542,12 @@ imap <C-b> <esc>:<C-u>FzfFiles<cr>
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* FF
   \ call fzf#vim#grep(
-  \   'git grep --line-number --color=always --column -- '.shellescape(<q-args>), 1,
+  \   'git grep --line-number --ignore-case --color=always --column -- '.shellescape(<q-args>), 1,
   \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
-  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf,rs,sol}"
   \ -g "!{.git,node_modules,vendor,env,venv}/*" '
 
 command! -bang -nargs=* Rg
@@ -692,5 +708,22 @@ let g:autopep8_disable_show_diff=1
 
 " let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+" vim-racer
+augroup Racer
+  autocmd!
+  autocmd FileType rust nmap <buffer> <leader>d  <Plug>(rust-def)
+  autocmd FileType rust nmap <buffer> <leader>s  <Plug>(rust-def-split)
+  autocmd FileType rust nmap <buffer> <leader>v  <Plug>(rust-def-vertical)
+  autocmd FileType rust nmap <buffer> <leader>x  <Plug>(rust-doc)
+  autocmd FileType rust nmap <buffer> <leader>X  <Plug>(rust-doc-tab)
+  autocmd FileType rust nmap <buffer> <leader>r  :Crun<cr>
+  autocmd FileType rust nmap <buffer> <leader>t  :RustTest<cr>
+  autocmd FileType rust nmap <buffer> <leader>T  :RustTest!<cr>
+  autocmd FileType rust nmap <buffer> <leader>b  :Cbuild<cr>
+augroup END
+
+let g:racer_experimental_completer = 1
+let g:racer_insert_paren = 1
 
 " vim: sw=2 sw=2 et
