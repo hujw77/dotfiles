@@ -542,7 +542,7 @@ imap <C-b> <esc>:<C-u>FzfFiles<cr>
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* FF
   \ call fzf#vim#grep(
-  \   'git grep --line-number --ignore-case --color=always --column -- '.shellescape(<q-args>), 1,
+  \   'git grep --line-number --color=always --column --ignore-case -- '.shellescape(<q-args>), 1,
   \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
 let g:rg_command = '
