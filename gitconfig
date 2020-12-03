@@ -39,7 +39,7 @@
 	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	editor = vim
 	quotepath = false
-	excludesfile = /Users/hujingwei/.gitignore_global
+	excludesfile = /Users/echo/.gitignore
 [credential]
 	helper = osxkeychain
 [github]
@@ -51,6 +51,8 @@
 	smudge = git-media-smudge %f
 [push]
 	default = current
+[pull]
+	rebase = false
 [commit]
 	template = /Users/hujingwei/.stCommitMsg
 [http]

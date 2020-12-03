@@ -8,7 +8,7 @@
 export GOPATH=$HOME/go 
 export PATH=$PATH:$GOPATH/bin
 export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -38,19 +38,45 @@ case `uname` in
   ;;
 esac
 
-alias sq='git rebase -i $(git merge-base $(git rev-parse --abbrev-ref HEAD) master)'
-alias co='git checkout master'
-alias po='git pull origin master'
+alias sq='git rebase -i $(git merge-base $(git rev-parse --abbrev-ref HEAD) $(basename $(git symbolic-ref refs/remotes/origin/HEAD)))'
+
+# if it fails to resolve, set the HEAD with: git remote set-head origin --auto
+alias co='git checkout $(basename $(git symbolic-ref refs/remotes/origin/HEAD))'
+alias po='git pull origin $(git rev-parse --abbrev-ref HEAD)'
+
 # cd into git root dir
 alias cdr='cd $(git rev-parse --show-toplevel)'
+
 # show 
 alias duh='du -sh -h * .[^.]* 2> /dev/null | sort -h'
-alias b='git branch'
+
+# build and test
+alias bt='go build ./... && go test ./...'
 alias hc='hub compare'
+alias hp='hub pull-request'
+alias b='git branch'
 alias hb='hub browse'
+alias duh='du -sh -h * .[^.]* 2> /dev/null | sort -h'
+
+# open seperate tmux buffer and search for a file, open with vim
+function fe() (
+  IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+)
+
+
+# open github repo from git repo
+function hb() {
+  # from https://jasonmccreary.me/articles/open-github-command-line/
+  github_url=`git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/'`;
+  open $github_url
+}
 
 alias -s go='go run'
 alias hs='hugo server'
+
+alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/'
+
 
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
@@ -60,7 +86,8 @@ export LANG="en_US.UTF-8"
 # =============
 #
 
-export PATH="/usr/local/go/bin:$GOBIN:$HOME/.cargo/bin:$PATH"
+export GOBIN="$HOME/go/bin"
+export PATH="$GOBIN:$HOME/.cargo/bin:$PATH"
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/library"
 
 export EDITOR="vim"
@@ -78,7 +105,6 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 setopt PUSHDSILENT
-
 # =============
 #    HISTORY
 # =============
@@ -253,11 +279,23 @@ exit() {
 }
 
 # ===================
+#    VIM DIRDIFF
+# ===================
+function dirdiff()
+{
+    # Shell-escape each path:
+    DIR1=$(printf '%q' "$1"); shift
+    DIR2=$(printf '%q' "$2"); shift
+    vim $@ -c "DirDiff $DIR1 $DIR2"
+}
+
+# ===================
 #    PLUGINS
 # ===================
 
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# These are installed via github.com/fatih/dotfiles/Brewfile
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # ===================
 #    THIRD PARTY
@@ -269,3 +307,9 @@ eval "$(jump shell)"
 # brew install direnv
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
+
+# brew install rbenv	
+eval "$(rbenv init -)"	
+
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"	
+export PATH="/usr/local/opt/mysql-client@5.7/bin:$PATH"

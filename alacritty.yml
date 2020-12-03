@@ -30,6 +30,8 @@ window:
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false
 
+  dynamic_title: true
+
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
   decorations: full
@@ -194,7 +196,7 @@ colors:
 #
 # To completely disable the visual bell, set its duration to 0.
 #
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
 
@@ -252,8 +254,6 @@ selection:
   # clipboard.
   save_to_clipboard: true
 
-dynamic_title: true
-
 cursor:
   # Cursor style
   #
@@ -262,6 +262,7 @@ cursor:
   #   - _ Underline
   #   - | Beam
   style: Block
+  unfocused_hollow: false
 
 # Live config reload (changes require restart)
 live_config_reload: true
