@@ -72,6 +72,12 @@ call plug#end()
 "=====================================================
 "===================== SETTINGS ======================
 
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 set nocompatible
 filetype off
 filetype plugin indent on
@@ -136,17 +142,17 @@ if has('persistent_undo')
 endif
 
 " color
-syntax enable
-set t_Co=256
-set background=dark
-let g:molokai_original = 1
-let g:rehash256 = 1
-colorscheme molokai
-" colorscheme nord
-" let g:nord_cursor_line_number_background = 1
-" let g:nord_bold_vertical_split_line = 1
-" let g:nord_uniform_status_lines = 1
-" let g:nord_underline = 1
+" syntax enable
+" set t_Co=256
+" set background=dark
+" let g:molokai_original = 1
+" let g:rehash256 = 1
+" colorscheme molokai
+colorscheme nord
+let g:nord_cursor_line_number_background = 1
+let g:nord_bold_vertical_split_line = 1
+let g:nord_uniform_status_lines = 1
+let g:nord_underline = 1
 
 augroup filetypedetect
   command! -nargs=* -complete=help Help vertical belowright help <args>
@@ -690,7 +696,7 @@ let g:jedi#smart_auto_mappings = 0
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 
-let g:python_host_prog = '/usr/local/bin/python'
+let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
 " vim-autopep8

@@ -9,6 +9,7 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
+export PATH="$PATH:/Users/echo/Library/Python/2.7/bin"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -23,7 +24,8 @@ alias ..='cd ..'
 alias t="tig status"
 alias tigs="tig status" #old habits don't die
 alias d='git diff' 
-alias vi='vim'
+alias vi='nvim'
+alias vim='nvim'
 alias e='emacsclient -t'
 
 case `uname` in
@@ -90,7 +92,7 @@ export GOBIN="$HOME/go/bin"
 export PATH="$GOBIN:$HOME/.cargo/bin:$PATH"
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/library"
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export NVIMRC="~/.vimrc"
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
