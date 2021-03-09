@@ -262,7 +262,6 @@ cursor:
   #   - _ Underline
   #   - | Beam
   style: Block
-  unfocused_hollow: false
 
 # Live config reload (changes require restart)
 live_config_reload: true

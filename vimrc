@@ -34,7 +34,6 @@ Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rhubarb'
 Plug 'vim-ruby/vim-ruby'
-Plug 'leafgarland/typescript-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'davidhalter/jedi-vim'
@@ -46,26 +45,12 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'tomlion/vim-solidity'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install && yarn add prettier-plugin-solidity',
-  \ 'branch': 'release/1.x',
-  \ 'for': [
-    \ 'javascript',
-    \ 'typescript',
-    \ 'css',
-    \ 'less',
-    \ 'scss',
-    \ 'json',
-    \ 'graphql',
-    \ 'markdown',
-    \ 'vue',
-    \ 'lua',
-    \ 'php',
-    \ 'python',
-    \ 'ruby',
-    \ 'html',
-    \ 'swift',
-    \ 'solidity'] }
+Plug 'LnL7/vim-nix'
+Plug 'editorconfig/editorconfig-vim'
+" Plug 'prettier/vim-prettier', {
+"   \ 'do': 'yarn install && yarn add prettier-plugin-solidity',
+"   \ 'branch': 'release/1.x',
+"   \ 'for': [ 'solidity'] }
 
 call plug#end()
 
@@ -175,9 +160,10 @@ augroup filetypedetect
   
   autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType rust setlocal noexpandtab tabstop=4 shiftwidth=4
-  autocmd FileType solidity setlocal noexpandtab tabstop=4 shiftwidth=4
+  autocmd FileType solidity setlocal expandtab tabstop=4 shiftwidth=4
   autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
   
+  autocmd FileType sh setlocal expandtab shiftwidth=2 tabstop=2 
   autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
@@ -725,8 +711,17 @@ augroup END
 let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
 
+" deoplete.nvim
+let g:deoplete#enable_at_startup = 1
+
+" editorconfig/editorconfig-vim
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
 " vim-prettier 
 " let g:prettier#autoformat = 0
 " autocmd BufWritePre *.sol Prettier
+
+" rust-lang/rust
+let g:rustfmt_autosave = 1
 
 " vim: sw=2 sw=2 et
