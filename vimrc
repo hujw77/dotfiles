@@ -11,7 +11,6 @@ Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'ervandew/supertab'
-Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
@@ -41,16 +40,13 @@ Plug 'will133/vim-dirdiff'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'tpope/vim-surround'
 Plug 'tyru/open-browser.vim'
-Plug 'arcticicestudio/nord-vim'
 Plug 'tomlion/vim-solidity'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'LnL7/vim-nix'
 Plug 'editorconfig/editorconfig-vim'
-" Plug 'prettier/vim-prettier', {
-"   \ 'do': 'yarn install && yarn add prettier-plugin-solidity',
-"   \ 'branch': 'release/1.x',
-"   \ 'for': [ 'solidity'] }
+Plug 'arcticicestudio/nord-vim'
+" Plug 'fatih/molokai'
 
 call plug#end()
 
@@ -655,11 +651,6 @@ nmap  -  <Plug>(choosewin)
 
 " Trigger a highlight in the appropriate direction when pressing these keys:
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
-" rhysd/vim-grammarous
-" nmap <Leader>gi <Plug>(grammarous-open-info-window)
-" nmap <Leader>gc <Plug>(grammarous-close-info-window)
-" nmap <Leader>gf <Plug>(grammarous-fixit)
 
 " python
 " vim-python
