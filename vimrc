@@ -1,3 +1,6 @@
+if &shell =~# 'fish$'
+    set shell=sh
+endif
 " PlugInstall
 call plug#begin('~/.vim/plugged')
 
@@ -45,6 +48,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'LnL7/vim-nix'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'dag/vim-fish'
 Plug 'arcticicestudio/nord-vim'
 " Plug 'fatih/molokai'
 
@@ -153,6 +157,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.hcl setlocal expandtab shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.sh setlocal expandtab shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.proto setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd BufNewFile,BufRead *.fish setlocal expandtab shiftwidth=2 tabstop=2
   
   autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType rust setlocal noexpandtab tabstop=4 shiftwidth=4
