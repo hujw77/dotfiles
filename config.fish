@@ -68,4 +68,4 @@ status --is-interactive; and source (jump shell fish | psub)
 
 # Senstive functions which are not pushed to Github
 # It contains work related stuff, some functions, aliases etc...
-# source ~/.config/fish/private.fish
+source ~/.config/fish/private.fish
