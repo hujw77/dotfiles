@@ -54,7 +54,6 @@ alias hc='hub compare'
 alias hp='hub pull-request'
 alias b='git branch'
 alias hb='hub browse'
-alias duh='du -sh -h * .[^.]* 2> /dev/null | sort -h'
 
 # open seperate tmux buffer and search for a file, open with vim
 function fe() (

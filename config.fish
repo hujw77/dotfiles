@@ -1,4 +1,4 @@
-set -gxp PATH /usr/local/opt/python@3.9/libexec/bin /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin
+set -gxp PATH /usr/local/opt/python@3.9/libexec/bin /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin /usr/local/opt/ruby/bin /usr/local/lib/ruby/gems/3.0.0/bin
 set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin
 set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
@@ -20,6 +20,7 @@ set -g __fish_git_prompt_color_cleanstate green --bold
 set -g __fish_git_prompt_color_invalidstate red
 set -g __fish_git_prompt_color_branch cyan --dim --italics
 
+# nord theme
 set nord0 2e3440
 set nord1 3b4252
 set nord2 434c5e
@@ -73,6 +74,32 @@ status --is-interactive; and source (jump shell fish | psub)
 # Senstive functions which are not pushed to Github
 # It contains work related stuff, some functions, aliases etc...
 # source ~/.config/fish/private.fish
+
+set -gx LSCOLORS cxBxhxDxfxhxhxhxhxcxcx
+set -gx CLICOLOR 1
+
+# support colors in less
+set -gx LESS_TERMCAP_mb \e'[01;31m'
+set -gx LESS_TERMCAP_md \e'[01;31m'
+set -gx LESS_TERMCAP_me \e'[0m'
+set -gx LESS_TERMCAP_se \e'[0m'
+set -gx LESS_TERMCAP_so \e'[01;44;33m'
+set -gx LESS_TERMCAP_ue \e'[0m'
+set -gx LESS_TERMCAP_us \e'[01;32m'
+
+# =============
+#    ALIAS
+# =============
 alias vi 'nvim'
 alias vim 'nvim'
 alias e 'emacsclient -t'
+
+switch (uname)
+    case Darwin
+        alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed'
+        alias ls='ls -GpF' # Mac OSX specific
+        alias ll='ls -alGpF' # Mac OSX specific
+    case Linux
+        alias ll='ls -al'
+        alias ls='ls --color=auto' 
+end

@@ -10,6 +10,7 @@ sync:
 	[ -f ~/.config/nvim/init.vim ] || ln -s $(PWD)/initvim ~/.config/nvim/init.vim
 	[ -f ~/.config/fish/config.fish  ] || ln -s $(PWD)/config.fish ~/.config/fish/config.fish
 	[ -d ~/.config/fish/functions/ ] || ln -s $(PWD)/fish/functions ~/.config/fish/functions
+	[ -d ~/.config/fish/conf.d/ ] || ln -s $(PWD)/fish/conf.d ~/.config/fish/conf.d
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
 	[ -f ~/.bashrc ] || ln -s $(PWD)/bashrc ~/.bashrc
 	[ -f ~/.zshrc ] || ln -s $(PWD)/zshrc ~/.zshrc
@@ -29,6 +30,7 @@ clean:
 	rm -f ~/.config/alacritty/alacritty.yml
 	rm -f ~/.config/fish/config.fish
 	rm -rf ~/.config/fish/functions/
+	rm -rf ~/.config/fish/conf.d/
 	rm -f ~/.bashrc
 	rm -f ~/.zshrc
 	rm -f ~/.tmux.conf
