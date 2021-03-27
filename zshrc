@@ -4,16 +4,12 @@
 
 # Senstive functions which are not pushed to Github
 # It contains GOPATH, some functions, aliases etc...
-[ -r ~/.zsh_private ] && source ~/.zsh_private
+# [ -r ~/.zsh_private ] && source ~/.zsh_private
 export GOPATH=$HOME/go 
 export PATH=$PATH:$GOPATH/bin
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
 export PATH="$PATH:/Users/echo/Library/Python/2.7/bin"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 # =============

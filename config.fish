@@ -1,5 +1,9 @@
-set -gxp PATH /usr/local/opt/python@3.9/libexec/bin /usr/local/sbin $HOME/go/bin
+set -gxp PATH /usr/local/opt/python@3.9/libexec/bin /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin
+set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin
+set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
+set -gx NVIMRC $HOME/.vimrc
+set -gx NVM_DIR $HOME/.nvm
 set -gx EDITOR nvim
 
 # git prompt settings
@@ -68,4 +72,7 @@ status --is-interactive; and source (jump shell fish | psub)
 
 # Senstive functions which are not pushed to Github
 # It contains work related stuff, some functions, aliases etc...
-source ~/.config/fish/private.fish
+# source ~/.config/fish/private.fish
+alias vi 'nvim'
+alias vim 'nvim'
+alias e 'emacsclient -t'

@@ -10,7 +10,7 @@
 
 # Senstive functions which are not pushed to Github
 # It contains GOPATH, some functions, aliases etc...
-[ -r ~/.bash_private ] && source ~/.bash_private
+# [ -r ~/.bash_private ] && source ~/.bash_private
 
 # On Mac OS X: brew install bash-completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -192,7 +192,3 @@ eval "$(jump shell)"
 # brew install direnv
 # https://github.com/direnv/direnv
 eval "$(direnv hook bash)"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
