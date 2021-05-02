@@ -54,7 +54,9 @@
 [pull]
 	rebase = false
 [commit]
-	template = /Users/hujingwei/.stCommitMsg
+	template = /Users/echo/.stCommitMsg
+[url "git@github.com:"]
+	insteadOf = https://github.com/
 [http]
 	sslVerify = false
 	proxy = socks5://127.0.0.1:1081
