@@ -6,6 +6,8 @@ unbind C-b
 set -g prefix C-f
 bind C-f send-prefix
 
+set-environment -g PATH "/usr/local/bin:/bin:/usr/bin"
+
 set-option -g default-shell /usr/local/bin/fish
 
 # toogle last window by hitting again C-f
@@ -33,14 +35,15 @@ set -g display-panes-time 2000
 set -g display-time 4000
 
 # {n}vim compability
+set-option -ga terminal-overrides ",xterm-256color:Tc"
 set -g default-terminal "screen-256color"
-# tell Tmux that outside terminal supports true color
-set -ga terminal-overrides ",xterm-256color*:Tc"
 
-# Split horiziontal and vertical splits, instead of % and "
-# Also open them in the same directory
-bind-key v split-window -h -c '#{pane_current_path}'
-bind-key s split-window -v -c '#{pane_current_path}'
+# Split horiziontal and vertical splits, instead of % and ". We also open them
+# in the same directory.  Because we use widescreens nowadays, opening a
+# vertical split that takes half of the screen is not worth. For vertical we
+# only open 90 lines width, for horizontal it's 20 columns.
+bind-key v split-window -h -l 90 -c '#{pane_current_path}'
+bind-key s split-window -v -l 20 -c '#{pane_current_path}'
 
 # Pressing Ctrl+Shift+Left (will move the current window to the left. Similarly
 # right. No need to use the modifier (C-b).
@@ -125,29 +128,42 @@ bind-key x kill-pane
 
 # This tmux statusbar config was created by tmuxline.vim
 # on Wed, 25 Nov 2015
+set -g @prefix_highlight_fg black
+set -g @prefix_highlight_bg brightcyan
+set -g @prefix_highlight_output_prefix "#[fg=brightcyan]#[bg=black]#[nobold]#[noitalics]#[nounderscore]?#[bg=brightcyan]#[fg=black]"
+set -g @prefix_highlight_output_suffix " "
+set -g @prefix_highlight_copy_mode_attr "fg=brightcyan,bg=black,bold"
+
 set -g status "on"
-set -g status-bg "colour236" 
+set -g status-bg black
+set -g status-fg white
 set -g status-justify "left"
 set -g status-position "top"
 set -g status-left-length "100"
 set -g status-right-length "100"
-set -g status-left "#{prefix_highlight}#[fg=colour22,bg=colour148,bold] #S #[fg=colour148,bg=colour236,nobold,nounderscore,noitalics]"
-set -g status-right "#[fg=colour240,bg=colour236,nobold,nounderscore,noitalics]#[fg=colour250,bg=colour240] %Y-%m-%d %H:%M #[fg=colour252,bg=colour240,nobold,nounderscore,noitalics]#[fg=colour241,bg=colour252] #h "
+set -g status-left "#{prefix_highlight}#[fg=black,bg=blue,bold] #S #[fg=blue,bg=black,nobold,nounderscore,noitalics]"
+set -g status-right "#[fg=brightblack,bg=black,nobold,nounderscore,noitalics]#[fg=white,bg=brightblack] %Y-%m-%d %H:%M #[fg=cyan,bg=brightblack,nobold,nounderscore,noitalics]#[fg=black,bg=cyan,bold] #h "
+
+set -g display-panes-colour black
+set -g display-panes-active-colour brightblack
+
+setw -g clock-mode-colour cyan
 
 setw -g window-status-separator ""
-setw -g window-status-format "#[fg=colour245,bg=colour236] #I #[fg=colour245,bg=colour236]#W "
-setw -g window-status-current-format "#[fg=colour236,bg=colour240,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour240] #I #[fg=colour231,bg=colour240]#{?window_zoomed_flag,#[fg=green][],}#W #[fg=colour240,bg=colour236,nobold,nounderscore,noitalics]"
+setw -g window-status-format "#[fg=black,bg=brightblack] #I #[fg=white,bg=brightblack]#W "
+setw -g window-status-current-format "#[fg=black,bg=cyan,nobold,nounderscore,noitalics]#[fg=black,bg=cyan] #I #[fg=white,bg=brightblack]#{?window_zoomed_flag,#[fg=green][],}#W #[fg=cyan,bg=black,nobold,nounderscore,noitalics]"
 
 # List of plugins
 # see this https://github.com/tmux-plugins/tpm to installation
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-open'
-set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
-# set -g @plugin "arcticicestudio/nord-tmux"
+set -g @tpm_plugins '          \
+  tmux-plugins/tpm             \
+  tmux-plugins/tmux-open   \
+  tmux-plugins/tmux-yank  \
+  tmux-plugins/tmux-prefix-highlight \
+'
 
-# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run -b '~/.tmux/plugins/tpm/tpm'
+ # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+ run '~/.tmux/plugins/tpm/tpm'
 
 
 # The followings are not any kind of setting for Tmux, but crucial to my
