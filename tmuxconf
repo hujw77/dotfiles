@@ -126,33 +126,6 @@ bind-key l select-pane -R
 # Disable confirm before killing
 bind-key x kill-pane
 
-# This tmux statusbar config was created by tmuxline.vim
-# on Wed, 25 Nov 2015
-set -g @prefix_highlight_fg black
-set -g @prefix_highlight_bg brightcyan
-set -g @prefix_highlight_output_prefix "#[fg=brightcyan]#[bg=black]#[nobold]#[noitalics]#[nounderscore]?#[bg=brightcyan]#[fg=black]"
-set -g @prefix_highlight_output_suffix " "
-set -g @prefix_highlight_copy_mode_attr "fg=brightcyan,bg=black,bold"
-
-set -g status "on"
-set -g status-bg black
-set -g status-fg white
-set -g status-justify "left"
-set -g status-position "top"
-set -g status-left-length "100"
-set -g status-right-length "100"
-set -g status-left "#{prefix_highlight}#[fg=black,bg=blue,bold] #S #[fg=blue,bg=black,nobold,nounderscore,noitalics]"
-set -g status-right "#[fg=brightblack,bg=black,nobold,nounderscore,noitalics]#[fg=white,bg=brightblack] %Y-%m-%d %H:%M #[fg=cyan,bg=brightblack,nobold,nounderscore,noitalics]#[fg=black,bg=cyan,bold] #h "
-
-set -g display-panes-colour black
-set -g display-panes-active-colour brightblack
-
-setw -g clock-mode-colour cyan
-
-setw -g window-status-separator ""
-setw -g window-status-format "#[fg=black,bg=brightblack] #I #[fg=white,bg=brightblack]#W "
-setw -g window-status-current-format "#[fg=black,bg=cyan,nobold,nounderscore,noitalics]#[fg=black,bg=cyan] #I #[fg=white,bg=brightblack]#{?window_zoomed_flag,#[fg=green][],}#W #[fg=cyan,bg=black,nobold,nounderscore,noitalics]"
-
 # List of plugins
 # see this https://github.com/tmux-plugins/tpm to installation
 set -g @tpm_plugins '          \

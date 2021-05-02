@@ -176,7 +176,7 @@ let g:tmuxline_preset = {
       \'cwin' : '#I #W',
       \'x'    : '%a',
       \'y'    : '%Y-%m-%d %H:%M',
-      \'z'    : 'ð #h',
+      \'z'    : '¿ #h',
       \'options' : {'status-justify' : 'left', 'status-position' : 'top'}}
 
 let g:tmuxline_powerline_separators = 0
