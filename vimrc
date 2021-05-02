@@ -50,18 +50,11 @@ Plug 'LnL7/vim-nix'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'dag/vim-fish'
 Plug 'arcticicestudio/nord-vim'
-" Plug 'fatih/molokai'
 
 call plug#end()
 
 "=====================================================
 "===================== SETTINGS ======================
-
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
 
 set nocompatible
 filetype off
@@ -127,12 +120,13 @@ if has('persistent_undo')
 endif
 
 " color
-" syntax enable
-" set t_Co=256
-" set background=dark
-" let g:molokai_original = 1
-" let g:rehash256 = 1
-" colorscheme molokai
+" if exists('+termguicolors')
+"   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"   set termguicolors
+" endif
+
+syntax enable
 colorscheme nord
 let g:nord_cursor_line_number_background = 1
 let g:nord_bold_vertical_split_line = 1

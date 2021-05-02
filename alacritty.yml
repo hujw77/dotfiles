@@ -1,4 +1,6 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator
+import:
+  - "/Users/echo/.config/alacritty/color.yml"
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -75,7 +77,7 @@ font:
     style: Regular Italic
 
   # Point size of the font
-  size: 12.0
+  size: 14.0
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -100,33 +102,33 @@ debug:
   render_timer: false
 
 # Colors (Nord)
-colors:
-   # Default colors
-   primary:
-     background: '#2E3440'
-     foreground: '#D8DEE9'
+# colors:
+#    # Default colors
+#    primary:
+#      background: '#2E3440'
+#      foreground: '#D8DEE9'
 
-   # Normal colors
-   normal:
-     black:   '#3B4252'
-     red:     '#BF616A'
-     green:   '#A3BE8C'
-     yellow:  '#EBCB8B'
-     blue:    '#81A1C1'
-     magenta: '#B48EAD'
-     cyan:    '#88C0D0'
-     white:   '#E5E9F0'
+#    # Normal colors
+#    normal:
+#      black:   '#3B4252'
+#      red:     '#BF616A'
+#      green:   '#A3BE8C'
+#      yellow:  '#EBCB8B'
+#      blue:    '#81A1C1'
+#      magenta: '#B48EAD'
+#      cyan:    '#88C0D0'
+#      white:   '#E5E9F0'
 
-   # Bright colors
-   bright:
-     black:   '#4C566A'
-     red:     '#BF616A'
-     green:   '#A3BE8C'
-     yellow:  '#EBCB8B'
-     blue:    '#81A1C1'
-     magenta: '#B48EAD'
-     cyan:    '#8FBCBB'
-     white:   '#ECEFF4'
+#    # Bright colors
+#    bright:
+#      black:   '#4C566A'
+#      red:     '#BF616A'
+#      green:   '#A3BE8C'
+#      yellow:  '#EBCB8B'
+#      blue:    '#81A1C1'
+#      magenta: '#B48EAD'
+#      cyan:    '#8FBCBB'
+#      white:   '#ECEFF4'
        
 # Colors (Tomorrow Night Bright)
 # colors:
@@ -271,10 +273,18 @@ live_config_reload: true
 # You can set shell.program to the path of your favorite shell, e.g. /bin/zsh.
 # Entries in shell.args are passed unmodified as arguments to the shell.
 #
+# shell:
+#   program: /usr/local/bin/fish
+#   args:
+#     - --login
 shell:
-  program: /usr/local/bin/zsh
+  program: /usr/local/bin/tmux
   args:
-    - --login
+    - new-session
+    - -A
+    - -D
+    - -s
+    - main
 
 
 # Key bindings
@@ -424,6 +434,7 @@ key_bindings:
   - { key: L,        mods: Command,       chars: "\x06\x6c" }
   - { key: T,        mods: Command,       chars: "\x06\x63" }
   - { key: RBracket, mods: Command|Shift, chars: "\x06\x6e" }
+  - { key: LBracket, mods: Command,       chars: "\x06\x5b" }
   - { key: LBracket, mods: Command|Shift, chars: "\x06\x70" }
   - { key: Return,   mods: Command|Shift, chars: "\x06\x7a" }
   - { key: Key1,     mods: Command,       chars: "\x06\x31" }
