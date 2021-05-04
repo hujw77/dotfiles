@@ -14,14 +14,14 @@ colors:
     foreground: '#d8dee9'
     dim_foreground: '#a5abb6'
   cursor:
-    text: '#2e3440'
-    cursor: '#d8dee9'
+    text: CellBackground
+    cursor: '#e5e9f0'
   vi_mode_cursor:
-    text: '#2e3440'
-    cursor: '#d8dee9'
+    text: CellBackground
+    cursor: CellForeground
   selection:
-    text: CellForeground
-    background: '#4c566a'
+    text: CellBackground
+    background: CellForeground
   search:
     matches:
       foreground: CellBackground
