@@ -173,7 +173,7 @@ let g:tmuxline_preset = {
       \'cwin' : '#I #W',
       \'x'    : '%a',
       \'y'    : '%Y-%m-%d %H:%M',
-      \'z'    : '#h',
+      \'z'    : '  #h',
       \'options' : {'status-justify' : 'left', 'status-position' : 'top'}}
 
 let g:tmuxline_powerline_separators = 0
@@ -499,6 +499,7 @@ let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_no_extensions_in_markdown = 1
+let g:vim_markdown_math = 1
 
 " create a hugo front matter in toml format to the beginning of a file. Open
 " empty markdown file, i.e: '2018-02-05-speed-up-vim.markdown'. Calling this

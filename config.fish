@@ -6,6 +6,9 @@ set -gx NVIMRC $HOME/.vimrc
 set -gx NVM_DIR $HOME/.nvm
 set -gx EDITOR nvim
 
+set -gx LC_ALL en_US.UTF-8
+set -gx LANG en_US.UTF-8
+
 # git prompt settings
 set -g __fish_git_prompt_show_informative_status 1
 set -g __fish_git_prompt_showdirtystate 'yes'
@@ -103,3 +106,10 @@ switch (uname)
         alias ll='ls -al'
         alias ls='ls --color=auto' 
 end
+
+
+set -gx FZF_DEFAULT_OPTS $FZF_DEFAULT_OPTS'
+    --color=fg:#e5e9f0,bg:#3b4252,hl:#81a1c1
+    --color=fg+:#e5e9f0,bg+:#3b4252,hl+:#81a1c1
+    --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
+    --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b'
