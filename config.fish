@@ -74,6 +74,9 @@ function __fish_describe_command; end
 # brew install jump, https://github.com/gsamokovarov/jump
 status --is-interactive; and source (jump shell fish | psub)
 
+# rbenv
+status --is-interactive; and source (rbenv init -|psub)
+
 # Senstive functions which are not pushed to Github
 # It contains work related stuff, some functions, aliases etc...
 # source ~/.config/fish/private.fish
@@ -108,7 +111,7 @@ switch (uname)
 end
 
 
-set -gx FZF_DEFAULT_OPTS $FZF_DEFAULT_OPTS'
+set -gx FZF_DEFAULT_OPTS $FZF_DEFAULT_OPTS '
     --color=fg:#e5e9f0,bg:#3b4252,hl:#81a1c1
     --color=fg+:#e5e9f0,bg+:#3b4252,hl+:#81a1c1
     --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
