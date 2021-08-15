@@ -280,7 +280,8 @@ noremap <Down> gj
 noremap j gj
 noremap k gk
 
-" Exit on j
+" Exit on jj and jk
+imap jk <Esc>
 imap jj <Esc>
 
 " Source (reload configuration)
@@ -476,6 +477,7 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_smart_quotes = 1    
 let g:delimitMate_expand_inside_quotes = 0    
 let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'   
+let g:delimitMate_quotes = "\" '"
 
 imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
@@ -495,6 +497,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh', 'racket=lisp']
 let g:vim_markdown_conceal = 2
+" let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_new_list_item_indent = 2

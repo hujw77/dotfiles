@@ -80,6 +80,9 @@ status --is-interactive; and source (rbenv init -|psub)
 # Senstive functions which are not pushed to Github
 # It contains work related stuff, some functions, aliases etc...
 # source ~/.config/fish/private.fish
+#
+set -g fish_user_paths "/usr/local/opt/openssl@1.1/bin" $fish_user_paths
+set -g fish_user_paths "/usr/local/opt/mysql-client/bin" $fish_user_paths
 
 set -gx LSCOLORS cxBxhxDxfxhxhxhxhxcxcx
 set -gx CLICOLOR 1
