@@ -1,9 +1,10 @@
 [user]
-	name = echo 
+	name = echo
 	email = hujw77@gmail.com
 [alias]
 	st = status -sb
 	ci = commit
+	reci = commit --amend
 	all = commit -am
 	br = branch
 	co = checkout
@@ -24,9 +25,9 @@
 [color]
 	ui = auto
 [color "grep"]
-	linenumber = yellow 
+	linenumber = yellow
 	match = red
-	filename = magenta    
+	filename = magenta
 [color "branch"]
 	current = yellow reverse
 	local = yellow
@@ -59,4 +60,4 @@
 	sslVerify = false
 	proxy = socks5://127.0.0.1:1081
 [https]
-    	proxy = socks5://127.0.0.1:1081
+	proxy = socks5://127.0.0.1:1081

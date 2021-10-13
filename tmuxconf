@@ -80,7 +80,7 @@ bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection-and-cancel\; r
 set -g status-keys emacs
 
 # focus events enabled for terminals that support them
-set -g focus-events on
+# set -g focus-events on
 
 # Sync panes (Send input to all panes in the window). When enabled, pane
 # borders become red as an indication.
