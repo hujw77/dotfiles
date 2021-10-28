@@ -1,4 +1,4 @@
-set -gxp PATH /usr/local/opt/python@3.9/libexec/bin /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin /usr/local/opt/ruby/bin /usr/local/lib/ruby/gems/3.0.0/bin
+set -gxp PATH /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin /usr/local/opt/ruby/bin /usr/local/lib/ruby/gems/3.0.0/bin
 set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin
 set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
@@ -83,6 +83,7 @@ status --is-interactive; and source (rbenv init -|psub)
 #
 set -g fish_user_paths "/usr/local/opt/openssl@1.1/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/mysql-client/bin" $fish_user_paths
+fish_add_path /usr/local/opt/python@3.8/bin
 
 set -gx LSCOLORS cxBxhxDxfxhxhxhxhxcxcx
 set -gx CLICOLOR 1
@@ -110,7 +111,7 @@ switch (uname)
         alias ll='ls -alGpF' # Mac OSX specific
     case Linux
         alias ll='ls -al'
-        alias ls='ls --color=auto' 
+        alias ls='ls --color=auto'
 end
 
 

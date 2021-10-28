@@ -52,6 +52,7 @@ Plug 'dag/vim-fish'
 Plug 'arcticicestudio/nord-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
+Plug 'arthurxavierx/vim-unicoder'
 
 call plug#end()
 
