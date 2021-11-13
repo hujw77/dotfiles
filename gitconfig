@@ -56,10 +56,10 @@
 	rebase = false
 [commit]
 	template = /Users/echo/.stCommitMsg
-[http]
-	sslVerify = false
-	proxy = socks5://127.0.0.1:1081
-[https]
-	proxy = socks5://127.0.0.1:1081
 [init]
 	defaultBranch = main
+[http]
+	proxy = socks5://127.0.0.1:1081
+	sslVerify = false
+[https]
+	proxy = socks5://127.0.0.1:1081

@@ -26,7 +26,7 @@ sync:
 	touch ~/.hushlogin
 
 clean:
-	rm -f ~/.vimrc 
+	rm -f ~/.vimrc
 	rm -f ~/.config/nvim/init.vim
 	rm -f ~/.config/alacritty/alacritty.yml
 	rm -f ~/.config/alacritty/color.yml
@@ -41,6 +41,6 @@ clean:
 	rm -f ~/.gitconfig
 	rm -f ~/.agignore
 	rm -f ~/.ssh/config
-	rm -f ~/.emacs 
+	rm -f ~/.emacs
 
 .PHONY: all clean sync build run kill

@@ -5,13 +5,14 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'load-path "~/.emacs.d/el-get")
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code."
   t)
 (require 'parenface)
 (set-face-foreground 'paren-face "DimGray")
 ;;;;;;;;;;;;
-;; Scheme 
+;; Scheme
 ;;;;;;;;;;;;
 
 (require 'cmuscheme)
@@ -82,7 +83,7 @@
 (load-theme 'nord t)
 (add-to-list 'exec-path "/usr/local/bin")
 
-;; Save all tempfiles in $TMPDIR/emacs$UID/                                                        
+;; Save all tempfiles in $TMPDIR/emacs$UID/
 (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
 (setq backup-directory-alist
   `((".*" . ,emacs-tmp-dir)))
@@ -99,7 +100,8 @@ emacs-tmp-dir)
  '(custom-safe-themes
    '("197cefea731181f7be51e9d498b29fb44b51be33484b17416b9855a2c4243cb1" default))
  '(global-display-line-numbers-mode t)
- '(package-selected-packages '(nord-theme)))
+ '(package-selected-packages
+   '(nordless-theme ## nord-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
