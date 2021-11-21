@@ -58,8 +58,3 @@
 	template = /Users/echo/.stCommitMsg
 [init]
 	defaultBranch = main
-[http]
-	proxy = socks5://127.0.0.1:1081
-	sslVerify = false
-[https]
-	proxy = socks5://127.0.0.1:1081

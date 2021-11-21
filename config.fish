@@ -1,7 +1,7 @@
 set -gxp PATH /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin /usr/local/opt/ruby/bin /usr/local/lib/ruby/gems/3.0.0/bin
+set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin
-set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 set -gx NVIMRC $HOME/.vimrc
 set -gx NVM_DIR $HOME/.nvm
 set -gx EDITOR nvim

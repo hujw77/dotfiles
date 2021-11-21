@@ -3,9 +3,7 @@
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
 (add-to-list 'load-path "~/.emacs.d/lisp")
-(add-to-list 'load-path "~/.emacs.d/el-get")
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code."
   t)
@@ -101,7 +99,7 @@ emacs-tmp-dir)
    '("197cefea731181f7be51e9d498b29fb44b51be33484b17416b9855a2c4243cb1" default))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(nordless-theme ## nord-theme)))
+   '(el-get weechat-alert weechat nordless-theme ## nord-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

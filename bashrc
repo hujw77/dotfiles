@@ -2,7 +2,7 @@
 # 1. Install latest bash via brew: brew install bash
 # 2. To source .bashrc, create .bash_profile with content:
 #
-# if [ -f ~/.bashrc ]; then . ~/.bashrc; fi 
+# if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 #
 ###############
 
@@ -11,6 +11,8 @@
 # Senstive functions which are not pushed to Github
 # It contains GOPATH, some functions, aliases etc...
 # [ -r ~/.bash_private ] && source ~/.bash_private
+
+if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
 
 # On Mac OS X: brew install bash-completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then

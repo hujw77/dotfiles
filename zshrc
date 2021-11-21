@@ -11,7 +11,8 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
 export PATH="$PATH:/Users/echo/Library/Python/2.7/bin"
 
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+# if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
 # =============
 #    ALIAS
 # =============
