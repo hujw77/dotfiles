@@ -12,6 +12,7 @@ sync:
 	[ -f ~/.config/fish/config.fish  ] || ln -s $(PWD)/config.fish ~/.config/fish/config.fish
 	[ -d ~/.config/fish/functions/ ] || ln -s $(PWD)/fish/functions ~/.config/fish/functions
 	[ -d ~/.config/fish/conf.d/ ] || ln -s $(PWD)/fish/conf.d ~/.config/fish/conf.d
+	[ -d ~/.config/nixpkgs/ ] || ln -s $(PWD)/nixpkgs ~/.config/nixpkgs
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
 	[ -f ~/.bashrc ] || ln -s $(PWD)/bashrc ~/.bashrc
 	[ -f ~/.zshrc ] || ln -s $(PWD)/zshrc ~/.zshrc
