@@ -32,8 +32,8 @@ clean:
 	rm -f ~/.config/alacritty/alacritty.yml
 	rm -f ~/.config/alacritty/color.yml
 	rm -f ~/.config/fish/config.fish
-	rm -rf ~/.config/fish/functions/
-	rm -rf ~/.config/fish/conf.d/
+	rm -rf ~/.config/fish/functions
+	rm -rf ~/.config/fish/conf.d
 	rm -f ~/.bashrc
 	rm -f ~/.zshrc
 	rm -f ~/.tmux.conf

@@ -18,9 +18,6 @@
     keep-outputs = true
     keep-derivations = true
   '';
-  nix.nixPath = [
-    "darwin=${builtins.getEnv "HOME"}/workspace/nix/nix-darwin"
-  ];
 
   environment.shells = [ pkgs.zsh ];
   environment.darwinConfig = "${builtins.getEnv "HOME"}/.config/nixpkgs/darwin-configuration.nix";
