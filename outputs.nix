@@ -1,12 +1,12 @@
 { self
 , nixpkgs
 , nur
-, home-manager
-, flake-utils
-, flake-registry
-, emacs-overlay
 , nix-darwin
-, fenix
+, home-manager
+# , flake-utils
+# , flake-registry
+# , emacs-overlay
+# , fenix
 }:
 {
   packages.x86_64-darwin =
@@ -31,7 +31,7 @@
     (import ./nixpkgs/overlays/20-weechat.nix)
   ];
 
-  darwinConfigurations."echo" = darwin.lib.darwinSystem {
+  darwinConfigurations."echo" = nix-darwin.lib.darwinSystem {
     system = "x86_64-darwin";
     modules = [ ./nixpkgs/darwin-configuration.nix ];
   };

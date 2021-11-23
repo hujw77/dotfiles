@@ -11,8 +11,8 @@
     # fenix.url = "github:nix-community/fenix";
     # fenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    # home-manager.url = "github:nix-community/home-manager";
-    # home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # emacs-overlay.url = "github:nix-community/emacs-overlay";
 
