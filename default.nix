@@ -1,13 +1,12 @@
 { nixpkgs, self, ... }@args:
 (nixpkgs.lib.fix (mkDarwinSystem:
   { hostName, nixpkgs, nix-darwin, flake-utils, home-manager
-  , system ? builtins.currentSystem or "aarch64-darwin", nixosModules ? [ ]
+  , system ? builtins.currentSystem or "x86_64-darwin", nixosModules ? [ ]
   , specialArgs ? nixpkgs.lib.id, flakeOutputs ? nixpkgs.lib.id
   , silliconOverlay ? (silliconPkgs: intelPkgs: { }), ... }@args:
   let
     darwinConfig = import "${nix-darwin}/eval-config.nix" {
       inherit (nixpkgs) lib;
-      inherit system;
     };
 
     # adapted from home-manager
@@ -18,24 +17,6 @@
         name = home-manager.lib.hm.strings.storeFileName (baseNameOf pathStr);
       in pkgs.runCommandLocal name { }
       "ln -s ${nixpkgs.lib.escapeShellArg pathStr} $out";
-
-    silliconBackportOverlay = new: old:
-      let
-        isSillicon = old.stdenv.hostPlatform.isDarwin
-          && old.stdenv.hostPlatform.isAarch64;
-        intel = "x86_64-darwin";
-        intelSystem = mkDarwinSystem (args // { system = intel; });
-        intelPkgs = intelSystem.pkgs;
-      in if isSillicon then {
-        # Marked as broken in aarch64-darwin
-        inherit (intelPkgs)
-          llvmPackages_6 llvmPackages_7 llvmPackages_8 llvmPackages_9
-          llvmPackages_10;
-
-        inherit (silliconOverlay old intelPkgs)
-        ;
-      } else
-        { };
 
     nixpkgsOverlay = (new: old: {
       darwinConfigurations.${hostName}.system = defaultPackage;
@@ -69,7 +50,7 @@
             localSystem = system;
             crossSystem = system;
           };
-          nixpkgs.overlays = [ nixpkgsOverlay silliconBackportOverlay ];
+          nixpkgs.overlays = [ nixpkgsOverlay ];
         }
         activationDiffModule
       ] ++ nixosModules;

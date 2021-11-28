@@ -51,6 +51,7 @@
       },
       "original": {
         "owner": "LnL7",
+        "ref": "master",
         "repo": "nix-darwin",
         "type": "github"
       }
@@ -73,11 +74,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1637668676,
-        "narHash": "sha256-XgenjJ4GGfsO7J/dH0xivDiUo678VQRszmyElxQiOTU=",
+        "lastModified": 1638081141,
+        "narHash": "sha256-/WHVyf//LoYQmoOqLCNqJXZ0LjIwrInX/VhoYoJehqM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "8b3645b46ec5a9125e0020aa640e0d798f98be0a",
+        "rev": "603e7609456a5266fdb1c1ce3024887b1af6d74d",
         "type": "github"
       },
       "original": {
