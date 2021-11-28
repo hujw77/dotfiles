@@ -12,7 +12,7 @@
 
   outputs = { self, mk-darwin-system, nixpkgs, ... }@inputs:
     import ./vix (mk-darwin-system.inputs // {
-      hix = self;
+      vix = self;
       inherit nixpkgs;
       inherit (mk-darwin-system) mkDarwinSystem;
     });
