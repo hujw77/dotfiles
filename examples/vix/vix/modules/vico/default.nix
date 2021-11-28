@@ -1,10 +1,6 @@
 { config, pkgs, lib, vix, vix-lib, ... }: {
 
-  imports = [ ./link-jvm.nix ];
-
   system.stateVersion = 4;
-
-  environment.systemPackages = [ ];
 
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = builtins.readFile "${vix}/nix.conf";
