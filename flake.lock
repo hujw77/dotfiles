@@ -18,7 +18,6 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "mk-darwin-system",
           "nixpkgs"
         ]
       },
@@ -36,28 +35,9 @@
         "type": "github"
       }
     },
-    "mk-darwin-system": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "home-manager": "home-manager",
-        "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs",
-        "nur": "nur"
-      },
-      "locked": {
-        "narHash": "sha256-rPTSQGCmrXHmx8At+ngXKBVrqPJmJT56MzC3hz+n6yo=",
-        "path": "/nix/store/kg0yfwlmn1dyix08b39fpvjxw28vd37j-source",
-        "type": "path"
-      },
-      "original": {
-        "path": "/nix/store/kg0yfwlmn1dyix08b39fpvjxw28vd37j-source",
-        "type": "path"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
-          "mk-darwin-system",
           "nixpkgs"
         ]
       },
@@ -94,11 +74,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1638081141,
-        "narHash": "sha256-/WHVyf//LoYQmoOqLCNqJXZ0LjIwrInX/VhoYoJehqM=",
+        "lastModified": 1638091595,
+        "narHash": "sha256-IUW6WZiobusd84IjjqrCViJzFu/BjYHnoKqIYxJ5Kno=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "603e7609456a5266fdb1c1ce3024887b1af6d74d",
+        "rev": "cf6a4dbc1a9369692cac4ea5d491edabd229ee42",
         "type": "github"
       },
       "original": {
@@ -109,7 +89,11 @@
     },
     "root": {
       "inputs": {
-        "mk-darwin-system": "mk-darwin-system"
+        "flake-utils": "flake-utils",
+        "home-manager": "home-manager",
+        "nix-darwin": "nix-darwin",
+        "nixpkgs": "nixpkgs",
+        "nur": "nur"
       }
     }
   },

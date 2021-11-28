@@ -41,16 +41,18 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "nur": "nur"
       },
       "locked": {
-        "narHash": "sha256-rPTSQGCmrXHmx8At+ngXKBVrqPJmJT56MzC3hz+n6yo=",
-        "path": "/nix/store/kg0yfwlmn1dyix08b39fpvjxw28vd37j-source",
+        "narHash": "sha256-4+M1i1580kZVb7Xg/wBxSkR2sgejwMCxuddcYEynVxw=",
+        "path": "/nix/store/xpfp7b635afvlgkff6ss3pc04s5mcdgh-source",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/kg0yfwlmn1dyix08b39fpvjxw28vd37j-source",
+        "path": "/nix/store/xpfp7b635afvlgkff6ss3pc04s5mcdgh-source",
         "type": "path"
       }
     },
@@ -109,7 +111,8 @@
     },
     "root": {
       "inputs": {
-        "mk-darwin-system": "mk-darwin-system"
+        "mk-darwin-system": "mk-darwin-system",
+        "nixpkgs": "nixpkgs"
       }
     }
   },
