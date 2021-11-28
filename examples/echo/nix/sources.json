@@ -1,0 +1,26 @@
+{
+    "VimMotionApp": {
+        "branch": "master",
+        "description": "Access macOS UI elements with your fingers stay on keyboard. Inspired by vim-easymotion & avy-mode.",
+        "homepage": "",
+        "owner": "dwarvesf",
+        "repo": "VimMotionApp",
+        "rev": "cc097d9c10db14c371755752f34509a398b685b3",
+        "sha256": "0260ji72b9fpjzzvp0aqwv2f0x41x4np6mkwl3dn35ppxrqpwq84",
+        "type": "tarball",
+        "url": "https://github.com/dwarvesf/VimMotionApp/archive/cc097d9c10db14c371755752f34509a398b685b3.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nur-packages": {
+        "branch": "main",
+        "description": "My personal NUR repository",
+        "homepage": null,
+        "owner": "hujw77",
+        "repo": "nur-packages",
+        "rev": "4e6604b11e5330c34111de5f0220f53d47080332",
+        "sha256": "07l3v0xdia9pvh6c93298ww58ic1f85xsj0j6lqziybvjmyq0y0j",
+        "type": "tarball",
+        "url": "https://github.com/hujw77/nur-packages/archive/4e6604b11e5330c34111de5f0220f53d47080332.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}

@@ -189,7 +189,7 @@ shopt -s nocaseglob
 
 # brew install jump
 # https://github.com/gsamokovarov/jump
-eval "$(jump shell)"
+eval "$(jump shell bash)"
 
 # brew install direnv
 # https://github.com/direnv/direnv

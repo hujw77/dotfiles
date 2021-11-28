@@ -1,5 +1,5 @@
 {
-  description = "My personal dotfiles";
+  description = "Create a nixFlakes + nix-darwin + home-manager system";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
