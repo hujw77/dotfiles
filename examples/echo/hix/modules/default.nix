@@ -1,1 +1,1 @@
-{ imports = [ ./pkg-overrides.nix ./pkg-sets.nix ./hix ]; }
+{ imports = [ ./pkg-overrides.nix ./pkg-sets.nix ./hic ]; }
