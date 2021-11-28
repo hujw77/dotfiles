@@ -11,10 +11,10 @@
 
     pkgSets = with pkgs; {
       # System level packages
-      vic = [ nixFlakes direnv home-manager ];
+      vico = [ nixFlakes direnv home-manager ];
 
       # Home level packages
-      echo = [
+      vic = [
         # bottom
         # # VimMotionApp
         # xsv

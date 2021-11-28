@@ -1,1 +1,1 @@
-{ imports = [ ./pkg-overrides.nix ./pkg-sets.nix ./vic ]; }
+{ imports = [ ./pkg-overrides.nix ./pkg-sets.nix ./vic ./vico ]; }
