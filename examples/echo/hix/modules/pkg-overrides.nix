@@ -5,17 +5,17 @@
       # See https://github.com/NixOS/nixpkgs/pull/129543/files
       # neovim = super.neovim-unwrapped;
 
-      # leader = vix-lib.nivGoAutoMod "leader";
+      # leader = hix-lib.nivGoAutoMod "leader";
 
-      # xbarApp = vix-lib.nivApp "xbar";
+      # xbarApp = hix-lib.nivApp "xbar";
 
-      VimMotionApp = vix-lib.nivApp "VimMotion";
+      # VimMotionApp = hix-lib.nivApp "VimMotion";
 
-      # HamerspoonApp = vix-lib.nivApp "Hamerspoon";
+      # HamerspoonApp = hix-lib.nivApp "Hamerspoon";
 
-      # KeyttyApp = vix-lib.nivApp "Keytty";
+      # KeyttyApp = hix-lib.nivApp "Keytty";
 
-      # EmacsApp = (vix-lib.nivApp "Emacs").overrideAttrs (old:
+      # EmacsApp = (hix-lib.nivApp "Emacs").overrideAttrs (old:
       #   let
       #     bin_dir = {
       #       "aarch64-darwin" = "bin-arm64-*/";
