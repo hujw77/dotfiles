@@ -2,7 +2,7 @@
   description = "Minimal DarwinSystem example";
 
   inputs = {
-    mk-darwin-system.url = "path:../..";
+    mk-darwin-system.url = "../..";
   };
 
   outputs = { mk-darwin-system, ... }@inputs:
