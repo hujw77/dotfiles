@@ -11,7 +11,7 @@
 
     pkgSets = with pkgs; {
       # System level packages
-      hix = [ nixFlakes direnv home-manager ];
+      vic = [ nixFlakes direnv home-manager ];
 
       # Home level packages
       echo = [
