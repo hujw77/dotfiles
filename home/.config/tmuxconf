@@ -67,6 +67,7 @@ bind-key -T edit-mode-vi Down send-keys -X history-down
 
 # setup 'v' to begin selection as in Vim
 bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
+bind-key -T copy-mode-vi 'C-v' send-keys -X rectangle-toggle
 
 # copy text with `y` in copy mode
 # bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel\; run "tmux save -|pbcopy >/dev/null 2>&1"

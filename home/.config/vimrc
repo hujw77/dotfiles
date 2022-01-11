@@ -7,13 +7,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
-Plug 'SirVer/ultisnips'
 Plug 'arthurxavierx/vim-caser'
 Plug 'cespare/vim-toml'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
-Plug 'ervandew/supertab'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
@@ -36,9 +34,11 @@ Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rhubarb'
 Plug 'vim-ruby/vim-ruby'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'davidhalter/jedi-vim'
+" Plug 'ervandew/supertab'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'zchee/deoplete-jedi'
+" Plug 'davidhalter/jedi-vim'
+" Plug 'SirVer/ultisnips'
 Plug 'will133/vim-dirdiff'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'tpope/vim-surround'
@@ -53,6 +53,16 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'arthurxavierx/vim-unicoder'
+
+" rust + nvim
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'simrat39/rust-tools.nvim'
+Plug 'hrsh7th/vim-vsnip'
 
 call plug#end()
 
@@ -93,7 +103,15 @@ set noshowmatch              " Do not show matching brackets by flickering
 set noshowmode               " We show the mode with airline or lightline
 set ignorecase               " Search case insensitive...
 set smartcase                " ... but not it begins with upper case
-set completeopt=menu,menuone
+
+"" Set completeopt to have a better completion experience
+" :help completeopt
+" menuone: popup even when there's only one match
+" noinsert: Do not insert text until a selection is made
+" noselect: Do not select, force user to select one from the menu
+" set completeopt=menu,menuone
+set completeopt=menuone,noinsert,noselect
+
 set nocursorcolumn           " speed up syntax highlighting
 " set nocursorline
 set cursorline
@@ -105,6 +123,10 @@ set shortmess+=c   " Shut off completion messages
 set belloff+=ctrlg " If Vim beeps during completion
 
 set lazyredraw
+
+" have a fixed column for the diagnostics to appear in
+" this removes the jitter when warnings/errors flow in
+set signcolumn=yes
 
 "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
 set clipboard^=unnamed
@@ -571,11 +593,11 @@ let g:vim_json_syntax_conceal = 0
 " ==================== Completion + Snippet ====================
 " Ultisnips has native support for SuperTab. SuperTab does omnicompletion by
 " pressing tab. I like this better than autocompletion, but it's still fast.
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" let g:SuperTabDefaultCompletionType = "context"
+" let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)
@@ -593,19 +615,19 @@ augroup vimrc-python
 augroup END
 
 " jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>u"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#goto_assignments_command = "<leader>g"
+" let g:jedi#goto_definitions_command = "<leader>d"
+" let g:jedi#documentation_command = "K"
+" let g:jedi#usages_command = "<leader>u"
+" let g:jedi#rename_command = "<leader>r"
+" let g:jedi#show_call_signatures = "0"
+" let g:jedi#smart_auto_mappings = 0
+" let g:jedi#completions_enabled = 0
+" let g:jedi#auto_vim_configuration = 0
 
-let g:python_host_prog = '/usr/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
+" let g:python_host_prog = '/usr/bin/python'
+" let g:python3_host_prog = '/usr/local/bin/python3'
 
 " vim-autopep8
 let g:autopep8_on_save = 1
@@ -614,27 +636,23 @@ let g:autopep8_disable_show_diff=1
 " supertab
 
 " let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " vim-racer
 augroup Racer
   autocmd!
-  autocmd FileType rust nmap <buffer> <leader>d  <Plug>(rust-def)
-  autocmd FileType rust nmap <buffer> <leader>s  <Plug>(rust-def-split)
-  autocmd FileType rust nmap <buffer> <leader>v  <Plug>(rust-def-vertical)
-  autocmd FileType rust nmap <buffer> <leader>x  <Plug>(rust-doc)
-  autocmd FileType rust nmap <buffer> <leader>X  <Plug>(rust-doc-tab)
-  autocmd FileType rust nmap <buffer> <leader>r  :Crun<cr>
-  autocmd FileType rust nmap <buffer> <leader>t  :RustTest<cr>
-  autocmd FileType rust nmap <buffer> <leader>T  :RustTest!<cr>
-  autocmd FileType rust nmap <buffer> <leader>b  :Cbuild<cr>
+  autocmd FileType rust nmap <buffer> <leader>R  :Crun<cr>
+  autocmd FileType rust nmap <buffer> <leader>T  :RustTest<cr>
+  autocmd FileType rust nmap <buffer> <leader>T! :RustTest!<cr>
+  autocmd FileType rust nmap <buffer> <leader>B  :Cbuild<cr>
+  autocmd FileType rust setlocal commentstring=///\ %s
 augroup END
 
-let g:racer_experimental_completer = 1
-let g:racer_insert_paren = 1
+let g:racer_experimental_completer = 0
+let g:racer_insert_paren = 0
 
 " deoplete.nvim
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 " editorconfig/editorconfig-vim
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
@@ -648,5 +666,109 @@ let g:rustfmt_autosave = 1
 
 highlight ExtraWhitespace ctermbg=LightRed guibg=LightRed
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
+
+" Configure LSP through rust-tools.nvim plugin.
+" rust-tools will configure and enable certain LSP features for us.
+" See https://github.com/simrat39/rust-tools.nvim#configuration
+lua <<EOF
+
+-- nvim_lsp object
+local nvim_lsp = require'lspconfig'
+
+local opts = {
+    tools = {
+        autoSetHints = true,
+        hover_with_actions = true,
+        runnables = {
+            use_telescope = true
+        },
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        -- on_attach = on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy"
+                },
+            }
+        }
+    },
+}
+
+require('rust-tools').setup(opts)
+EOF
+
+" Setup Completion
+" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+lua <<EOF
+local cmp = require'cmp'
+cmp.setup({
+  snippet = {
+    expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-m>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+
+  -- Installed sources
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+})
+EOF
+
+" Code navigation shortcuts
+" as found in :help lsp
+augroup go
+  autocmd!
+autocmd FileType rust nmap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
+autocmd FileType rust nmap <silent> <leader>d <cmd>lua vim.lsp.buf.definition()<CR>
+autocmd FileType rust nmap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
+autocmd FileType rust nmap <silent> <leader>D <cmd>lua vim.lsp.buf.implementation()<CR>
+autocmd FileType rust nmap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
+autocmd FileType rust nmap <silent> <leader>t <cmd>lua vim.lsp.buf.type_definition()<CR>
+autocmd FileType rust nmap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
+autocmd FileType rust nmap <silent> <leader>0 <cmd>lua vim.lsp.buf.document_symbol()<CR>
+autocmd FileType rust nmap <silent> <leader>W <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+
+" Quick-fix
+autocmd FileType rust nmap <silent> <leader>a <cmd>lua vim.lsp.buf.code_action()<CR>
+
+" Goto previous/next diagnostic warning/error
+autocmd FileType rust nmap <silent> <leader>[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+autocmd FileType rust nmap <silent> <leader>] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+autocmd FileType rust nmap <silent> <leader>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+
+augroup END
 
 " vim: sw=2 sw=2 et
