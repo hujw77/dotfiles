@@ -55,6 +55,9 @@
 [pull]
 	rebase = false
 [commit]
+	gpgsign = true
 	template = /Users/echo/.stCommitMsg
 [init]
 	defaultBranch = main
+[gpg]
+	program = gpg

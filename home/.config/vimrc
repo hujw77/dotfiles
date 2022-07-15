@@ -645,7 +645,7 @@ augroup Racer
   autocmd FileType rust nmap <buffer> <leader>T  :RustTest<cr>
   autocmd FileType rust nmap <buffer> <leader>T! :RustTest!<cr>
   autocmd FileType rust nmap <buffer> <leader>B  :Cbuild<cr>
-  autocmd FileType rust setlocal commentstring=///\ %s
+  autocmd FileType rust setlocal commentstring=//\ %s
 augroup END
 
 let g:racer_experimental_completer = 0
@@ -749,25 +749,25 @@ EOF
 
 " Code navigation shortcuts
 " as found in :help lsp
-augroup go
+augroup rust
   autocmd!
-autocmd FileType rust nmap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
-autocmd FileType rust nmap <silent> <leader>d <cmd>lua vim.lsp.buf.definition()<CR>
-autocmd FileType rust nmap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
-autocmd FileType rust nmap <silent> <leader>D <cmd>lua vim.lsp.buf.implementation()<CR>
-autocmd FileType rust nmap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
-autocmd FileType rust nmap <silent> <leader>t <cmd>lua vim.lsp.buf.type_definition()<CR>
-autocmd FileType rust nmap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
-autocmd FileType rust nmap <silent> <leader>0 <cmd>lua vim.lsp.buf.document_symbol()<CR>
-autocmd FileType rust nmap <silent> <leader>W <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+  autocmd FileType rust nmap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
+  autocmd FileType rust nmap <silent> <leader>d <cmd>lua vim.lsp.buf.definition()<CR>
+  autocmd FileType rust nmap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
+  autocmd FileType rust nmap <silent> <leader>D <cmd>lua vim.lsp.buf.implementation()<CR>
+  autocmd FileType rust nmap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
+  autocmd FileType rust nmap <silent> <leader>t <cmd>lua vim.lsp.buf.type_definition()<CR>
+  autocmd FileType rust nmap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
+  autocmd FileType rust nmap <silent> <leader>0 <cmd>lua vim.lsp.buf.document_symbol()<CR>
+  autocmd FileType rust nmap <silent> <leader>W <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 
-" Quick-fix
-autocmd FileType rust nmap <silent> <leader>a <cmd>lua vim.lsp.buf.code_action()<CR>
+  " Quick-fix
+  autocmd FileType rust nmap <silent> <leader>a <cmd>lua vim.lsp.buf.code_action()<CR>
 
-" Goto previous/next diagnostic warning/error
-autocmd FileType rust nmap <silent> <leader>[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-autocmd FileType rust nmap <silent> <leader>] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-autocmd FileType rust nmap <silent> <leader>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+  " Goto previous/next diagnostic warning/error
+  autocmd FileType rust nmap <silent> <leader>[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+  autocmd FileType rust nmap <silent> <leader>] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+  autocmd FileType rust nmap <silent> <leader>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 
 augroup END
 
