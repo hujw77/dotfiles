@@ -6,7 +6,7 @@ set -gx NVIMRC $HOME/.vimrc
 set -gx NVM_DIR $HOME/.nvm
 set -gx EDITOR nvim
 
-set -gx GPG_TTY (tty)
+set -x GPG_TTY (tty)
 
 set -gx LC_ALL en_US.UTF-8
 set -gx LANG en_US.UTF-8
