@@ -5,6 +5,7 @@ set -gx GOBIN $HOME/go/bin
 set -gx NVIMRC $HOME/.vimrc
 set -gx NVM_DIR $HOME/.nvm
 set -gx EDITOR nvim
+set -gx FZF_CTRL_T_COMMAND vim
 
 set -x GPG_TTY (tty)
 
