@@ -1,0 +1,14 @@
+diff --git a/notification_center.py b/notification_center.py
+index 257ba0a..20a9e46 100644
+--- a/notification_center.py
++++ b/notification_center.py
+@@ -1,6 +1,9 @@
+ # https://github.com/sindresorhus/weechat-notification-center
+ # Requires `pip install pync`
+
++import sys
++sys.path.append('@env@')
++
+ import os
+ import datetime
+ import weechat

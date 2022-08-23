@@ -3,4 +3,3 @@ terraform.tfstate*
 result*
 flake.lock
 .DS_Store
-home/.config/nixpkgs
