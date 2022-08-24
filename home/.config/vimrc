@@ -1,5 +1,5 @@
 if &shell =~# 'fish$'
-    set shell=sh
+    set shell=zsh
 endif
 " PlugInstall
 call plug#begin('~/.vim/plugged')
@@ -24,7 +24,7 @@ Plug 'roxma/vim-tmux-clipboard'
 Plug 'scrooloose/nerdtree'
 Plug 't9md/vim-choosewin'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
-" Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
@@ -665,7 +665,6 @@ local nvim_lsp = require'lspconfig'
 local opts = {
     tools = {
         autoSetHints = true,
-        hover_with_actions = true,
         runnables = {
             use_telescope = true
         },
@@ -755,6 +754,12 @@ augroup rust
   autocmd FileType rust nmap <silent> <leader>[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
   autocmd FileType rust nmap <silent> <leader>] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
   autocmd FileType rust nmap <silent> <leader>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+
+  " Show diagnostic popup on cursor hold
+  autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+  " Goto previous/next diagnostic warning/error
+  nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
+  nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 
 augroup END
 
