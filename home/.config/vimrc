@@ -173,9 +173,9 @@ augroup filetypedetect
   autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType rust setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType solidity setlocal expandtab tabstop=4 shiftwidth=4
-  autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
   autocmd FileType sh setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
