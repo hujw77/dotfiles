@@ -66,6 +66,9 @@ Plug 'hrsh7th/vim-vsnip'
 " etk
 Plug 'quilt/vim-etk', { 'branch': 'main' }
 
+" nim
+Plug 'zah/nim.vim'
+
 call plug#end()
 
 "=====================================================
@@ -754,6 +757,21 @@ augroup rust
   nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
   nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 
+augroup END
+
+" zah/nim.vim
+fun! JumpToDef()
+  if exists("*GotoDefinition_" . &filetype)
+    call GotoDefinition_{&filetype}()
+  else
+    exe "norm! \<C-]>"
+  endif
+endf
+
+augroup nim
+  autocmd!
+  " Jump to tag
+  autocmd FileType nim nmap <silent> <leader>d  :call JumpToDef()<cr>
 augroup END
 
 " vim: sw=2 sw=2 et
