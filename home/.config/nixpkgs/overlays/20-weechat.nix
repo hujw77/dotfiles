@@ -3,12 +3,14 @@ rec {
   weechat = super.weechat.override {
     configure = { availablePlugins, ... }: {
       scripts = with super.weechatScripts; [
+        colorize_nicks
+        edit
+        multiline
         wee-slack
         weechat-autosort
         weechat-go
-        weechat-matrix
-        multiline
-        edit
+        weechat-grep
+        # weechat-matrix
       ] ++ [
         weechat-notification-center
         colorize_lines

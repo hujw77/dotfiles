@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
       env = "${
           buildEnv {
             name = "weechat-notification-center-env";
-            paths = with python3Packages; [ pync dateutil six ];
+            paths = with python3Packages; [ pync python-dateutil six ];
           }
         }/${python3Packages.python.sitePackages}";
     })
