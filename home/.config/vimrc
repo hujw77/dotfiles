@@ -69,9 +69,6 @@ Plug 'quilt/vim-etk', { 'branch': 'main' }
 " nim
 Plug 'zah/nim.vim'
 
-" certora
-Plug 'm-chrzan/certora-vim'
-
 call plug#end()
 
 "=====================================================
