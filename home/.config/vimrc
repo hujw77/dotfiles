@@ -69,6 +69,8 @@ Plug 'quilt/vim-etk', { 'branch': 'main' }
 " nim
 Plug 'zah/nim.vim'
 
+Plug 'ntpeters/vim-better-whitespace'
+
 call plug#end()
 
 "=====================================================
@@ -647,9 +649,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " rust-lang/rust
 let g:rustfmt_autosave = 1
 
-" ExtraWhitespace
-highlight ExtraWhitespace ctermbg=LightRed
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
+" ntpeters/vim-better-whitespace
+let g:better_whitespace_guicolor='LightRed'
+" autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
 
 " Configure LSP through rust-tools.nvim plugin.
 " rust-tools will configure and enable certain LSP features for us.
