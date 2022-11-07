@@ -647,7 +647,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " rust-lang/rust
 let g:rustfmt_autosave = 1
 
-highlight ExtraWhitespace ctermbg=LightRed guibg=LightRed
+" ExtraWhitespace
+highlight ExtraWhitespace ctermbg=LightRed
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
 
 " Configure LSP through rust-tools.nvim plugin.
