@@ -86,6 +86,7 @@ status --is-interactive; and source (rbenv init -|psub)
 #
 set -g fish_user_paths "/usr/local/opt/openssl@1.1/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/mysql-client/bin" $fish_user_paths
+fish_add_path /usr/local/opt/python@3.9/bin
 
 set -gx LSCOLORS cxBxhxDxfxhxhxhxhxcxcx
 set -gx CLICOLOR 1

@@ -21,7 +21,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'roxma/vim-tmux-clipboard'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 't9md/vim-choosewin'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'tmux-plugins/vim-tmux-focus-events'
@@ -612,7 +612,8 @@ augroup END
 " let g:jedi#auto_vim_configuration = 0
 
 " let g:python_host_prog = '/usr/bin/python'
-" let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python3_host_prog = '/usr/local/bin/python3'
+let g:perl_host_prog = '/usr/local/bin/perl'
 
 " vim-autopep8
 let g:autopep8_on_save = 1
