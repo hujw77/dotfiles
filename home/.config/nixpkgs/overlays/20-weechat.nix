@@ -2,6 +2,7 @@ self: super:
 rec {
   weechat = super.weechat.override {
     configure = { availablePlugins, ... }: {
+      plugins = builtins.attrValues (builtins.removeAttrs availablePlugins [ "php" ]);
       scripts = with super.weechatScripts; [
         colorize_nicks
         edit
@@ -10,7 +11,7 @@ rec {
         weechat-autosort
         weechat-go
         weechat-grep
-        # weechat-matrix
+        weechat-matrix
       ] ++ [
         weechat-notification-center
         colorize_lines
