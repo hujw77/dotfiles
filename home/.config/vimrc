@@ -50,6 +50,7 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'arthurxavierx/vim-unicoder'
+Plug 'ntpeters/vim-better-whitespace'
 
 " rust + nvim
 Plug 'rust-lang/rust.vim'
@@ -69,7 +70,8 @@ Plug 'quilt/vim-etk', { 'branch': 'main' }
 " nim
 Plug 'zah/nim.vim'
 
-Plug 'ntpeters/vim-better-whitespace'
+" k
+Plug 'kframework/k-editor-support', { 'rtp': 'vim' }
 
 call plug#end()
 
