@@ -25,3 +25,8 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 # install tmux plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# enable font smoothing
+defaults -currentHost write -g AppleFontSmoothing -int 2
+
+# enable dark mode notify service
+launchctl load -w ~/Library/LaunchAgents/io.echo.notify.plist

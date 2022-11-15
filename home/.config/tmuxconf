@@ -128,29 +128,6 @@ bind-key l select-pane -R
 # Disable confirm before killing
 bind-key x kill-pane
 
-# This tmux statusbar config was created by tmuxline.vim
-# on Mon, 08 Feb 2021
-
-set -g status-justify "left"
-set -g status "on"
-set -g status-left-style "none"
-set -g message-command-style "fg=cyan,bg=brightblack"
-set -g status-right-style "none"
-set -g pane-active-border-style "fg=cyan"
-set -g status-position "top"
-set -g status-style "none,bg=black"
-set -g message-style "fg=cyan,bg=brightblack"
-set -g pane-border-style "fg=brightblack"
-set -g status-right-length "100"
-set -g status-left-length "100"
-setw -g window-status-activity-style "underscore,fg=cyan,bg=black"
-setw -g window-status-separator ""
-setw -g window-status-style "none,fg=cyan,bg=black"
-set -g status-left "#[fg=black,bg=cyan] #S #[fg=blue,bg=black,nobold,nounderscore,noitalics]"
-set -g status-right "#[fg=black,bg=black,nobold,nounderscore,noitalics]#[fg=cyan,bg=black] %a #[fg=brightblack,bg=black,nobold,nounderscore,noitalics]#[fg=blue,bg=brightblack] %Y-%m-%d %H:%M #[fg=blue,bg=brightblack,nobold,nounderscore,noitalics]#[fg=black,bg=blue]  #h "
-setw -g window-status-format "#[fg=black,bg=black,nobold,nounderscore,noitalics]#[default] #I #W #[fg=black,bg=black,nobold,nounderscore,noitalics]"
-setw -g window-status-current-format "#[fg=black,bg=brightblack,nobold,nounderscore,noitalics]#[fg=cyan,bg=brightblack] #I #W #[fg=brightblack,bg=black,nobold,nounderscore,noitalics]"
-
 # List of plugins
 # see this https://github.com/tmux-plugins/tpm to installation
 set -g @tpm_plugins '          \
