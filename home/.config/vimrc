@@ -210,6 +210,7 @@ augroup filetypedetect
   autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType typescript setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType kframework setlocal expandtab tabstop=2 shiftwidth=2
 augroup END
 
 "=====================================================
@@ -528,7 +529,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " ==================== markdown ====================
 let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh', 'racket=lisp', 'act=act']
+let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh', 'racket=lisp', 'act=act', 'k=kframework']
 let g:vim_markdown_conceal = 2
 " let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_toml_frontmatter = 1
