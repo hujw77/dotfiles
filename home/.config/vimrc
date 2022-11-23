@@ -529,7 +529,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " ==================== markdown ====================
 let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh', 'racket=lisp', 'act=act', 'k=kframework']
+let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh', 'racket=lisp', 'act=act', 'k=kframework', 'sol=solidity']
 let g:vim_markdown_conceal = 2
 " let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_toml_frontmatter = 1
