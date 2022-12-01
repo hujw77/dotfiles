@@ -1,4 +1,4 @@
-set -gxp PATH /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin /usr/local/opt/ruby/bin /usr/local/lib/ruby/gems/3.0.0/bin
+set -gxp PATH /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin
 set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin
@@ -43,9 +43,12 @@ status --is-interactive; and source (rbenv init -|psub)
 # It contains work related stuff, some functions, aliases etc...
 # source ~/.config/fish/private.fish
 #
-set -g fish_user_paths "/usr/local/opt/openssl@1.1/bin" $fish_user_paths
-set -g fish_user_paths "/usr/local/opt/mysql-client/bin" $fish_user_paths
+fish_add_path /usr/local/opt/node@18/bin
 fish_add_path /usr/local/opt/python@3.9/bin
+fish_add_path /usr/local/opt/ruby/bin
+fish_add_path /usr/local/lib/ruby/gems/3.0.0/bin
+fish_add_path /usr/local/opt/openssl@1.1/bin
+fish_add_path /usr/local/opt/mysql-client/bin
 
 set -gx LSCOLORS cxBxhxDxfxhxhxhxhxcxcx
 set -gx CLICOLOR 1
