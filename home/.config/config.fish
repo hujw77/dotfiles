@@ -68,6 +68,7 @@ set -gx LESS_TERMCAP_us \e'[01;32m'
 alias vi 'nvim'
 alias vim 'nvim'
 alias e 'emacsclient -t'
+alias python python3
 
 switch (uname)
     case Darwin

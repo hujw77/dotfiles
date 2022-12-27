@@ -54,7 +54,7 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " rust + nvim
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer'
+" Plug 'racer-rust/vim-racer'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -72,6 +72,9 @@ Plug 'zah/nim.vim'
 
 " k
 Plug 'kframework/k-editor-support', { 'rtp': 'vim' }
+
+" yul
+Plug 'mattdf/vim-yul'
 
 call plug#end()
 
@@ -651,17 +654,17 @@ let g:autopep8_disable_show_diff=1
 " let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " vim-racer
-augroup Racer
-  autocmd!
-  autocmd FileType rust nmap <buffer> <leader>R  :Crun<cr>
-  autocmd FileType rust nmap <buffer> <leader>T  :RustTest<cr>
-  autocmd FileType rust nmap <buffer> <leader>T! :RustTest!<cr>
-  autocmd FileType rust nmap <buffer> <leader>B  :Cbuild<cr>
-  autocmd FileType rust setlocal commentstring=//\ %s
-augroup END
+" augroup Racer
+"   autocmd!
+"   autocmd FileType rust nmap <buffer> <leader>R  :Crun<cr>
+"   autocmd FileType rust nmap <buffer> <leader>T  :RustTest<cr>
+"   autocmd FileType rust nmap <buffer> <leader>T! :RustTest!<cr>
+"   autocmd FileType rust nmap <buffer> <leader>B  :Cbuild<cr>
+"   autocmd FileType rust setlocal commentstring=//\ %s
+" augroup END
 
-let g:racer_experimental_completer = 0
-let g:racer_insert_paren = 0
+" let g:racer_experimental_completer = 0
+" let g:racer_insert_paren = 0
 
 " deoplete.nvim
 " let g:deoplete#enable_at_startup = 1
