@@ -76,6 +76,9 @@ Plug 'kframework/k-editor-support', { 'rtp': 'vim' }
 " yul
 Plug 'mattdf/vim-yul'
 
+" circom
+Plug 'iden3/vim-circom-syntax'
+
 call plug#end()
 
 "=====================================================
