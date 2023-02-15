@@ -769,7 +769,6 @@ EOF
 " as found in :help lsp
 augroup rust
   autocmd!
-  autocmd FileType rust nmap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
   autocmd FileType rust nmap <silent> <leader>d <cmd>lua vim.lsp.buf.definition()<CR>
   autocmd FileType rust nmap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
   autocmd FileType rust nmap <silent> <leader>D <cmd>lua vim.lsp.buf.implementation()<CR>
