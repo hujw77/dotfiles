@@ -273,7 +273,7 @@ nnoremap <space> zz
 " nnoremap <leader><space> :nohlsearch<CR>
 function! s:clear_highlight()
   let @/ = ""
-  call go#guru#ClearSameIds()
+  call go#sameids#ClearSameIds()
 endfunction
 nnoremap <silent> <leader><space> :<C-u>call <SID>clear_highlight()<CR>
 
