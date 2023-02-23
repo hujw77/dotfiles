@@ -4,6 +4,7 @@ sync:
 	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/alacritty
 	mkdir -p ~/.config/fish
+	mkdir -p ~/.vim/lua
 	mkdir -p ~/.tmux/
 	mkdir -p ~/.emacs.d
 	mkdir -p ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch
@@ -16,6 +17,7 @@ sync:
 	[ -d ~/.config/fish/conf.d/ ] || ln -s $(PWD)/fish/conf.d ~/.config/fish/conf.d
 	[ -d ~/.config/nixpkgs ] || ln -s $(PWD)/nixpkgs ~/.config/nixpkgs
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
+	[ -f ~/.vim/lua/rust.lua ] || ln -s $(PWD)/rust.lua ~/.vim/lua/rust.lua
 	[ -f ~/.bashrc ] || ln -s $(PWD)/bashrc ~/.bashrc
 	[ -f ~/.zshrc ] || ln -s $(PWD)/zshrc ~/.zshrc
 	[ -f ~/.tmux.conf ] || ln -s $(PWD)/tmuxconf ~/.tmux.conf
@@ -34,6 +36,7 @@ sync:
 
 clean:
 	rm -f ~/.vimrc
+	rm -f ~/.vim/lua/rust.lua
 	rm -f ~/.config/nvim/init.vim
 	rm -f ~/.config/alacritty/alacritty.yml
 	rm -f ~/.config/alacritty/color.yml
@@ -43,7 +46,8 @@ clean:
 	rm -f ~/.bashrc
 	rm -f ~/.zshrc
 	rm -rf ~/.tmux.conf
-	rm -f ~/.tmux
+	rm -f ~/.tmux/tmux-dark.conf
+	rm -f ~/.tmux/tmux-light.conf
 	rm -f ~/.tigrc
 	rm -f ~/.git-prompt.sh
 	rm -f ~/.gitconfig
