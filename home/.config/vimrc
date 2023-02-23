@@ -63,7 +63,9 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/cmp-path'
 " rust debug
+Plug 'nvim-lua/plenary.nvim'
 Plug 'mfussenegger/nvim-dap'
+
 
 " etk
 Plug 'quilt/vim-etk', { 'branch': 'main' }
