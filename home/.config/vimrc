@@ -213,6 +213,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.fish setlocal expandtab shiftwidth=2 tabstop=2
 
   autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
+  autocmd FileType lua setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType rust setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType solidity setlocal expandtab tabstop=4 shiftwidth=4
 
