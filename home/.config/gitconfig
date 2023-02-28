@@ -61,8 +61,3 @@
 	defaultBranch = main
 [gpg]
 	program = gpg
-[http]
-	proxy = socks5://127.0.0.1:1080
-	sslVerify = false
-[https]
-	proxy = socks5://127.0.0.1:1080
