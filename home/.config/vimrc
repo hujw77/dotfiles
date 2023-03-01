@@ -676,7 +676,8 @@ let g:rustfmt_autosave = 1
 let g:better_whitespace_guicolor='LightRed'
 " autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
 
-" rust.lua
+" import lua
+:lua require('lsp')
 :lua require('rust')
 
 " zah/nim.vim
