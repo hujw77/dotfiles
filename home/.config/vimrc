@@ -33,11 +33,6 @@ Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rhubarb'
 Plug 'vim-ruby/vim-ruby'
-" Plug 'ervandew/supertab'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'zchee/deoplete-jedi'
-" Plug 'davidhalter/jedi-vim'
-" Plug 'SirVer/ultisnips'
 Plug 'will133/vim-dirdiff'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'tpope/vim-surround'

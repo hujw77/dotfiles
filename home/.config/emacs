@@ -77,8 +77,17 @@
     (define-key scheme-mode-map (kbd "<f6>") 'scheme-send-definition-split-window)))
 
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
+
+;; theme
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
-(load-theme 'nord t)
+(load-theme 'timu-spacegrey t)
+(customize-set-variable 'timu-spacegrey-flavour "light")
+(customize-set-variable 'timu-spacegrey-scale-org-document-title t)
+(customize-set-variable 'timu-spacegrey-scale-org-document-info t)
+(customize-set-variable 'timu-spacegrey-scale-org-level-1 t)
+(customize-set-variable 'timu-spacegrey-scale-org-level-2 t)
+(customize-set-variable 'timu-spacegrey-scale-org-level-3 t)
+
 (add-to-list 'exec-path "/usr/local/bin")
 
 ;; Save all tempfiles in $TMPDIR/emacs$UID/
@@ -88,21 +97,13 @@
 (setq auto-save-file-name-transforms
   `((".*" ,emacs-tmp-dir t)))
 
-(setq auto-save-list-file-prefix
-emacs-tmp-dir)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("197cefea731181f7be51e9d498b29fb44b51be33484b17416b9855a2c4243cb1" default))
- '(global-display-line-numbers-mode t)
- '(package-selected-packages
-   '(el-get weechat-alert weechat nordless-theme ## nord-theme)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(setq auto-save-list-file-prefix emacs-tmp-dir)
+
+(setq browse-url-browser-function 'eww-browse-url
+      shr-use-colors nil
+      shr-bullet "• "
+      shr-folding-mode t
+      eww-search-prefix "https://wiby.me/?q="
+      url-privacy-level '(email agent cookies lastloc))
+
+(scroll-bar-mode -1)
