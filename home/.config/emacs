@@ -18,6 +18,7 @@
 (package-initialize)
 ;; (unless package-archive-contents
 ;;   (package-refresh-contents))
+(require 'use-package)
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (autoload 'paredit-mode "paredit"
