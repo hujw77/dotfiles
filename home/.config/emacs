@@ -20,7 +20,9 @@
 ;;   (package-refresh-contents))
 (require 'use-package)
 
+;; Add my library path to load-path
 (add-to-list 'load-path "~/.emacs.d/lisp")
+
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code."
   t)
@@ -54,7 +56,6 @@
       (run-scheme scheme-program-name)))
   (or (scheme-get-process)
       (error "No current process. See variable `scheme-buffer'")))
-
 
 (defun scheme-split-window ()
   (cond
