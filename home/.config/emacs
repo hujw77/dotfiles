@@ -131,12 +131,12 @@
 ;; (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
 ;; (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-(add-to-list 'default-frame-alist '(fullscreen . maximized)))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 (setq mouse-wheel-progressive-speed nil)
 (setq mouse-wheel-follow-mouse 't)
 (setq scroll-step 1)
-(setq use-dialog-box nil))
+(setq use-dialog-box nil)
 
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
@@ -162,21 +162,15 @@
 (require 'straight-x)
 
 (set-default-coding-systems 'utf-8)
+(setq-default indent-tabs-mode nil)
 
-;; Enable line numbers for some modes
-(dolist (mode '(text-mode-hook
-                prog-mode-hook
-                conf-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 1))))
+(setq large-file-warning-threshold nil)
+(setq vc-follow-symlinks t)
 
-;; Override some modes which derive from the above
-(dolist (mode '(org-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+(use-package emojify
+  :hook (erc-mode . emojify-mode)
+  :commands emojify-mode)
 
-
-
-
-
-
-
-
+(use-package ws-butler
+  :hook ((text-mode . ws-butler-mode)
+         (prog-mode . ws-butler-mode)))
