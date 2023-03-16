@@ -20,6 +20,26 @@
 ;;   (package-refresh-contents))
 (require 'use-package)
 
+;; Bootstrap straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+      (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+;; Always use straight to install on systems other than Linux
+(setq straight-use-package-by-default (not (eq system-type 'gnu/linux)))
+;; Use straight.el for use-package expressions
+(straight-use-package 'use-package)
+;; Load the helper package for commands like `straight-x-clean-unused-repos'
+(require 'straight-x)
+
 ;; Add my library path to load-path
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
@@ -28,24 +48,20 @@
   t)
 (require 'parenface)
 (set-face-foreground 'paren-face "DimGray")
+
 ;;;;;;;;;;;;
 ;; Scheme
 ;;;;;;;;;;;;
-
 (require 'cmuscheme)
 (setq scheme-program-name "racket")         ;; 如果用 Petite 就改成 "petite"
-
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-
 (global-set-key (kbd "M-h") 'windmove-left)
 (global-set-key (kbd "M-j") 'windmove-down)
 (global-set-key (kbd "M-k") 'windmove-up)
 (global-set-key (kbd "M-l") 'windmove-right)
-
 (global-set-key (kbd "<f11>") (lambda () (interactive) (other-frame 1)))
 (global-set-key (kbd "<f12>") (lambda () (interactive) (other-frame -1)))
-
 ;; bypass the interactive question and start the default interpreter
 (defun scheme-proc ()
   "Return the current Scheme process, starting one if necessary."
@@ -56,7 +72,6 @@
       (run-scheme scheme-program-name)))
   (or (scheme-get-process)
       (error "No current process. See variable `scheme-buffer'")))
-
 (defun scheme-split-window ()
   (cond
    ((= 1 (count-windows))
@@ -75,19 +90,14 @@
     (other-window 1)
     (switch-to-buffer "*scheme*")
     (other-window -1))))
-
-
 (defun scheme-send-last-sexp-split-window ()
   (interactive)
   (scheme-split-window)
   (scheme-send-last-sexp))
-
-
 (defun scheme-send-definition-split-window ()
   (interactive)
   (scheme-split-window)
   (scheme-send-definition))
-
 (add-hook 'scheme-mode-hook
   (lambda ()
     (paredit-mode 1)
@@ -98,7 +108,10 @@
 
 ;; theme
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
-(load-theme 'timu-spacegrey t)
+(use-package timu-spacegrey-theme
+  :ensure t
+  :config
+  (load-theme 'timu-spacegrey t))
 (customize-set-variable 'timu-spacegrey-flavour "light")
 (customize-set-variable 'timu-spacegrey-scale-org-document-title t)
 (customize-set-variable 'timu-spacegrey-scale-org-document-info t)
@@ -138,28 +151,6 @@
 (setq scroll-step 1)
 (setq use-dialog-box nil)
 
-;; Bootstrap straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-      (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-        "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-        'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; Always use straight to install on systems other than Linux
-(setq straight-use-package-by-default (not (eq system-type 'gnu/linux)))
-
-;; Use straight.el for use-package expressions
-(straight-use-package 'use-package)
-
-;; Load the helper package for commands like `straight-x-clean-unused-repos'
-(require 'straight-x)
 
 (set-default-coding-systems 'utf-8)
 (setq-default indent-tabs-mode nil)
