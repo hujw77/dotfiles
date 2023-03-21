@@ -20,6 +20,9 @@
 ;;   (package-refresh-contents))
 (require 'use-package)
 
+;; load the config
+(toggle-debug-on-error)
+
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -56,10 +59,6 @@
 (setq scheme-program-name "racket")         ;; 如果用 Petite 就改成 "petite"
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "M-h") 'windmove-left)
-(global-set-key (kbd "M-j") 'windmove-down)
-(global-set-key (kbd "M-k") 'windmove-up)
-(global-set-key (kbd "M-l") 'windmove-right)
 (global-set-key (kbd "<f11>") (lambda () (interactive) (other-frame 1)))
 (global-set-key (kbd "<f12>") (lambda () (interactive) (other-frame -1)))
 ;; bypass the interactive question and start the default interpreter
@@ -151,7 +150,6 @@
 (setq scroll-step 1)
 (setq use-dialog-box nil)
 
-
 (set-default-coding-systems 'utf-8)
 (setq-default indent-tabs-mode nil)
 
@@ -165,3 +163,11 @@
 (use-package ws-butler
   :hook ((text-mode . ws-butler-mode)
          (prog-mode . ws-butler-mode)))
+
+(use-package xwwp-full
+  :straight (xwwp-full :type git :host github :repo "hujw77/xwwp")
+  :custom
+  (xwwp-follow-link-completion-system 'helm)
+  :bind (:map xwidget-webkit-mode-map
+              ("v" . xwwp-follow-link)
+              ("t" . xwwp-ace-toggle)))
