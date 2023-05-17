@@ -59,9 +59,14 @@ local opts = {
             -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
             ["rust-analyzer"] = {
                 -- enable clippy on save
-                checkOnSave = {
-                    command = "clippy"
-                },
+                checkOnSave = { command = "clippy" },
+				-- https://users.rust-lang.org/t/how-to-disable-rust-analyzer-proc-macro-warnings-in-neovim/53150
+				procMacro = { enable = true },
+			    diagnostics = {
+			        enable = true,
+			        disabled = {"unresolved-proc-macro"},
+			        enableExperimental = true,
+			    },
             }
         }
     },
