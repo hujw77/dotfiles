@@ -80,6 +80,9 @@ Plug 'iden3/vim-circom-syntax'
 " lua
 Plug 'tbastos/vim-lua'
 
+" sage
+Plug 'saliola/vim-sage'
+
 call plug#end()
 
 "=====================================================
