@@ -24,6 +24,6 @@ vim.keymap.set("n" , "<leader>d" , vim.lsp.buf.definition       , opts)
 vim.keymap.set("n" , "<leader>D" , vim.lsp.buf.implementation   , opts)
 vim.keymap.set("n" , "<leader>t" , vim.lsp.buf.type_definition  , opts)
 vim.keymap.set("n" , "<leader>r" , vim.lsp.buf.references       , opts)
-vim.keymap.set("n" , "<leader>a" , vim.lsp.buf.code_action      , opts)
+vim.keymap.set("n" , "<leader>c" , vim.lsp.buf.code_action      , opts)
 
 require'lspconfig'.pyright.setup{}

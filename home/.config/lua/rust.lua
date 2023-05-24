@@ -6,7 +6,7 @@ local rt = require'rust-tools'
 local function on_attach(client, buffer)
     local keymap_opts = { buffer = buffer, noremap=true, silent=true }
     -- Code navigation and shortcuts
-    vim.keymap.set("n" , "<leader>c" , rt.open_cargo_toml.open_cargo_toml , keymap_opts)
+    vim.keymap.set("n" , "<leader>l" , rt.open_cargo_toml.open_cargo_toml , keymap_opts)
     vim.keymap.set("n" , "<leader>m" , rt.expand_macro.expand_macro       , keymap_opts)
 
     -- Debugging
