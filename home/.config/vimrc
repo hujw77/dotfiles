@@ -296,10 +296,10 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Print full path
-map <C-f> :echo expand("%:p")<cr>
+nnor <leader>pf :echo expand("%:p")<CR>
 
-" Mnemonic: Copy File path
-nnor <leader>cf :let @*=expand("%:p")<CR>
+" Copy file path
+nnor <leader>pc :let @*=expand("%:p")<CR>
 
 " Terminal settings
 if has('terminal')
