@@ -222,6 +222,8 @@ augroup filetypedetect
   autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType typescript setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType kframework setlocal expandtab tabstop=2 shiftwidth=2
+
+  autocmd FileType sage setlocal commentstring=#\ %s
 augroup END
 
 "=====================================================
