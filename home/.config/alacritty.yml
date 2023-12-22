@@ -67,17 +67,17 @@ scrolling:
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Meslo LG M for Powerline
+    family: MesloLGMDZ Nerd Font Mono
     style: Regular
 
   # The bold font face
   bold:
-    family: Meslo LG M for Powerline
+    family: MesloLGMDZ Nerd Font Mono
     style: Bold
 
   # The italic font face
   italic:
-    family: Meslo LG M for Powerline
+    family: MesloLGMDZ Nerd Font Mono
     style: Italic
 
   # Point size of the font
@@ -186,6 +186,7 @@ cursor:
   #   - _ Underline
   #   - | Beam
   style: Block
+  unfocused_hollow: false
 
 # Live config reload (changes require restart)
 live_config_reload: true

@@ -1,8 +1,8 @@
 all: sync
 
 sync:
-	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/alacritty
+	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/fish
 	mkdir -p ~/.tmux/
 	mkdir -p ~/.emacs.d
@@ -10,12 +10,11 @@ sync:
 
 	[ -f ~/.config/alacritty/alacritty.yml ]                                     || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 	[ -f ~/.config/alacritty/color.yml ]                                         || ln -s $(PWD)/color.yml ~/.config/alacritty/color.yml
-	[ -f ~/.config/nvim/init.vim ]                                               || ln -s $(PWD)/initvim ~/.config/nvim/init.vim
 	[ -f ~/.config/fish/config.fish  ]                                           || ln -s $(PWD)/config.fish ~/.config/fish/config.fish
 	[ -d ~/.config/fish/functions/ ]                                             || ln -s $(PWD)/fish/functions ~/.config/fish/functions
 	[ -d ~/.config/fish/conf.d ]                                                 || ln -s $(PWD)/fish/conf.d ~/.config/fish/conf.d
 	[ -d ~/.config/nixpkgs ]                                                     || ln -s $(PWD)/nixpkgs ~/.config/nixpkgs
-	[ -d ~/.vim/lua ]                                                            || ln -s $(PWD)/lua ~/.vim
+	[ -f ~/.config/nvim/init.lua ]                                               || ln -s $(PWD)/init.lua ~/.config/nvim/init.lua
 	[ -f ~/.vimrc ]                                                              || ln -s $(PWD)/vimrc ~/.vimrc
 	[ -f ~/.bashrc ]                                                             || ln -s $(PWD)/bashrc ~/.bashrc
 	[ -f ~/.zshrc ]                                                              || ln -s $(PWD)/zshrc ~/.zshrc
@@ -36,6 +35,7 @@ sync:
 clean:
 	rm -f ~/.vimrc
 	rm -f ~/.config/nvim/init.vim
+	rm -f ~/.config/nvim/init.lua
 	rm -f ~/.config/alacritty/alacritty.yml
 	rm -f ~/.config/alacritty/color.yml
 	rm -f ~/.config/fish/config.fish

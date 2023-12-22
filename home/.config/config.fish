@@ -65,7 +65,7 @@ set -gx LESS_TERMCAP_us \e'[01;32m'
 # =============
 #    ALIAS
 # =============
-alias vi 'nvim'
+alias vi 'vim'
 alias vim 'nvim'
 alias e 'emacsclient -t'
 alias python python3
