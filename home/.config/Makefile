@@ -25,7 +25,7 @@ sync:
 	[ -f ~/.git-prompt.sh ]                                                      || ln -s $(PWD)/git-prompt.sh ~/.git-prompt.sh
 	[ -f ~/.gitconfig ]                                                          || ln -s $(PWD)/gitconfig ~/.gitconfig
 	[ -f ~/.agignore ]                                                           || ln -s $(PWD)/agignore ~/.agignore
-	[ -f ~/.emacs ]                                                              || ln -s $(PWD)/emacs ~/.emacs
+	# [ -f ~/.emacs ]                                                              || ln -s $(PWD)/emacs ~/.emacs
 	[ -f ~/Library/LaunchAgents/io.echo.notify.plist ]                           || ln -s $(PWD)/io.echo.notify.plist ~/Library/LaunchAgents/io.echo.notify.plist
 	[ -f ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py ] || ln -s $(PWD)/iterm2_auto.py ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py
 
@@ -52,7 +52,7 @@ clean:
 	rm -f ~/.gitconfig
 	rm -f ~/.agignore
 	rm -f ~/.ssh/config
-	rm -f ~/.emacs
+	# rm -f ~/.emacs
 	rm -f ~/Library/LaunchAgents/io.echo.notify.plist
 
 .PHONY: all clean sync build run kill
