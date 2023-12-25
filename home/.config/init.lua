@@ -238,7 +238,10 @@ require("lazy").setup({
       local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
       capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-      require("lspconfig").pyright.setup{}
+      require("lspconfig").pyright.setup {}
+      -- require("lspconfig").solc.setup {
+      --   cmd = {'solc', '--lsp', '--base-path', './', '--include-path', './lib $(forge remappings)'}
+      -- }
       require("lspconfig").rust_analyzer.setup {
         settings = {
           ["rust-analyzer"] = {
