@@ -583,8 +583,8 @@ let g:better_whitespace_guicolor='LightRed'
 " autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
 
 " import lua
-:lua require('lsp')
-:lua require('rust')
+" :lua require('lsp')
+" :lua require('rust')
 
 " zah/nim.vim
 fun! JumpToDef()

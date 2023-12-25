@@ -238,6 +238,20 @@ require("lazy").setup({
       local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
       capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+      require("lspconfig").pyright.setup{}
+      require("lspconfig").rust_analyzer.setup {
+        settings = {
+          ["rust-analyzer"] = {
+            checkOnSave = { command = "clippy" }, -- enable clippy on save
+				    procMacro = { enable = true }, -- https://users.rust-lang.org/t/how-to-disable-rust-analyzer-proc-macro-warnings-in-neovim/53150
+			      diagnostics = {
+			        enable = true,
+			        disabled = {"unresolved-proc-macro"},
+			        enableExperimental = true,
+			      },
+          },
+        }
+      }
       require("lspconfig").gopls.setup({
         capabilities = capabilities,
         flags = { debounce_text_changes = 200 },
@@ -766,6 +780,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "g0", vim.lsp.buf.document_symbol, opts)
+    vim.keymap.set("n", "gW", vim.lsp.buf.workspace_symbol, opts)
+    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+    vim.keymap.set("n", "<c-k>", vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<leader>cl', vim.lsp.codelens.run, opts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, opts)

@@ -1,5 +1,5 @@
 set -gxp PATH /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin
-set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
+Gkset -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin
 set -gx NVIMRC $HOME/.vimrc
@@ -65,8 +65,7 @@ set -gx LESS_TERMCAP_us \e'[01;32m'
 # =============
 #    ALIAS
 # =============
-alias vi 'vim'
-alias vim 'nvim'
+alias vi '/usr/local/bin/vim'
 alias e 'emacsclient -t'
 alias python python3
 
