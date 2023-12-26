@@ -121,7 +121,8 @@ require("lazy").setup({
       require("nvim-tree").setup({
         sort_by = "case_sensitive",
         filters = {
-          dotfiles = true,
+          dotfiles = true, -- H
+          git_ignored = true, -- I
         },
         on_attach = function(bufnr)
           local api = require('nvim-tree.api')
