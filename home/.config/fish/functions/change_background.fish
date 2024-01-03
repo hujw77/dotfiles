@@ -20,12 +20,12 @@ function change_background --argument mode_setting
   end
 
   # change neovim
-  for addr in (/usr/local/bin/nvr --serverlist)
+  for addr in (nvr --serverlist)
     switch $mode
       case dark
-        /usr/local/bin/nvr --servername "$addr" -c "set background=dark"
+        nvr --servername "$addr" -c "set background=dark"
       case light
-        /usr/local/bin/nvr --servername "$addr" -c "set background=light"
+        nvr --servername "$addr" -c "set background=light"
     end
   end
 
