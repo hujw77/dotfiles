@@ -741,8 +741,14 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
 -- Hence override our indentation rules.
 vim.api.nvim_create_autocmd('Filetype', {
   group = vim.api.nvim_create_augroup('setIndent', { clear = true }),
-  pattern = { 'go' },
+  pattern = { 'go', 'rust', 'solidity' },
   command = 'setlocal noexpandtab tabstop=4 shiftwidth=4'
+})
+
+vim.api.nvim_create_autocmd('Filetype', {
+  group = vim.api.nvim_create_augroup('setIndent', { clear = true }),
+  pattern = { 'sh', 'yaml', 'ruby', 'javascript', 'typescript', 'kframwork' },
+  command = 'setlocal noexpandtab tabstop=2 shiftwidth=2'
 })
 
 -- Run gofmt/gofmpt, import packages automatically on save
