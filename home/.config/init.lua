@@ -540,13 +540,30 @@ require("lazy").setup({
       })
     end,
   },
+
+  -- CHATGPT.nvim
+  {
+    "jackMort/ChatGPT.nvim",
+      event = "VeryLazy",
+      config = function()
+        require("chatgpt").setup({
+          api_key_cmd = "security find-generic-password -s ChatGPT-token -a ChatGPT -w"
+        }
+      )
+      end,
+      dependencies = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+      }
+  },
 })
 
 ----------------
 --- SETTINGS ---
 ----------------
 
--- disable netrw at the very start of our init.lua, because we use nvim-tree
+-- Please disable netrw at the beginning of our init.lua file, as we are using nvim-tree.
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
