@@ -20,21 +20,21 @@ function change_background --argument mode_setting
   end
 
   # change neovim
-  for addr in (nvr --serverlist)
+  for addr in (/usr/local/bin/nvr --serverlist)
     switch $mode
       case dark
-        nvr --servername "$addr" -c "set background=dark"
+        /usr/local/bin/nvr --servername "$addr" -c "set background=dark"
       case light
-        nvr --servername "$addr" -c "set background=light"
+        /usr/local/bin/nvr --servername "$addr" -c "set background=light"
     end
   end
 
   # change tmux
   switch $mode
     case dark
-      tmux source-file ~/.tmux/tmux-dark.conf
+      /usr/local/bin/tmux source-file ~/.tmux/tmux-dark.conf
     case light
-      tmux source-file ~/.tmux/tmux-light.conf
+      /usr/local/bin/tmux source-file ~/.tmux/tmux-light.conf
   end
 
   # change alacritty
