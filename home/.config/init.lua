@@ -550,14 +550,19 @@ require("lazy").setup({
       config = function()
         require("chatgpt").setup({
           api_key_cmd = "security find-generic-password -s ChatGPT-token -a ChatGPT -w"
-        }
-      )
+        })
       end,
       dependencies = {
         "MunifTanjim/nui.nvim",
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim"
       }
+  },
+  { 'echasnovski/mini.align',
+      version = false,
+      config = function()
+        require('mini.align').setup()
+      end,
   },
 })
 
