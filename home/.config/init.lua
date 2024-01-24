@@ -347,6 +347,7 @@ require("lazy").setup({
           'gomod',
           'lua',
           'ruby',
+          'rust',
           'vimdoc',
           'vim',
           'bash',
@@ -354,6 +355,7 @@ require("lazy").setup({
           'markdown',
           'markdown_inline',
           'mermaid',
+          'solidity',
         },
         indent = { enable = true },
         incremental_selection = {
