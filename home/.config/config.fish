@@ -1,4 +1,4 @@
-set -gxp PATH /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin
+set -gxp PATH /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin $HOME/.local/share/solana/install/active_release/bin
 set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin

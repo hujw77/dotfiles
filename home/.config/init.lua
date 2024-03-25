@@ -352,6 +352,7 @@ require("lazy").setup({
           'vim',
           'bash',
           'fish',
+          'json',
           'markdown',
           'markdown_inline',
           'mermaid',
