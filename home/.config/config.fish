@@ -43,7 +43,7 @@ status --is-interactive; and source (rbenv init -|psub)
 # It contains work related stuff, some functions, aliases etc...
 # source ~/.config/fish/private.fish
 #
-fish_add_path /usr/local/opt/node@22/bin
+fish_add_path /usr/local/opt/node@18/bin
 fish_add_path /usr/local/opt/python@3.11/bin
 fish_add_path /usr/local/opt/ruby/bin
 fish_add_path /usr/local/lib/ruby/gems/3.0.0/bin
@@ -77,3 +77,7 @@ switch (uname)
         alias ll='ls -al'
         alias ls='ls --color=auto'
 end
+
+fish_add_path -a /Users/echo/.foundry/bin
+
+export PATH="$PATH:/Users/echo/.ityfuzz/bin"

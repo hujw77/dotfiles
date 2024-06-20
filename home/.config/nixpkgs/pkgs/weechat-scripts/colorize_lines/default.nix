@@ -6,7 +6,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://weechat.org/files/scripts/colorize_lines.pl";
-    sha256 = "17sa92zfplnny61bfxdj0y45c31szrny5q0f07v5c7pmzmbhzzg7";
+    sha256 = "sha256-Ow77UIBNmEKh95F7/fiVth43p5yt9m0HFA1kFF3+Thg=";
   };
 
   dontUnpack = true;
