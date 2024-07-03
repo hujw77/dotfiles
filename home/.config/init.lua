@@ -11,6 +11,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Globals {{{
+local function init_globals()
+    vim.g.python3_host_prog                         = '/usr/local/bin/python3'
+    vim.g.perl_host_prog                            = '/usr/local/bin/perl'
+end
+-- }}}
+
 -- ChangeBackground changes the background mode based on macOS's `Appearance
 -- setting.
 local function change_background()
