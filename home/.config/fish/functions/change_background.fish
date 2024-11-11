@@ -20,28 +20,36 @@ function change_background --argument mode_setting
   end
 
   # change neovim
-  for addr in (/usr/local/bin/nvr --serverlist)
+  for addr in (/opt/homebrew/bin/nvr --serverlist)
     switch $mode
       case dark
-        /usr/local/bin/nvr --servername "$addr" -c "set background=dark"
+        /opt/homebrew/bin/nvr --servername "$addr" -c "set background=dark"
       case light
-        /usr/local/bin/nvr --servername "$addr" -c "set background=light"
+        /opt/homebrew/bin/nvr --servername "$addr" -c "set background=light"
     end
   end
 
   # change tmux
   switch $mode
     case dark
-      /usr/local/bin/tmux source-file ~/.tmux/tmux-dark.conf
+      tmux source-file ~/.tmux/tmux-dark.conf
     case light
-      /usr/local/bin/tmux source-file ~/.tmux/tmux-light.conf
+      tmux source-file ~/.tmux/tmux-light.conf
   end
 
-  # change alacritty
-  switch $mode
-    case dark
-      alacritty-theme gruvbox_dark
-    case light
-      alacritty-theme gruvbox_light
+  # # change alacritty
+  function alacritty-theme --argument mode_setting
+    pushd /Users/hujingwei/workspace/tools/dotfiles/home/.config
+
+    cp alacritty.toml alacritty.toml.backup
+    set -l line "general.import = [\"/Users/hujingwei/.config/alacritty/themes/alacritty-gruvbox-$mode_setting.toml\"]"
+    echo $line> alacritty.toml
+    
+    cat alacritty.toml.backup |tail -n+2>> alacritty.toml
+    rm alacritty.toml.backup
+
+    popd
   end
+
+  alacritty-theme $mode
 end

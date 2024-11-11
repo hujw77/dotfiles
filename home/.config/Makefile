@@ -2,14 +2,17 @@ all: sync
 
 sync:
 	mkdir -p ~/.config/alacritty
+	mkdir -p ~/.config/alacritty/themes
 	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/fish
 	mkdir -p ~/.tmux/
 	mkdir -p ~/.emacs.d
 	mkdir -p ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch
 
-	[ -f ~/.config/alacritty/alacritty.yml ]                                     || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
-	[ -f ~/.config/alacritty/color.yml ]                                         || ln -s $(PWD)/color.yml ~/.config/alacritty/color.yml
+
+	[ -f ~/.config/alacritty/alacritty.toml ]                                    || ln -s $(PWD)/alacritty.toml ~/.config/alacritty/alacritty.toml
+	[ -f ~/.config/alacritty/themes/alacritty-gruvbox-dark.toml ]                || ln -s $(PWD)/alacritty-gruvbox-dark.toml ~/.config/alacritty/themes/alacritty-gruvbox-dark.toml
+	[ -f ~/.config/alacritty/themes/alacritty-gruvbox-light.toml ]               || ln -s $(PWD)/alacritty-gruvbox-light.toml ~/.config/alacritty/themes/alacritty-gruvbox-light.toml
 	[ -f ~/.config/fish/config.fish  ]                                           || ln -s $(PWD)/config.fish ~/.config/fish/config.fish
 	[ -d ~/.config/fish/functions/ ]                                             || ln -s $(PWD)/fish/functions ~/.config/fish/functions
 	[ -d ~/.config/fish/conf.d ]                                                 || ln -s $(PWD)/fish/conf.d ~/.config/fish/conf.d
@@ -36,7 +39,9 @@ clean:
 	rm -f ~/.vimrc
 	rm -f ~/.config/nvim/init.vim
 	rm -f ~/.config/nvim/init.lua
-	rm -f ~/.config/alacritty/alacritty.yml
+	rm -f ~/.config/alacritty/alacritty.toml
+	rm -f ~/.config/alacritty/themes/alacritty-gruvbox-dark.toml
+	rm -f ~/.config/alacritty/themes/alacritty-gruvbox-light.toml
 	rm -f ~/.config/alacritty/color.yml
 	rm -f ~/.config/fish/config.fish
 	rm -rf ~/.config/fish/functions

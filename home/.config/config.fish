@@ -1,11 +1,11 @@
-set -gxp PATH /usr/local/sbin $HOME/go/bin $HOME/.cargo/bin $HOME/.local/share/solana/install/active_release/bin
-set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
+set -gxp PATH $HOM/.cargo/bin $HOME/go/bin /usr/local/sbin /opt/homebrew/bin
+# set -gx RUST_SC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin
 set -gx NVIMRC $HOME/.vimrc
 set -gx NVM_DIR $HOME/.nvm
 set -gx EDITOR nvim
-set -gx FZF_CTRL_T_COMMAND vim
+set -gx FZF_CTRL_T_COMMAND nvim
 
 set -x GPG_TTY (tty)
 
@@ -43,12 +43,12 @@ status --is-interactive; and source (rbenv init -|psub)
 # It contains work related stuff, some functions, aliases etc...
 # source ~/.config/fish/private.fish
 #
-fish_add_path /usr/local/opt/node@18/bin
-fish_add_path /usr/local/opt/python@3.11/bin
-fish_add_path /usr/local/opt/ruby/bin
-fish_add_path /usr/local/lib/ruby/gems/3.0.0/bin
-fish_add_path /usr/local/opt/openssl@1.1/bin
-fish_add_path /usr/local/opt/mysql-client/bin
+# fish_add_path /usr/local/opt/node@18/bin
+# fish_add_path /usr/local/opt/python@3.11/bin
+# fish_add_path /usr/local/opt/ruby/bin
+# fish_add_path /usr/local/lib/ruby/gems/3.0.0/bin
+# fish_add_path /usr/local/opt/openssl@1.1/bin
+# fish_add_path /usr/local/opt/mysql-client/bin
 
 set -gx LSCOLORS cxBxhxDxfxhxhxhxhxcxcx
 set -gx CLICOLOR 1
@@ -78,10 +78,9 @@ switch (uname)
         alias ls='ls --color=auto'
 end
 
-fish_add_path -a /Users/echo/.foundry/bin
-
-export PATH="$PATH:/Users/echo/.ityfuzz/bin"
+# fish_add_path -a /Users/echo/.foundry/bin
+# export PATH="$PATH:/Users/echo/.ityfuz/z/bin"
 
 # bun
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH
+# set --export BUN_INSTALL "$HOME/.bun"
+# set --export PATH $BUN_INSTALL/bin $PATH

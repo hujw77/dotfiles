@@ -8,13 +8,13 @@
     <key>KeepAlive</key>
     <true/>
     <key>StandardErrorPath</key>
-    <string>/Users/echo/.notify-stderr.log</string>
+    <string>/Users/hujingwei/.notify-stderr.log</string>
     <key>StandardOutPath</key>
-    <string>/Users/echo/.notify-stdout.log</string>
+    <string>/Users/hujingwei/.notify-stdout.log</string>
     <key>ProgramArguments</key>
     <array>
-       <string>/usr/local/bin/notify</string>
-       <string>/usr/local/bin/fish</string>
+      <string>/opt/homebrew/bin/notify</string>
+       <string>/opt/homebrew/bin/fish</string>
        <string>-c</string>
        <string>change_background</string>
     </array>
