@@ -197,3 +197,4 @@ eval "$(jump shell bash)"
 # brew install direnv
 # https://github.com/direnv/direnv
 eval "$(direnv hook bash)"
+. "$HOME/.cargo/env"

@@ -43,6 +43,8 @@
 	excludesfile = /Users/echo/.gitignore
 [credential]
 	helper = osxkeychain
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 [github]
 	user = echo
 [mergetool]
@@ -61,3 +63,5 @@
 	defaultBranch = main
 [gpg]
 	program = gpg
+[credential "https://dev.azure.com"]
+	useHttpPath = true

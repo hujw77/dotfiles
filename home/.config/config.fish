@@ -1,4 +1,4 @@
-set -gxp PATH $HOM/.cargo/bin $HOME/go/bin /usr/local/sbin /opt/homebrew/bin
+set -gxp PATH $HOME/.cargo/bin $HOME/go/bin /usr/local/sbin /opt/homebrew/bin
 # set -gx RUST_SC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 set -gx GOPATH $HOME/go
 set -gx GOBIN $HOME/go/bin
@@ -78,9 +78,35 @@ switch (uname)
         alias ls='ls --color=auto'
 end
 
-# fish_add_path -a /Users/echo/.foundry/bin
 # export PATH="$PATH:/Users/echo/.ityfuz/z/bin"
 
 # bun
 # set --export BUN_INSTALL "$HOME/.bun"
 # set --export PATH $BUN_INSTALL/bin $PATH
+
+fish_add_path -a /Users/hujingwei/.foundry/bin
+
+# Created by `pipx` on 2024-12-06 01:58:34
+fish_add_path /Users/hujingwei/.local/bin
+
+fish_add_path /Users/hujingwei/.pyenv/bin
+pyenv init - fish | source
+
+fish_add_path /opt/homebrew/opt/libpq/bin
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if test -f /opt/homebrew/Caskroom/miniconda/base/bin/conda
+    eval /opt/homebrew/Caskroom/miniconda/base/bin/conda "shell.fish" "hook" $argv | source
+else
+    if test -f "/opt/homebrew/Caskroom/miniconda/base/etc/fish/conf.d/conda.fish"
+        . "/opt/homebrew/Caskroom/miniconda/base/etc/fish/conf.d/conda.fish"
+    else
+        set -x PATH "/opt/homebrew/Caskroom/miniconda/base/bin" $PATH
+    end
+end
+# <<< conda initialize <<<
+
+set -gx E /Volumes/Samsung
+set -gx EHOME $E/$HOME
+

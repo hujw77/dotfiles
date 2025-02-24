@@ -360,10 +360,13 @@ require("lazy").setup({
           'bash',
           'fish',
           'json',
+          'javascript',
+          'typescript',
           'markdown',
           'markdown_inline',
           'mermaid',
           'solidity',
+          'python',
         },
         indent = { enable = true },
         incremental_selection = {
