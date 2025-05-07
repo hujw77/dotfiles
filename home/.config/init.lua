@@ -554,6 +554,17 @@ require("lazy").setup({
     end,
   },
 
+  -- augment
+  {
+    'augmentcode/augment.vim',
+    config = function()
+      vim.g.augment_workspace_folders = {'/Volumes/Samsung/rust/solver/cow-solver', '/Volumes/Samsung/rust/solver/smart-order-router'}
+    end,
+  },
+
+  -- -- RustOwl.nvim
+  -- { "cordx56/rustowl", dependencies = { "neovim/nvim-lspconfig" } }
+
   -- -- CHATGPT.nvim
   -- {
   --   "jackMort/ChatGPT.nvim",
@@ -768,6 +779,17 @@ vim.keymap.set('n', '<leader>ds', vim.diagnostic.setqflist)
 
 -- vim-go
 vim.keymap.set('n', '<leader>b', build_go_files)
+
+-- augment
+-- Send a chat message in normal and visual mode
+vim.api.nvim_set_keymap('n', '<leader>ac', ':Augment chat<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>ac', ':Augment chat<CR>', { noremap = true, silent = true })
+-- Start a new chat conversation
+vim.api.nvim_set_keymap('n', '<leader>an', ':Augment chat-new<CR>', { noremap = true, silent = true })
+-- Toggle the chat panel visibility
+vim.api.nvim_set_keymap('n', '<leader>at', ':Augment chat-toggle<CR>', { noremap = true, silent = true })
+-- " Use Ctrl-Y to accept a suggestion
+vim.api.nvim_set_keymap('i', '<C-Y>', '<cmd>call augment#Accept()<CR>', { noremap = true, silent = true })
 
 -- disable diagnostics, I didn't like them
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
