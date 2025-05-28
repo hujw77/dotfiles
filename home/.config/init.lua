@@ -558,7 +558,11 @@ require("lazy").setup({
   {
     'augmentcode/augment.vim',
     config = function()
-      vim.g.augment_workspace_folders = {'/Volumes/Samsung/rust/solver/cow-solver', '/Volumes/Samsung/rust/solver/smart-order-router'}
+      vim.g.augment_workspace_folders = {
+        '/Volumes/Samsung/rust/solver/cow-solver',
+        '/Volumes/Samsung/rust/solver/smart-order-router',
+        '/Volumes/Samsung/rust/solver/extreme'
+      }
     end,
   },
 
