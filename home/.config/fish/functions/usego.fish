@@ -7,7 +7,7 @@ function usego --argument ver
   set go_bin_path (command -v "go$ver")
   if test -z $go_bin_path
     echo "go $ver does not exist, installing with commands: "
-    echo " go install golang.org/dl/go$ver@latest"
+    echo "  go install golang.org/dl/go$ver@latest"
     echo "  go$ver download"
     echo ""
 

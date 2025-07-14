@@ -167,20 +167,6 @@ require("lazy").setup({
     end,
   },
 
-  -- markdown
-  {
-    "iamcco/markdown-preview.nvim",
-    dependencies = {
-      "zhaozg/vim-diagram",
-      "aklt/plantuml-syntax",
-    },
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    ft = "markdown",
-    cmd = { "MarkdownPreview" },
-  },
-
   -- commenting out lines
   {
     "numToStr/Comment.nvim",
@@ -250,19 +236,19 @@ require("lazy").setup({
       -- require("lspconfig").solc.setup {
       --   cmd = {'solc', '--lsp', '--base-path', './', '--include-path', './lib $(forge remappings)'}
       -- }
-      require("lspconfig").rust_analyzer.setup {
-        settings = {
-          ["rust-analyzer"] = {
-            checkOnSave = { command = "clippy" }, -- enable clippy on save
-				    procMacro = { enable = true }, -- https://users.rust-lang.org/t/how-to-disable-rust-analyzer-proc-macro-warnings-in-neovim/53150
-			      diagnostics = {
-			        enable = true,
-			        disabled = {"unresolved-proc-macro"},
-			        enableExperimental = true,
-			      },
-          },
-        }
-      }
+      -- require("lspconfig").rust_analyzer.setup {
+      --   settings = {
+      --     ["rust-analyzer"] = {
+      --       checkOnSave = { command = "clippy" }, -- enable clippy on save
+				  --   procMacro = { enable = true }, -- https://users.rust-lang.org/t/how-to-disable-rust-analyzer-proc-macro-warnings-in-neovim/53150
+			   --    diagnostics = {
+			   --      enable = true,
+			   --      disabled = {"unresolved-proc-macro"},
+			   --      enableExperimental = true,
+			   --    },
+      --     },
+      --   }
+      -- }
       require("lspconfig").gopls.setup({
         capabilities = capabilities,
         flags = { debounce_text_changes = 200 },
@@ -565,6 +551,13 @@ require("lazy").setup({
       }
     end,
   },
+
+  -- rustaceanvim
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^6', -- Recommended
+    lazy = false, -- This plugin is already lazy
+  }
 
   -- -- RustOwl.nvim
   -- { "cordx56/rustowl", dependencies = { "neovim/nvim-lspconfig" } }
