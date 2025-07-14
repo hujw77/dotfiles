@@ -18,18 +18,6 @@ local function init_globals()
 end
 -- }}}
 
--- ChangeBackground changes the background mode based on macOS's `Appearance
--- setting.
-local function change_background()
-  local m = vim.fn.system("defaults read -g AppleInterfaceStyle")
-  m = m:gsub("%s+", "") -- trim whitespace
-  if m == "Dark" then
-    vim.o.background = "dark"
-  else
-    vim.o.background = "light"
-  end
-end
-
 -- run :GoBuild or :GoTestCompile based on the go file
 local function build_go_files()
   if vim.endswith(vim.api.nvim_buf_get_name(0), "_test.go") then
@@ -45,11 +33,10 @@ end
 require("lazy").setup({
 
   -- colorscheme
-  {
-    "ellisonleao/gruvbox.nvim",
+  { 
+    "ellisonleao/gruvbox.nvim", 
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function ()
-      change_background()
       require("gruvbox").setup({
         contrast = "hard"
       })
@@ -57,16 +44,22 @@ require("lazy").setup({
     end,
   },
 
+  -- automatic dark mode
+  -- requires: brew install cormacrelf/tap/dark-notify
+  { 
+    "cormacrelf/dark-notify",
+    config = function ()
+      require("dark_notify").run()
+    end,
+  },
+
   -- statusline
-  {
+  { 
     "nvim-lualine/lualine.nvim",
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function ()
       require("lualine").setup({
-        options = {
-          theme = 'gruvbox',
-          section_separators = '', component_separators = ''
-        },
+        options = { theme = 'gruvbox' },
         sections = {
           lualine_c = {
             {
@@ -184,111 +177,146 @@ require("lazy").setup({
     "AndrewRadev/splitjoin.vim"
   },
 
-  -- fzf extension for telescope with better speed
-  {
-    "nvim-telescope/telescope-fzf-native.nvim", build = 'make' 
-  },
-
-  {'nvim-telescope/telescope-ui-select.nvim' },
-
-  -- fuzzy finder framework
-  {
-    "nvim-telescope/telescope.nvim",
-    tag = '0.1.4',
+  { -- Fuzzy Finder (files, lsp, etc)
+    'nvim-telescope/telescope.nvim',
+    event = 'VimEnter',
+    branch = '0.1.x',
     dependencies = {
-      "nvim-lua/plenary.nvim" ,
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
+      'nvim-lua/plenary.nvim',
+      { -- If encountering errors, see telescope-fzf-native README for installation instructions
+        'nvim-telescope/telescope-fzf-native.nvim',
+
+        -- `build` is used to run some command when the plugin is installed/updated.
+        -- This is only run then, not every time Neovim starts up.
+        build = 'make',
+
+        -- `cond` is a condition used to determine whether this plugin should be
+        -- installed and loaded.
+        cond = function()
+          return vim.fn.executable 'make' == 1
+        end,
+      },
+      { 'nvim-telescope/telescope-ui-select.nvim' },
+
+      -- Useful for getting pretty icons, but requires a Nerd Font.
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
-    config = function ()
-      require("telescope").setup({
+
+    config = function()
+      require('telescope').setup {
+        defaults = {
+          layout_strategy = 'center',
+          sorting_strategy = "ascending",
+          layout_config = {
+            prompt_position = "top"  -- search bar at the top
+          },
+        },
         extensions = {
-          fzf = {
-            fuzzy = true,                    -- false will only do exact matching
-            override_generic_sorter = true,  -- override the generic sorter
-            override_file_sorter = true,     -- override the file sorter
-            case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                             -- the default case_mode is "smart_case"
+          ['ui-select'] = {
+            require('telescope.themes').get_dropdown(),
+          },
+        },
+        picker = {
+          find_files = {
+            theme = "dropdown",
           }
         }
-      })
+      }
 
-      -- To get fzf loaded and working with telescope, you need to call
-      -- load_extension, somewhere after setup function:
-      require('telescope').load_extension('fzf')
+      -- Enable Telescope extensions if they are installed
+      pcall(require('telescope').load_extension, 'fzf')
+      pcall(require('telescope').load_extension, 'ui-select')
 
-      -- To get ui-select loaded and working with telescope, you need to call
-      -- load_extension, somewhere after setup function:
-      require("telescope").load_extension("ui-select")
+      -- See `:help telescope.builtin`
+      local builtin = require 'telescope.builtin'
+      vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+      vim.keymap.set('n', '<C-b>', builtin.find_files, {})
+      vim.keymap.set('n', '<C-g>', builtin.lsp_document_symbols, {})
+      vim.keymap.set('n', '<leader>td', builtin.diagnostics, {})
+      vim.keymap.set('n', '<leader>gs', builtin.grep_string, {})
+      vim.keymap.set('n', '<leader>gg', builtin.live_grep, {})
     end,
   },
 
-  -- lsp-config
+  -- LSP Plugins
   {
-    "neovim/nvim-lspconfig",
-    config = function ()
-      util = require "lspconfig/util"
+    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+    -- used for completion, annotations and signatures of Neovim apis
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {
+      library = {
+        -- Load luvit types when the `vim.uv` word is found
+        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+  { 'Bilal2453/luvit-meta', lazy = true },
 
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
+  {
+    -- Main LSP Configuration
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      -- Automatically install LSPs and related tools to stdpath for Neovim
+      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-      require("lspconfig").pyright.setup {}
-      -- require("lspconfig").solc.setup {
-      --   cmd = {'solc', '--lsp', '--base-path', './', '--include-path', './lib $(forge remappings)'}
-      -- }
-      -- require("lspconfig").rust_analyzer.setup {
-      --   settings = {
-      --     ["rust-analyzer"] = {
-      --       checkOnSave = { command = "clippy" }, -- enable clippy on save
-				  --   procMacro = { enable = true }, -- https://users.rust-lang.org/t/how-to-disable-rust-analyzer-proc-macro-warnings-in-neovim/53150
-			   --    diagnostics = {
-			   --      enable = true,
-			   --      disabled = {"unresolved-proc-macro"},
-			   --      enableExperimental = true,
-			   --    },
-      --     },
-      --   }
-      -- }
-      require("lspconfig").gopls.setup({
-        capabilities = capabilities,
-        flags = { debounce_text_changes = 200 },
-        settings = {
-          gopls = {
-            usePlaceholders = true,
-            gofumpt = true,
-            analyses = {
-              nilness = true,
-              unusedparams = true,
-              unusedwrite = true,
-              useany = true,
-            },
-            codelenses = {
-              gc_details = false,
-              generate = true,
-              regenerate_cgo = true,
-              run_govulncheck = true,
-              test = true,
-              tidy = true,
-              upgrade_dependency = true,
-              vendor = true,
-            },
-            experimentalPostfixCompletions = true,
-            completeUnimported = true,
-            staticcheck = true,
-            directoryFilters = { "-.git", "-node_modules" },
-            semanticTokens = true,
-            hints = {
-              assignVariableTypes = true,
-              compositeLiteralFields = true,
-              compositeLiteralTypes = true,
-              constantValues = true,
-              functionTypeParameters = true,
-              parameterNames = true,
-              rangeVariableTypes = true,
+      -- Useful status updates for LSP.
+      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      { 'j-hui/fidget.nvim', opts = {} },
+
+      -- Allows extra capabilities provided by nvim-cmp
+      'hrsh7th/cmp-nvim-lsp',
+    },
+    config = function()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+      local servers = {
+        gopls = {
+          capabilities = capabilities,
+        },
+        lua_ls = {
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = 'Replace',
+              },
             },
           },
         },
+      }
+
+      -- Ensure the servers and tools above are installed
+      --  To check the current status of installed tools and/or manually install
+      --  other tools, you can run
+      --    :Mason
+      --
+      --  You can press `g?` for help in this menu.
+      require('mason').setup()
+
+      -- You can add other tools here that you want Mason to install
+      -- for you, so that they are available from within Neovim.
+      local ensure_installed = vim.tbl_keys(servers or {})
+      vim.list_extend(ensure_installed, {
+        'stylua', -- Used to format Lua code
+        'gofumpt', -- Used to format Lua code
       })
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      require('mason-lspconfig').setup {
+        handlers = {
+          function(server_name)
+            local server = servers[server_name] or {}
+            -- This handles overriding only values explicitly passed
+            -- by the server configuration above. Useful when disabling
+            -- certain features of an LSP (for example, turning off formatting for ts_ls)
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            require('lspconfig')[server_name].setup(server)
+          end,
+        },
+      }
     end,
   },
 
@@ -338,6 +366,7 @@ require("lazy").setup({
         ensure_installed = {
           'go',
           'gomod',
+          'proto',
           'lua',
           'ruby',
           'rust',
@@ -457,24 +486,37 @@ require("lazy").setup({
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "onsails/lspkind-nvim",
+      "lukas-reineke/cmp-under-comparator",
     },
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       local lspkind = require("lspkind")
+      local types = require("cmp.types")
+      local compare = require("cmp.config.compare")
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
       luasnip.config.setup {}
 
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      local modified_priority = {
+          [types.lsp.CompletionItemKind.Variable] = types.lsp.CompletionItemKind.Method,
+          [types.lsp.CompletionItemKind.Snippet] = 0, -- top
+          [types.lsp.CompletionItemKind.Keyword] = 0, -- top
+          [types.lsp.CompletionItemKind.Text] = 100, -- bottom
+      }
+
+      local function modified_kind(kind)
+          return modified_priority[kind] or kind
       end
 
+
       require('cmp').setup({
+        preselect = false,
+        completion = {
+            completeopt = "menu,menuone,preview,noselect",
+        },
         snippet = {
             expand = function(args)
               luasnip.lsp_expand(args.body)
@@ -490,38 +532,68 @@ require("lazy").setup({
             },
           },
         },
+
+        sorting = {
+            priority_weight = 1.0,
+            comparators = {
+                compare.offset,
+                compare.exact,
+                compare.score,
+                compare.locality,
+                function(entry1, entry2) -- sort by length ignoring "=~"
+                    local len1 = string.len(string.gsub(entry1.completion_item.label, "[=~()_]", ""))
+                    local len2 = string.len(string.gsub(entry2.completion_item.label, "[=~()_]", ""))
+                    if len1 ~= len2 then
+                        return len1 - len2 < 0
+                    end
+                end,
+                compare.recently_used,
+                function(entry1, entry2) -- sort by compare kind (Variable, Function etc)
+                    local kind1 = modified_kind(entry1:get_kind())
+                    local kind2 = modified_kind(entry2:get_kind())
+                    if kind1 ~= kind2 then
+                        return kind1 - kind2 < 0
+                    end
+                end,
+                require("cmp-under-comparator").under,
+                compare.kind,
+            },
+        },
+
+        matching = {
+           disallow_fuzzy_matching = true,
+           disallow_fullfuzzy_matching = true,
+           disallow_partial_fuzzy_matching = true,
+           disallow_partial_matching = false,
+           disallow_prefix_unmatching = true,
+        },
         mapping = cmp.mapping.preset.insert {
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<CR>'] = cmp.mapping.confirm { select = true },
-          ['<Tab>'] = cmp.mapping(function(fallback)
+          ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then 
-              luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
             else
-              fallback()
+                fallback()
             end
           end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+             if cmp.visible() then
+                 cmp.select_prev_item()
+             elseif luasnip.jumpable(-1) then
+                 luasnip.jump(-1)
+             else
+                 fallback()
+             end
+          end, { "i", "s" }),
+
         },
-        -- don't auto select item
-        preselect = cmp.PreselectMode.None,
-        window = {
-          documentation = cmp.config.window.bordered(),
-        },
+        window = { documentation = cmp.config.window.bordered(), completion = cmp.config.window.bordered() },
         view = {
           entries = {
             name = "custom",
@@ -535,6 +607,9 @@ require("lazy").setup({
           { name = 'nvim_lsp' },
           { name = "luasnip", keyword_length = 2},
           { name = "buffer", keyword_length = 5},
+        },
+        performance = {
+          max_view_entries = 20,
         },
       })
     end,
@@ -643,6 +718,17 @@ vim.keymap.set('n', 'k', 'gk')
 vim.keymap.set('i', 'jj', '<ESC>')
 vim.keymap.set('i', 'jk', '<ESC>')
 
+-- Copy current filepath to system clipboard (relative to git root, fallback to absolute path)
+vim.keymap.set('n', '<Leader>e', function()
+  local git_prefix = vim.fn.system('git rev-parse --show-prefix'):gsub('\n', '')
+  if vim.v.shell_error == 0 then
+    local relative_path = git_prefix .. vim.fn.expand('%')
+    vim.fn.setreg('+', relative_path)
+  else
+    vim.fn.setreg('+', vim.fn.expand('%:p'))
+  end
+end, { silent = true })
+
 -- Remove search highlight
 vim.keymap.set('n', '<Leader><space>', ':nohlsearch<CR>')
 
@@ -711,17 +797,22 @@ vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l')
 -- links in browser
 vim.keymap.set("n", "gx", '<Cmd>call jobstart(["open", expand("<cfile>")], {"detach": v:true})<CR>')
 
--- automatically switch to insert mode when entering a Term buffer
-vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
-    group = vim.api.nvim_create_augroup("openTermInsert", {}),
-    callback = function(args)
-        -- we don't use vim.startswith() and look for test:// because of vim-test
-        -- vim-test starts tests in a terminal, which we want to keep in normal mode
-        if vim.endswith(vim.api.nvim_buf_get_name(args.buf), "fish") then
-            vim.cmd("startinsert")
-        end
-    end,
-})
+if vim.fn.getenv("TERM_PROGRAM") == "ghostty" then
+  vim.opt.title = true
+  vim.opt.titlestring = "%{getcwd()}/%{bufname()}"
+end
+
+-- -- automatically switch to insert mode when entering a Term buffer
+-- vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
+--     group = vim.api.nvim_create_augroup("openTermInsert", {}),
+--     callback = function(args)
+--         -- we don't use vim.startswith() and look for test:// because of vim-test
+--         -- vim-test starts tests in a terminal, which we want to keep in normal mode
+--         if vim.endswith(vim.api.nvim_buf_get_name(args.buf), "fish") then
+--             vim.cmd("startinsert")
+--         end
+--     end,
+-- })
 
 -- Open help window in a vertical split to the right.
 vim.api.nvim_create_autocmd("BufWinEnter", {
@@ -732,10 +823,10 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     end
 })
 
--- don't show number
-vim.api.nvim_create_autocmd("TermOpen", {
-    command = [[setlocal nonumber norelativenumber]]
-})
+-- -- don't show number
+-- vim.api.nvim_create_autocmd("TermOpen", {
+--     command = [[setlocal nonumber norelativenumber]]
+-- })
 
 
 -- git.nvim
@@ -776,6 +867,9 @@ vim.keymap.set('n', '<leader>ds', vim.diagnostic.setqflist)
 
 -- vim-go
 vim.keymap.set('n', '<leader>b', build_go_files)
+vim.api.nvim_create_user_command("A", ":lua vim.api.nvim_call_function('go#alternate#Switch', {true, 'edit'})<CR>", {})
+vim.api.nvim_create_user_command("AV", ":lua vim.api.nvim_call_function('go#alternate#Switch', {true, 'vsplit'})<CR>", {})
+vim.api.nvim_create_user_command("AS", ":lua vim.api.nvim_call_function('go#alternate#Switch', {true, 'split'})<CR>", {})
 
 -- augment
 -- Send a chat message in normal and visual mode
@@ -878,4 +972,15 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'qf',
   group = qfgroup,
   command = 'setlocal wrap',
+})
+
+-- Highlight when yanking (copying) text
+--  Try it with `yap` in normal mode
+--  See `:help vim.highlight.on_yank()`
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })

@@ -63,5 +63,3 @@
 	defaultBranch = main
 [gpg]
 	program = gpg
-[credential "https://dev.azure.com"]
-	useHttpPath = true

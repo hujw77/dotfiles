@@ -130,9 +130,9 @@ bind-key x kill-pane
 # List of plugins
 # see this https://github.com/tmux-plugins/tpm to installation
 set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-open'
-set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'erikw/tmux-dark-notify'
+set -g @dark-notify-theme-path-light '$HOME/.tmux/tmux-light.conf'
+set -g @dark-notify-theme-path-dark '$HOME/.tmux/tmux-dark.conf'
 
  # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
@@ -229,4 +229,60 @@ run '~/.tmux/plugins/tpm/tpm'
 # enter the hex code which I want to be executed, hence the tmux sequence. So
 # when I press CMD + d in iterm, I send the sequence 0x06 0x76,
 # which tmux inteprets it as opening a new pane.
+###############################################
+
+######### Ghostty + Tmux key integration #########
+# First of all, Ghostty can send hex codes for shortcuts you define. So for
+# example you can send a hex code for the shortcut "c-f v" which in my case
+# opens a vertical pane (see setting above). The hex code for this combination
+# is: 0x06 0x76. There are many cases to find it out. One of them is the tool
+# 'xxd'
+
+# If you run "xxd -psd" and hit "c-f v" and then enter and finally c-c to exit
+# , it outputs the following:
+#
+# 	$ xxd -psd
+# 	^Fv
+# 	06760a^C
+#
+# What matters is the sequence  06760a^C where:
+#
+# 	06 -> c-f
+# 	76 -> v
+# 	0a -> return
+#	^C -> c-c
+#
+# From here, we know that 0x06 0x76 corresponds to "c-f v".
+#
+# Next step is to add a line to 'key_binding' setting in Ghostty:
+#
+#    keybind = super+d=text:\x06\x76
+# 
+# From now when, when I press cmd+d, Ghossty sends the 'c-f v' interpretation
+# which opens a split pane
+#
+# That's it! The followings are the ones that I'm using:
+#
+#    keybind = super+d=text:\x06\x76
+#    keybind = super+shift+d=text:\x06\x73
+#    keybind = super+w=text:\x06\x78
+#    keybind = super+h=text:\x06\x68
+#    keybind = super+j=text:\x06\x6a
+#    keybind = super+k=text:\x06\x6b
+#    keybind = super+l=text:\x06\x6c
+#    keybind = super+right=text:\x06\x4c
+#    keybind = super+down=text:\x06\x4a
+#    keybind = super+left=text:\x06\x48
+#    keybind = super+up=text:\x06\x4b
+#    keybind = super+t=text:\x06\x63
+#    keybind = super+1=text:\x06\x31
+#    keybind = super+2=text:\x06\x32
+#    keybind = super+3=text:\x06\x33
+#    keybind = super+4=text:\x06\x34
+#    keybind = super+5=text:\x06\x35
+#    keybind = super+6=text:\x06\x36
+#    keybind = super+7=text:\x06\x37
+#    keybind = super+8=text:\x06\x38
+#    keybind = super+9=text:\x06\x39
+#
 ###############################################

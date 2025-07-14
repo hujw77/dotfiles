@@ -5,8 +5,10 @@ sync:
 	mkdir -p ~/.config/alacritty/themes
 	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/fish
+	mkdir -p ~/.config/ghostty
 	mkdir -p ~/.tmux/
 	mkdir -p ~/.emacs.d
+	mkdir -p ~/.claude
 	mkdir -p ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch
 
 
@@ -28,9 +30,11 @@ sync:
 	[ -f ~/.git-prompt.sh ]                                                      || ln -s $(PWD)/git-prompt.sh ~/.git-prompt.sh
 	[ -f ~/.gitconfig ]                                                          || ln -s $(PWD)/gitconfig ~/.gitconfig
 	[ -f ~/.agignore ]                                                           || ln -s $(PWD)/agignore ~/.agignore
+	[ -f ~/.config/ghostty/config ]                                              || ln -s $(PWD)/ghostty.config ~/.config/ghostty/config
 	# [ -f ~/.emacs ]                                                              || ln -s $(PWD)/emacs ~/.emacs
 	[ -f ~/Library/LaunchAgents/io.echo.notify.plist ]                           || ln -s $(PWD)/io.echo.notify.plist ~/Library/LaunchAgents/io.echo.notify.plist
 	[ -f ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py ] || ln -s $(PWD)/iterm2_auto.py ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py
+	[ -d ~/.claude/commands/ ]                                                   || ln -s $(PWD)/claude/commands ~/.claude/commands
 
 	# don't show last login message
 	touch ~/.hushlogin
@@ -56,8 +60,10 @@ clean:
 	rm -f ~/.git-prompt.sh
 	rm -f ~/.gitconfig
 	rm -f ~/.agignore
+	rm -f ~/.config/ghostty/config
 	rm -f ~/.ssh/config
 	# rm -f ~/.emacs
 	rm -f ~/Library/LaunchAgents/io.echo.notify.plist
+	rm -rf ~/.claude/commands/
 
 .PHONY: all clean sync build run kill
