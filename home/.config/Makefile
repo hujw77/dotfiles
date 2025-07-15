@@ -32,9 +32,11 @@ sync:
 	[ -f ~/.agignore ]                                                           || ln -s $(PWD)/agignore ~/.agignore
 	[ -f ~/.config/ghostty/config ]                                              || ln -s $(PWD)/ghostty.config ~/.config/ghostty/config
 	# [ -f ~/.emacs ]                                                              || ln -s $(PWD)/emacs ~/.emacs
-	[ -f ~/Library/LaunchAgents/io.echo.notify.plist ]                           || ln -s $(PWD)/io.echo.notify.plist ~/Library/LaunchAgents/io.echo.notify.plist
 	[ -f ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py ] || ln -s $(PWD)/iterm2_auto.py ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py
 	[ -d ~/.claude/commands/ ]                                                   || ln -s $(PWD)/claude/commands ~/.claude/commands
+	[ -f ~/.config/zed/settings.json ]                                           || ln -s $(PWD)/zed-config.json ~/.config/zed/settings.json
+	[ -f ~/.config/zed/keymap.json ]                                             || ln -s $(PWD)/zed-keymap.json ~/.config/zed/keymap.json
+	[ -f ~/.config/zed/tasks.json ]                                              || ln -s $(PWD)/zed-tasks.json ~/.config/zed/tasks.json
 
 	# don't show last login message
 	touch ~/.hushlogin
@@ -63,7 +65,9 @@ clean:
 	rm -f ~/.config/ghostty/config
 	rm -f ~/.ssh/config
 	# rm -f ~/.emacs
-	rm -f ~/Library/LaunchAgents/io.echo.notify.plist
+	rm -f ~/.config/zed/settings.json
+	rm -f ~/.config/zed/keymap.json
+	rm -f ~/.config/zed/tasks.json
 	rm -rf ~/.claude/commands/
 
 .PHONY: all clean sync build run kill
