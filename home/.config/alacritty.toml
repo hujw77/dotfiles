@@ -1066,7 +1066,7 @@ save_to_clipboard = true
 semantic_escape_chars = ''',│`|:"' ()[]{}<>'''
 
 [terminal.shell]
-args = ["new-session", "-A", "-D", "-s", "main"]
+args = ["new-session", "-A", "-D", "-s", "chat"]
 program = "/opt/homebrew/bin/tmux"
 
 [window]
