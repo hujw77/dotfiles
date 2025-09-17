@@ -10,6 +10,7 @@ sync:
 	mkdir -p ~/.emacs.d
 	mkdir -p ~/.claude
 	mkdir -p ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch
+	mkdir -p ~/Library/Application\ Support/Cursor/User
 
 
 	[ -f ~/.config/alacritty/alacritty.toml ]                                    || ln -s $(PWD)/alacritty.toml ~/.config/alacritty/alacritty.toml
@@ -37,6 +38,8 @@ sync:
 	[ -f ~/.config/zed/settings.json ]                                           || ln -s $(PWD)/zed-config.json ~/.config/zed/settings.json
 	[ -f ~/.config/zed/keymap.json ]                                             || ln -s $(PWD)/zed-keymap.json ~/.config/zed/keymap.json
 	[ -f ~/.config/zed/tasks.json ]                                              || ln -s $(PWD)/zed-tasks.json ~/.config/zed/tasks.json
+	[ -f ~/Library/Application\ Support/Cursor/User/settings.json ]              || ln -s $(PWD)/cursor-settings.json ~/Library/Application\ Support/Cursor/User/settings.json
+	[ -f ~/Library/Application\ Support/Cursor/User/keybindings.json ]           || ln -s $(PWD)/cursor-keybindings.json ~/Library/Application\ Support/Cursor/User/keybindings.json
 
 	# don't show last login message
 	touch ~/.hushlogin
@@ -69,5 +72,7 @@ clean:
 	rm -f ~/.config/zed/keymap.json
 	rm -f ~/.config/zed/tasks.json
 	rm -rf ~/.claude/commands/
+	rm -f ~/Library/Application\ Support/Cursor/User/settings.json
+	rm -f ~/Library/Application\ Support/Cursor/User/keybindings.json
 
 .PHONY: all clean sync build run kill

@@ -1,0 +1,108 @@
+[
+  {
+    "key": ", w",
+    "command": "workbench.action.files.save",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": ", q",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.showNextError",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+m",
+    "command": "workbench.action.showPreviousError",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": ", a",
+    "command": "workbench.actions.view.problems",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": ", space",
+    "command": "vim.remap",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.navigateUp",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": ", n",
+    "command": "workbench.view.explorer",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": ", f",
+    "command": "workbench.view.explorer",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+c",
+    "command": "vim.remap",
+    "when": "vim.mode == 'Insert'"
+  },
+  {
+    "key": "cmd+1",
+    "command": "workbench.action.openEditorAtIndex1"
+  },
+  {
+    "key": "cmd+2",
+    "command": "workbench.action.openEditorAtIndex2"
+  },
+  {
+    "key": "cmd+3",
+    "command": "workbench.action.openEditorAtIndex3"
+  },
+  {
+    "key": "cmd+4",
+    "command": "workbench.action.openEditorAtIndex4"
+  },
+  {
+    "key": "cmd+5",
+    "command": "workbench.action.openEditorAtIndex5"
+  },
+  {
+    "key": "cmd+6",
+    "command": "workbench.action.openEditorAtIndex6"
+  },
+  {
+    "key": "cmd+7",
+    "command": "workbench.action.openEditorAtIndex7"
+  },
+  {
+    "key": "cmd+8",
+    "command": "workbench.action.openEditorAtIndex8"
+  },
+  {
+    "key": "cmd+9",
+    "command": "workbench.action.openEditorAtIndex9"
+  }
+]
