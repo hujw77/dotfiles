@@ -98,7 +98,7 @@ bind C-s if -F '#{pane_synchronized}' \
 set -s escape-time 0
 
 # Have a very large history
-set -g history-limit 1000000
+set -g history-limit 300000
 
 # Mouse mode on
 set -g mouse on

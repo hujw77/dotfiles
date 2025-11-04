@@ -323,7 +323,7 @@ require("lazy").setup({
 
      vim.keymap.set("n", "<C-p>", require("fzf-lua").git_files, {})
      vim.keymap.set("n", "<C-b>", require("fzf-lua").files, {})
-     vim.keymap.set("n", "<C-g>", require("fzf-lua").lsp_document_symbols, {})
+     vim.keymap.set("n", "<C-g>", require("fzf-lua").live_grep, {})
     end
   },
 

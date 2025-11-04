@@ -47,7 +47,6 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "window.autoDetectColorScheme": true,
-  "workbench.preferredLightColorTheme": "Gruvbox Light Hard",
   "workbench.preferredDarkColorTheme": "Gruvbox Dark Hard",
   "workbench.iconTheme": "vs-seti",
   "workbench.editor.enablePreview": false,
@@ -70,5 +69,9 @@
     "editor.insertSpaces": true,
     "editor.formatOnSave": true
   },
-  "workbench.settings.openDefaultKeybindings": true
+  "workbench.settings.openDefaultKeybindings": true,
+  "workbench.preferredLightColorTheme": "Cursor Light",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  }
 }

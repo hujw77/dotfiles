@@ -6,6 +6,10 @@ set -gx NVIMRC $HOME/.vimrc
 set -gx NVM_DIR $HOME/.nvm
 set -gx EDITOR nvim
 set -gx FZF_CTRL_T_COMMAND nvim
+set -gx FZF_DEFAULT_COMMAND "fd --type f --hidden --follow --exclude .git"
+
+# shell integration, if we don't set it, working directory features won't work
+set -gx GHOSTTY_SHELL_INTEGRATION_XDG_DIR /Applications/Ghostty.app/Contents/Resources/ghostty/shell-integration
 
 set -x GPG_TTY (tty)
 
@@ -38,6 +42,12 @@ status --is-interactive; and source (jump shell fish | psub)
 
 # rbenv
 status --is-interactive; and source (rbenv init -|psub)
+
+set -gx ATUIN_NOBIND "true"
+status --is-interactive; atuin init fish | source
+
+bind \cr _atuin_search
+bind -M insert \cr _atuin_search
 
 # Senstive functions which are not pushed to Github
 # It contains work related stuff, some functions, aliases etc...
@@ -114,3 +124,4 @@ set -gx EHOME $E/$HOME
 set -gx WASMTIME_HOME "$HOME/.wasmtime"
 
 string match -r ".wasmtime" "$PATH" > /dev/null; or set -gx PATH "$WASMTIME_HOME/bin" $PATH
+export PATH="$PATH:/Users/hujingwei/.rrelayer/bin"
