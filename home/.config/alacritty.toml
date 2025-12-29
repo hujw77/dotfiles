@@ -1,4 +1,4 @@
-general.import = ["/Users/hujingwei/.config/alacritty/themes/alacritty-gruvbox-dark.toml"]
+general.import = ["/Users/hujingwei/.config/alacritty/themes/alacritty-gruvbox-light.toml"]
 general.live_config_reload = true
 
 [[keyboard.bindings]]

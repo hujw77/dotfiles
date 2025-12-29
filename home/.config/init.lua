@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -27,6 +27,8 @@ local function build_go_files()
   end
 end
 
+
+vim.o.background = "light" 
 ----------------
 --- plugins ---
 ----------------
@@ -46,12 +48,12 @@ require("lazy").setup({
 
   -- automatic dark mode
   -- requires: brew install cormacrelf/tap/dark-notify
-  { 
-    "cormacrelf/dark-notify",
-    config = function ()
-      require("dark_notify").run()
-    end,
-  },
+  -- { 
+  --   "cormacrelf/dark-notify",
+  --   config = function ()
+  --     require("dark_notify").run()
+  --   end,
+  -- },
 
   -- statusline
   { 
@@ -118,6 +120,7 @@ require("lazy").setup({
           'markdown_inline',
           'mermaid',
           'solidity',
+          'sql',
           'python',
         },
         indent = { enable = true },
@@ -139,7 +142,7 @@ require("lazy").setup({
           -- Disable slow treesitter highlight for large files
           disable = function(lang, buf)
             local max_filesize = 100 * 1024 -- 100 KB
-            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
               return true
             end
@@ -269,6 +272,53 @@ require("lazy").setup({
     end
   },
 
+
+  {
+    "coder/claudecode.nvim",
+    lazy = false,
+    opts = {
+      terminal_cmd = "/opt/homebrew/bin/claude",
+      terminal = {
+          provider = "none", -- no UI actions; server + tools remain available
+      },
+    },
+    cmd = {
+      "ClaudeCode",
+      "ClaudeCodeFocus",
+      "ClaudeCodeSelectModel",
+      "ClaudeCodeAdd",
+      "ClaudeCodeSend",
+      "ClaudeCodeTreeAdd",
+      "ClaudeCodeDiffAccept",
+      "ClaudeCodeDiffDeny",
+    },
+    keys = {
+      { "<leader>c", nil, desc = "AI/Claude Code" },
+      { "<C-t>", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+      { "<leader>cf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+      { "<leader>cr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+      { "<leader>cC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+      { "<leader>cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+      { "<leader>ca", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+      { "<leader>cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+      {
+        "<leader>cs",
+        "<cmd>ClaudeCodeTreeAdd<cr>",
+        desc = "Add file",
+        ft = { "NvimTree", "neo-tree", "oil" },
+      },
+      { "<leader>da", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+      { "<leader>dd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+    }
+  },
+
+  -- {
+  --   "sourcegraph/amp.nvim",
+  --   branch = "main", 
+  --   lazy = false,
+  --   opts = { auto_start = true, log_level = "info" },
+  -- },
+
   {
       'brianhuster/live-preview.nvim',
       dependencies = {
@@ -280,7 +330,10 @@ require("lazy").setup({
   -- Fuzzy Finder (files, lsp, etc)
   {
     "ibhagwan/fzf-lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { 
+      "nvim-tree/nvim-web-devicons",
+      "elanmed/fzf-lua-frecency.nvim",
+    },
     opts = {},
     config = function() 
       require("fzf-lua").register_ui_select()
@@ -321,7 +374,21 @@ require("lazy").setup({
         }
       }
 
-     vim.keymap.set("n", "<C-p>", require("fzf-lua").git_files, {})
+     -- Setup frecency for fzf-lua (tracks frequently + recently used files)
+     require('fzf-lua-frecency').setup()
+     vim.keymap.set("n", "<C-p>", function()
+       -- Get git root to use as cwd (handles autochdir)
+       local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+       if vim.v.shell_error ~= 0 then
+         git_root = vim.fn.getcwd()
+       end
+       require('fzf-lua-frecency').frecency({
+         file_icons = false,
+         git_icons = false,
+         cwd_only = true,  -- only show files from current repo
+         cwd = git_root,   -- use git root, not autochdir path
+       })
+     end, {})
      vim.keymap.set("n", "<C-b>", require("fzf-lua").files, {})
      vim.keymap.set("n", "<C-g>", require("fzf-lua").live_grep, {})
     end
@@ -343,112 +410,156 @@ require("lazy").setup({
 
   { 'Bilal2453/luvit-meta', lazy = true },
 
+  -- Useful status updates for LSP
+  { 'j-hui/fidget.nvim', opts = {} },
+
+  -- Extra capabilities for nvim-cmp
+  { 'hrsh7th/cmp-nvim-lsp' },
+
   {
-    -- Main LSP Configuration
-    'neovim/nvim-lspconfig',
+    "L3MON4D3/LuaSnip",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end
+  },
+
+  -- autocompletion
+  {
+    "hrsh7th/nvim-cmp",
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
-      'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
-
-      'saghen/blink.cmp',
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+      "onsails/lspkind-nvim",
+      "lukas-reineke/cmp-under-comparator",
     },
     config = function()
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+      local lspkind = require("lspkind")
+      local types = require("cmp.types")
+      local compare = require("cmp.config.compare")
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
-      local servers = {
-        gopls = {
-          capabilities = capabilities,
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+      luasnip.config.setup {}
+
+      local modified_priority = {
+          [types.lsp.CompletionItemKind.Variable] = types.lsp.CompletionItemKind.Method,
+          [types.lsp.CompletionItemKind.Snippet] = 0, -- top
+          [types.lsp.CompletionItemKind.Keyword] = 0, -- top
+          [types.lsp.CompletionItemKind.Text] = 100, -- bottom
+      }
+
+      local function modified_kind(kind)
+          return modified_priority[kind] or kind
+      end
+
+
+      require('cmp').setup({
+        preselect = false,
+        completion = {
+            completeopt = "menu,menuone,preview,noselect",
         },
-        lua_ls = {
-          capabilities = capabilities,
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
+        snippet = {
+            expand = function(args)
+              luasnip.lsp_expand(args.body)
+            end,
+        },
+        formatting = {
+          format = lspkind.cmp_format {
+            with_text = true,
+            menu = {
+              buffer = "[Buffer]",
+              nvim_lsp = "[LSP]",
+              nvim_lua = "[Lua]",
             },
           },
         },
-      }
 
-      -- Ensure the servers and tools above are installed
-      --  To check the current status of installed tools and/or manually install
-      --  other tools, you can run
-      --    :Mason
-      --
-      --  You can press `g?` for help in this menu.
-      require('mason').setup()
+        sorting = {
+            priority_weight = 1.0,
+            comparators = {
+                compare.offset,
+                compare.exact,
+                compare.score,
+                compare.locality,
+                function(entry1, entry2) -- sort by length ignoring "=~"
+                    local len1 = string.len(string.gsub(entry1.completion_item.label, "[=~()_]", ""))
+                    local len2 = string.len(string.gsub(entry2.completion_item.label, "[=~()_]", ""))
+                    if len1 ~= len2 then
+                        return len1 - len2 < 0
+                    end
+                end,
+                compare.recently_used,
+                function(entry1, entry2) -- sort by compare kind (Variable, Function etc)
+                    local kind1 = modified_kind(entry1:get_kind())
+                    local kind2 = modified_kind(entry2:get_kind())
+                    if kind1 ~= kind2 then
+                        return kind1 - kind2 < 0
+                    end
+                end,
+                require("cmp-under-comparator").under,
+                compare.kind,
+            },
+        },
 
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-        'gofumpt', -- Used to format Lua code
+        matching = {
+           disallow_fuzzy_matching = true,
+           disallow_fullfuzzy_matching = true,
+           disallow_partial_fuzzy_matching = true,
+           disallow_partial_matching = false,
+           disallow_prefix_unmatching = true,
+        },
+        mapping = cmp.mapping.preset.insert {
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+          end, { 'i', 's' }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+             if cmp.visible() then
+                 cmp.select_prev_item()
+             elseif luasnip.jumpable(-1) then
+                 luasnip.jump(-1)
+             else
+                 fallback()
+             end
+          end, { "i", "s" }),
+
+        },
+        window = { documentation = cmp.config.window.bordered(), completion = cmp.config.window.bordered() },
+        view = {
+          entries = {
+            name = "custom",
+            selection_order = "near_cursor",
+          },
+        },
+        confirm_opts = {
+          behavior = cmp.ConfirmBehavior.Insert,
+        },
+        sources = {
+          { name = 'nvim_lsp' },
+          { name = "luasnip", keyword_length = 2},
+          { name = "buffer", keyword_length = 5},
+        },
+        performance = {
+          max_view_entries = 20,
+        },
       })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-      require('mason-lspconfig').setup {
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      }
     end,
-  },
-
-  { "rafamadriz/friendly-snippets" },
-
- -- autocompletion
-  {
-    'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
-    version = '1.*',
-    opts = {
-      keymap = { 
-        preset = 'enter',
-        ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
-        ["<S-Tab>"] = { "select_next", "snippet_forward", "fallback" },
-      },
-      appearance = {
-        nerd_font_variant = 'mono'
-      },
-      completion = { 
-        documentation = {
-          auto_show = true,
-          auto_show_delay_ms = 100,
-        },
-        menu = {
-          border = 'rounded',
-          draw = {
-            treesitter = { 'lsp' },
-          },
-        },
-        list = {
-           selection = {
-             preselect = false,
-             auto_insert = true,
-          },
-        },
-      },
-      sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
-      },
-      fuzzy = { implementation = "prefer_rust_with_warning" }
-    },
-    opts_extend = { "sources.default" }
   },
 
   -- augment
@@ -457,8 +568,12 @@ require("lazy").setup({
     config = function()
       vim.g.augment_workspace_folders = {
         '/Volumes/Samsung/rust/solver/cow-solver',
+        '/Volumes/Samsung/rust/solver/omni-rs',
         '/Volumes/Samsung/rust/solver/smart-order-router',
-        '/Volumes/Samsung/rust/solver/extreme'
+        '/Volumes/Samsung/rust/solver/extreme',
+        '/Volumes/Samsung/rust/solver/infra/uniob',
+        '/Volumes/Samsung/rust/solver/infra/azoth-balancer',
+        '/Volumes/Samsung/rust/solver/infra/openzeppelin-monitor'
       }
     end,
   },
@@ -477,6 +592,40 @@ require("lazy").setup({
   --     end,
   -- },
 })
+
+----------------
+--- LSP Setup (Neovim 0.11 native) ---
+----------------
+
+-- Get capabilities from cmp-nvim-lsp for better completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+-- gopls (install: go install golang.org/x/tools/gopls@latest)
+vim.lsp.config('gopls', {
+  cmd = { 'gopls' },
+  filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+  root_markers = { 'go.mod', 'go.work', '.git' },
+  capabilities = capabilities,
+})
+
+-- lua-language-server (install: brew install lua-language-server)
+vim.lsp.config('lua_ls', {
+  cmd = { 'lua-language-server' },
+  filetypes = { 'lua' },
+  root_markers = { '.luarc.json', '.luarc.jsonc', '.stylua.toml', 'stylua.toml', '.git' },
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      completion = {
+        callSnippet = 'Replace',
+      },
+    },
+  },
+})
+
+-- Enable the LSP servers
+vim.lsp.enable({ 'gopls', 'lua_ls' })
 
 ----------------
 --- SETTINGS ---
@@ -679,6 +828,233 @@ vim.api.nvim_set_keymap('n', '<leader>at', ':Augment chat-toggle<CR>', { noremap
 -- " Use Ctrl-Y to accept a suggestion
 vim.api.nvim_set_keymap('i', '<C-Y>', '<cmd>call augment#Accept()<CR>', { noremap = true, silent = true })
 
+-- -- ClaudeCode mapping
+vim.keymap.set('n', '<C-t>', ':ClaudeCode<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>aa', '<cmd>ClaudeCodeAdd %<cr>', { desc = "Add current buffer" })
+vim.keymap.set({'n', 'v'}, '<leader>as', '<cmd>ClaudeCodeSend<cr>', { desc = "Send to Claude" })
+
+-- -- Amp mapping
+-- vim.keymap.set('n', '<leader>ab', '<cmd>AmpBuffer<cr>', { desc = "Create Amp buffer" })
+-- vim.keymap.set('x', '<leader>ab', ":'<,'>AmpBuffer<CR>", { desc = "Create Amp buffer from selection" })
+-- -- vim.keymap.set('n', '<leader>as', '<cmd>AmpSendBuffer<cr>', { desc = "Send buffer to Amp" })
+-- vim.keymap.set('v', '<leader>as', ":'<,'>AmpPromptRef<CR>", { desc = "Send selection to Prompt" })
+-- vim.keymap.set('n', '<leader>am', '<cmd>AmpMessage %<cr>', { desc = "Send message to Amp" })
+-- vim.keymap.set('x', '<leader>aa', ":'<,'>AmpAppendBuffer<CR>", { desc = "Append selection to Amp buffer" })
+
+-- Add selected text directly to prompt
+vim.api.nvim_create_user_command("AmpPromptSelection", function(opts)
+  local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
+  local text = table.concat(lines, "\n")
+
+  local amp_message = require("amp.message")
+  amp_message.send_to_prompt(text)
+end, {
+  range = true,
+  desc = "Add selected text to Amp prompt",
+})
+
+-- Add file+selection reference to prompt
+vim.api.nvim_create_user_command("AmpPromptRef", function(opts)
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if bufname == "" then
+    print("Current buffer has no filename")
+    return
+  end
+
+  local relative_path = vim.fn.fnamemodify(bufname, ":.")
+  local ref = "@" .. relative_path
+  if opts.line1 ~= opts.line2 then
+    ref = ref .. "#L" .. opts.line1 .. "-" .. opts.line2
+  elseif opts.line1 > 1 then
+    ref = ref .. "#L" .. opts.line1
+  end
+
+  local amp_message = require("amp.message")
+  amp_message.send_to_prompt(ref)
+end, {
+  range = true,
+  desc = "Add file reference (with selection) to Amp prompt",
+})
+
+vim.api.nvim_create_user_command("AmpMessage", function(opts)
+  local message = opts.args
+  if message == "" then
+    print("Please provide a message to send")
+    return
+  end
+
+  local amp_message = require("amp.message")
+  amp_message.send_message(message)
+end, {
+  nargs = "*",
+  desc = "Send a message to Amp",
+})
+
+-- Open new scratch buffer for Amp prompts
+vim.api.nvim_create_user_command("AmpBuffer", function(opts)
+	local lines = {}
+	-- Only get lines if we have a valid range
+	local has_range = (opts.range > 0) and (opts.line2 > 0) and (opts.line2 >= opts.line1)
+	if has_range then
+		lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
+	end
+
+	-- Check if amp-scratch buffer already exists
+	local existing_buf = nil
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_valid(buf) then
+			local buf_name = vim.api.nvim_buf_get_name(buf)
+			if buf_name:match("amp%-scratch$") then
+				existing_buf = buf
+				break
+			end
+		end
+	end
+
+	if existing_buf then
+		-- Open existing buffer in a vertical split
+		vim.cmd("vsplit")
+		vim.api.nvim_win_set_buf(0, existing_buf)
+
+		-- Only append new lines if we have a selection
+		if #lines > 0 then
+			local existing_lines = vim.api.nvim_buf_get_lines(existing_buf, 0, -1, false)
+			if #existing_lines > 0 and existing_lines[#existing_lines] ~= "" then
+				table.insert(existing_lines, "") -- Add blank line separator
+			end
+			for _, line in ipairs(lines) do
+				table.insert(existing_lines, line)
+			end
+			vim.api.nvim_buf_set_lines(existing_buf, 0, -1, false, existing_lines)
+		end
+		-- If no selection, just open the existing buffer without modifying it
+	else
+		-- Create new buffer
+		vim.cmd("vsplit")
+		local buf = vim.api.nvim_create_buf(false, true)
+		vim.api.nvim_win_set_buf(0, buf)
+		vim.bo[buf].buftype = "nofile"
+		vim.bo[buf].bufhidden = "hide"
+		vim.bo[buf].swapfile = false
+		vim.api.nvim_buf_set_name(buf, "amp-scratch")
+
+		-- Populate buffer with selected lines
+		if #lines > 0 then
+			vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+		end
+	end
+end, {
+	nargs = 0,
+	desc = "Open scratch buffer for Amp prompts",
+	range = true,
+})
+
+-- Send entire buffer contents and close the buffer
+vim.api.nvim_create_user_command("AmpSendBuffer", function(opts)
+	local buf = vim.api.nvim_get_current_buf()
+	local buf_name = vim.api.nvim_buf_get_name(buf)
+
+	-- Check if we're in an amp-scratch buffer
+	if not buf_name:match("amp%-scratch$") then
+		print("AmpSendBuffer can only be used in amp-scratch buffers")
+		return
+	end
+
+	local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+	local content = table.concat(lines, "\n")
+
+	-- Check if content is empty
+	if content:match("^%s*$") then
+		print("Buffer is empty, nothing to send")
+		return
+	end
+
+	-- Check if Amp server is running
+	local amp = require("amp")
+	if not amp.state.server then
+		print("Amp server is not running - start it first with :AmpStart")
+		return
+	end
+
+	-- Check if there are actually connected clients
+	local server_status = amp.state.server.get_status and amp.state.server.get_status()
+	if not server_status or server_status.client_count == 0 then
+		print("No Amp clients connected")
+		return
+	end
+
+	-- Store buffer info before attempting send (failsafe)
+	local should_close_buffer = false
+	local amp_message = require("amp.message")
+
+	-- Send message and check return value
+	local success = amp_message.send_message(content)
+
+	if success then
+		should_close_buffer = true
+		print("Message sent to Amp")
+	else
+		print("Failed to send to Amp - connection failed")
+	end
+
+	-- Only close buffer if we explicitly marked it as safe to close
+	if should_close_buffer then
+		vim.api.nvim_buf_set_lines(buf, 0, -1, false, {})
+		vim.api.nvim_buf_delete(buf, { force = true })
+	end
+end, {
+	nargs = "?",
+	desc = "Send current buffer contents to Amp",
+})
+
+-- Append selected lines to amp-scratch buffer in @filename#L12-46 format
+vim.api.nvim_create_user_command("AmpAppendBuffer", function(opts)
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if bufname == "" then
+    print("Current buffer has no filename")
+    return
+  end
+
+  local relative_path = vim.fn.fnamemodify(bufname, ":.")
+  local ref = "@" .. relative_path
+  if opts.line1 ~= opts.line2 then
+    ref = ref .. "#L" .. opts.line1 .. "-" .. opts.line2
+  elseif opts.line1 > 1 then
+    ref = ref .. "#L" .. opts.line1
+  end
+
+  -- Find amp-scratch buffer
+  local scratch_buf = nil
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    local buf_name = vim.api.nvim_buf_get_name(buf)
+    if buf_name:match("amp%-scratch$") then
+      scratch_buf = buf
+      break
+    end
+  end
+
+  if not scratch_buf then
+    print("No amp-scratch buffer found")
+    return
+  end
+
+  -- Get current lines in scratch buffer and append the reference to the last line
+  local scratch_lines = vim.api.nvim_buf_get_lines(scratch_buf, 0, -1, false)
+  if #scratch_lines == 0 then
+    -- Empty buffer, just add the reference
+    table.insert(scratch_lines, ref)
+  else
+    -- Append to the last line with a space
+    scratch_lines[#scratch_lines] = scratch_lines[#scratch_lines] .. " " .. ref
+  end
+  vim.api.nvim_buf_set_lines(scratch_buf, 0, -1, false, scratch_lines)
+
+  print("Appended " .. ref .. " to amp-scratch buffer")
+end, {
+  range = true,
+  desc = "Add file reference (with selection) to amp-scratch buffer",
+})
+
 -- automatically resize all vim buffers if I resize the terminal window
 vim.api.nvim_command('autocmd VimResized * wincmd =')
 
@@ -723,7 +1099,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- disable diagnostics, I didn't like them
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = false,
+  underline = false,
+  update_in_insert = false,
+})
 
 -- Run gofmt/gofmpt, import packages automatically on save
 vim.api.nvim_create_autocmd('BufWritePre', {

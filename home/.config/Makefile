@@ -35,6 +35,7 @@ sync:
 	# [ -f ~/.emacs ]                                                              || ln -s $(PWD)/emacs ~/.emacs
 	[ -f ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py ] || ln -s $(PWD)/iterm2_auto.py ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py
 	[ -d ~/.claude/commands/ ]                                                   || ln -s $(PWD)/claude/commands ~/.claude/commands
+	[ -f ~/.claude/statusline-git.sh ]                                           || ln -s $(PWD)/claude/statusline-git.sh ~/.claude/statusline-git.sh
 	[ -f ~/.config/zed/settings.json ]                                           || ln -s $(PWD)/zed-config.json ~/.config/zed/settings.json
 	[ -f ~/.config/zed/keymap.json ]                                             || ln -s $(PWD)/zed-keymap.json ~/.config/zed/keymap.json
 	[ -f ~/.config/zed/tasks.json ]                                              || ln -s $(PWD)/zed-tasks.json ~/.config/zed/tasks.json
@@ -72,6 +73,7 @@ clean:
 	rm -f ~/.config/zed/keymap.json
 	rm -f ~/.config/zed/tasks.json
 	rm -rf ~/.claude/commands/
+	rm -f ~/.claude/statusline-git.sh
 	rm -f ~/Library/Application\ Support/Cursor/User/settings.json
 	rm -f ~/Library/Application\ Support/Cursor/User/keybindings.json
 

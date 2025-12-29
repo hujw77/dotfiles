@@ -50,6 +50,35 @@
     "when": "vim.mode == 'Normal'"
   },
   {
+    "key": "cmd+j",
+    "command": "workbench.action.focusPanel"
+  },
+  {
+    "key": "cmd+k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "panelFocus || terminalFocus"
+  },
+  {
+    "key": "cmd+h",
+    "command": "workbench.action.focusSideBar",
+    "when": "editorFocus"
+  },
+  {
+    "key": "cmd+h",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "auxiliaryBarFocus || composerFocused"
+  },
+  {
+    "key": "cmd+l",
+    "command": "aichat.newchataction",
+    "when": "editorHasSelection"
+  },
+  {
+    "key": "cmd+l",
+    "command": "workbench.action.focusAuxiliaryBar",
+    "when": "editorFocus && !editorHasSelection"
+  },
+  {
     "key": ", n",
     "command": "workbench.view.explorer",
     "when": "vim.mode == 'Normal'"
@@ -63,6 +92,28 @@
     "key": "ctrl+t",
     "command": "workbench.action.terminal.toggleTerminal",
     "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "cmd+w",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+1",
+    "command": "workbench.view.explorer"
+  },
+  {
+    "key": "ctrl+2",
+    "command": "workbench.view.search"
+  },
+  {
+    "key": "ctrl+3",
+    "command": "workbench.view.scm"
   },
   {
     "key": "ctrl+c",
@@ -104,5 +155,27 @@
   {
     "key": "cmd+9",
     "command": "workbench.action.openEditorAtIndex9"
+  },
+  {
+    "key": "ctrl+g",
+    "command": "workbench.action.gotoSymbol",
+    "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
+  },
+  {
+    "key": "shift+cmd+o",
+    "command": "-workbench.action.gotoSymbol",
+    "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
+  },
+  {
+    "key": "ctrl+;",
+    "command": "workbench.action.gotoLine"
+  },
+  {
+    "key": "ctrl+g",
+    "command": "-workbench.action.gotoLine"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-composer.newAgentChat"
   }
 ]

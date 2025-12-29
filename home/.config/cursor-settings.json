@@ -30,7 +30,7 @@
   ],
   "editor.wordWrap": "on",
   "editor.lineNumbers": "on",
-  "editor.renderWhitespace": "boundary",
+  "editor.renderWhitespace": "none",
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
@@ -38,7 +38,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.fontFamily": "TX-02",
-  "editor.fontSize": 13,
+  "editor.fontSize": 14,
   "terminal.integrated.defaultProfile.osx": "fish",
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
@@ -47,7 +47,7 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "window.autoDetectColorScheme": true,
-  "workbench.preferredDarkColorTheme": "Gruvbox Dark Hard",
+  "workbench.preferredLightColorTheme": "Gruvbox Light Hard",
   "workbench.iconTheme": "vs-seti",
   "workbench.editor.enablePreview": false,
   "workbench.editor.enablePreviewFromQuickOpen": false,
@@ -70,8 +70,7 @@
     "editor.formatOnSave": true
   },
   "workbench.settings.openDefaultKeybindings": true,
-  "workbench.preferredLightColorTheme": "Cursor Light",
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
-  }
+  "workbench.preferredDarkColorTheme": "Gruvbox Dark Hard",
+  "editor.renderControlCharacters": false,
+  "go.toolsManagement.autoUpdate": true
 }
