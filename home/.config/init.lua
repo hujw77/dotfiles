@@ -275,11 +275,16 @@ require("lazy").setup({
 
   {
     "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
     lazy = false,
     opts = {
       terminal_cmd = "/opt/homebrew/bin/claude",
+      -- terminal = {
+      --     provider = "none", -- no UI actions; server + tools remain available
+      -- },
       terminal = {
-          provider = "none", -- no UI actions; server + tools remain available
+        split_side = "right",
+        split_width_percentage = 0.30,
       },
     },
     cmd = {
@@ -309,7 +314,7 @@ require("lazy").setup({
       },
       { "<leader>da", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
       { "<leader>dd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
-    }
+    },
   },
 
   -- {
@@ -568,6 +573,7 @@ require("lazy").setup({
     config = function()
       vim.g.augment_workspace_folders = {
         '/Volumes/Samsung/rust/solver/cow-solver',
+        '/Volumes/Samsung/rust/solver/solver-infra',
         '/Volumes/Samsung/rust/solver/omni-rs',
         '/Volumes/Samsung/rust/solver/smart-order-router',
         '/Volumes/Samsung/rust/solver/extreme',
