@@ -702,6 +702,13 @@ vim.keymap.set('n', '<Leader>e', function()
   end
 end, { silent = true })
 
+-- Copy absolute filepath to system clipboard
+vim.keymap.set('n', '<Leader>r', function()
+  local path = vim.fn.expand('%:p')
+  vim.fn.setreg('+', path)
+  print('Copied to clipboard: ' .. path)
+end, { silent = true })
+
 -- Remove search highlight
 vim.keymap.set('n', '<Leader><space>', ':nohlsearch<CR>')
 
@@ -775,7 +782,20 @@ vim.keymap.set('n', 'Y', 'y$')
 
 if vim.fn.getenv("TERM_PROGRAM") == "ghostty" then
   vim.opt.title = true
-  vim.opt.titlestring = "%{getcwd()}/%{bufname()}"
+  local function update_title()
+    local root = vim.fn.systemlist('git rev-parse --show-toplevel 2>/dev/null')
+    if vim.v.shell_error == 0 and #root > 0 and root[1] ~= '' then
+      vim.opt.titlestring = vim.fn.fnamemodify(root[1], ':t')
+    else
+      vim.opt.titlestring = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+    end
+  end
+
+  update_title()
+
+  vim.api.nvim_create_autocmd({'DirChanged', 'VimEnter'}, {
+    callback = update_title,
+  })
 end
 
 -- Open help window in a vertical split to the right.
@@ -842,7 +862,7 @@ vim.keymap.set({'n', 'v'}, '<leader>as', '<cmd>ClaudeCodeSend<cr>', { desc = "Se
 -- -- Amp mapping
 -- vim.keymap.set('n', '<leader>ab', '<cmd>AmpBuffer<cr>', { desc = "Create Amp buffer" })
 -- vim.keymap.set('x', '<leader>ab', ":'<,'>AmpBuffer<CR>", { desc = "Create Amp buffer from selection" })
--- -- vim.keymap.set('n', '<leader>as', '<cmd>AmpSendBuffer<cr>', { desc = "Send buffer to Amp" })
+-- vim.keymap.set('n', '<leader>as', '<cmd>AmpSendBuffer<cr>', { desc = "Send buffer to Amp" })
 -- vim.keymap.set('v', '<leader>as', ":'<,'>AmpPromptRef<CR>", { desc = "Send selection to Prompt" })
 -- vim.keymap.set('n', '<leader>am', '<cmd>AmpMessage %<cr>', { desc = "Send message to Amp" })
 -- vim.keymap.set('x', '<leader>aa', ":'<,'>AmpAppendBuffer<CR>", { desc = "Append selection to Amp buffer" })
@@ -917,10 +937,25 @@ vim.api.nvim_create_user_command("AmpBuffer", function(opts)
 		end
 	end
 
+	local target_buf
 	if existing_buf then
-		-- Open existing buffer in a vertical split
-		vim.cmd("vsplit")
-		vim.api.nvim_win_set_buf(0, existing_buf)
+		-- Check if existing buffer is already visible in a window
+		local existing_win = nil
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			if vim.api.nvim_win_get_buf(win) == existing_buf then
+				existing_win = win
+				break
+			end
+		end
+
+		if existing_win then
+			-- Switch to existing window
+			vim.api.nvim_set_current_win(existing_win)
+		else
+			-- Open existing buffer in a vertical split
+			vim.cmd("vsplit")
+			vim.api.nvim_win_set_buf(0, existing_buf)
+		end
 
 		-- Only append new lines if we have a selection
 		if #lines > 0 then
@@ -933,7 +968,7 @@ vim.api.nvim_create_user_command("AmpBuffer", function(opts)
 			end
 			vim.api.nvim_buf_set_lines(existing_buf, 0, -1, false, existing_lines)
 		end
-		-- If no selection, just open the existing buffer without modifying it
+		target_buf = existing_buf
 	else
 		-- Create new buffer
 		vim.cmd("vsplit")
@@ -948,7 +983,17 @@ vim.api.nvim_create_user_command("AmpBuffer", function(opts)
 		if #lines > 0 then
 			vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 		end
+		target_buf = buf
 	end
+
+	-- Add empty lines at end and move cursor there
+	local current_lines = vim.api.nvim_buf_get_lines(target_buf, 0, -1, false)
+	-- Only add newlines if buffer has content
+	if #current_lines > 0 and current_lines[1] ~= "" then
+		vim.api.nvim_buf_set_lines(target_buf, -1, -1, false, { "", "" })
+	end
+	local line_count = vim.api.nvim_buf_line_count(target_buf)
+	vim.api.nvim_win_set_cursor(0, { line_count, 0 })
 end, {
 	nargs = 0,
 	desc = "Open scratch buffer for Amp prompts",
@@ -1072,12 +1117,9 @@ vim.api.nvim_create_autocmd('DirChanged', {
   command = [[call chansend(v:stderr, printf("\033]7;file://%s\033\\", v:event.cwd))]],
 })
 
-vim.api.nvim_create_autocmd('VimLeave', {
-  group = exitgroup,
-  pattern = { '*' },
-  command = [[call chansend(v:stderr, "\033]7;\033\\")]],
-})
-
+-- Note: We intentionally don't clear OSC 7 on VimLeave.
+-- The shell (fish) will report its own working directory after Vim exits.
+-- Sending an empty OSC 7 here causes Ghostty to lose track of the CWD.
 
 -- put quickfix window always to the bottom
 local qfgroup = vim.api.nvim_create_augroup('changeQuickfix', { clear = true })
