@@ -34,7 +34,7 @@ sync:
 	[ -f ~/.config/ghostty/config ]                                              || ln -s $(PWD)/ghostty.config ~/.config/ghostty/config
 	# [ -f ~/.emacs ]                                                              || ln -s $(PWD)/emacs ~/.emacs
 	[ -f ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py ] || ln -s $(PWD)/iterm2_auto.py ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py
-	[ -d ~/.claude/skills/ ]                                                     || ln -s $(PWD)/agent/skills ~/.claude/skills
+	[ -d ~/.claude/skills/ ]                                                     || ln -s $(PWD)/claude/skills ~/.claude/skills
 	[ -f ~/.claude/statusline-git.sh ]                                           || ln -s $(PWD)/claude/statusline-git.sh ~/.claude/statusline-git.sh
 	[ -f ~/.claude/CLAUDE.md ]                                                   || ln -s $(PWD)/claude/CLAUDE.md ~/.claude/CLAUDE.md
 	[ -f ~/.config/zed/settings.json ]                                           || ln -s $(PWD)/zed-config.json ~/.config/zed/settings.json
