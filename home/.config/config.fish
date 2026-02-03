@@ -44,10 +44,7 @@ status --is-interactive; and source (jump shell fish | psub)
 status --is-interactive; and source (rbenv init -|psub)
 
 set -gx ATUIN_NOBIND "true"
-status --is-interactive; atuin init fish | source
-
-bind \cr _atuin_search
-bind -M insert \cr _atuin_search
+status --is-interactive; and atuin init fish | source
 
 # Senstive functions which are not pushed to Github
 # It contains work related stuff, some functions, aliases etc...

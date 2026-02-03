@@ -34,8 +34,9 @@ sync:
 	[ -f ~/.config/ghostty/config ]                                              || ln -s $(PWD)/ghostty.config ~/.config/ghostty/config
 	# [ -f ~/.emacs ]                                                              || ln -s $(PWD)/emacs ~/.emacs
 	[ -f ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py ] || ln -s $(PWD)/iterm2_auto.py ~/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/iterm2_auto.py
-	[ -d ~/.claude/commands/ ]                                                   || ln -s $(PWD)/claude/commands ~/.claude/commands
+	[ -d ~/.claude/skills/ ]                                                     || ln -s $(PWD)/agent/skills ~/.claude/skills
 	[ -f ~/.claude/statusline-git.sh ]                                           || ln -s $(PWD)/claude/statusline-git.sh ~/.claude/statusline-git.sh
+	[ -f ~/.claude/CLAUDE.md ]                                                   || ln -s $(PWD)/claude/CLAUDE.md ~/.claude/CLAUDE.md
 	[ -f ~/.config/zed/settings.json ]                                           || ln -s $(PWD)/zed-config.json ~/.config/zed/settings.json
 	[ -f ~/.config/zed/keymap.json ]                                             || ln -s $(PWD)/zed-keymap.json ~/.config/zed/keymap.json
 	[ -f ~/.config/zed/tasks.json ]                                              || ln -s $(PWD)/zed-tasks.json ~/.config/zed/tasks.json
@@ -72,8 +73,9 @@ clean:
 	rm -f ~/.config/zed/settings.json
 	rm -f ~/.config/zed/keymap.json
 	rm -f ~/.config/zed/tasks.json
-	rm -rf ~/.claude/commands/
+	rm -rf ~/.claude/skills/
 	rm -f ~/.claude/statusline-git.sh
+	rm -f ~/.claude/CLAUDE.md
 	rm -f ~/Library/Application\ Support/Cursor/User/settings.json
 	rm -f ~/Library/Application\ Support/Cursor/User/keybindings.json
 

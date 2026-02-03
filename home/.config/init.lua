@@ -279,12 +279,8 @@ require("lazy").setup({
     lazy = false,
     opts = {
       terminal_cmd = "/opt/homebrew/bin/claude",
-      -- terminal = {
-      --     provider = "none", -- no UI actions; server + tools remain available
-      -- },
       terminal = {
-        split_side = "right",
-        split_width_percentage = 0.30,
+          provider = "none", -- no UI actions; server + tools remain available
       },
     },
     cmd = {
@@ -572,6 +568,7 @@ require("lazy").setup({
     'augmentcode/augment.vim',
     config = function()
       vim.g.augment_workspace_folders = {
+        '/Volumes/Samsung/rust/solver/sor',
         '/Volumes/Samsung/rust/solver/cow-solver',
         '/Volumes/Samsung/rust/solver/solver-infra',
         '/Volumes/Samsung/rust/solver/omni-rs',
